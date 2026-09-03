@@ -28,8 +28,8 @@ export function AttorneyPanel() {
           <Reveal><p className="eyebrow mb-7">The attorney</p></Reveal>
           <LineReveal
             as="h2"
-            className="display text-[clamp(2.25rem,5.5vw,4.25rem)]"
-            lines={["Shaheen Wallace,", <em key="e" className="not-italic text-wine">Esq.</em>]}
+            className="display max-w-[16ch] text-[clamp(2rem,4.5vw,3.5rem)]"
+            lines={["Shaheen Wallace,", <em key="e" className="not-italic text-wine-2">Esq.</em>]}
           />
           <Reveal delay={0.15}>
             <p className="mt-8 max-w-[54ch] text-[1.0625rem] leading-relaxed text-mist/75 text-pretty">

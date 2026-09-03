@@ -58,7 +58,7 @@ export default async function PracticeArea({
         <Reveal>
           <div className="mb-16 flex flex-wrap items-center gap-4 border-y border-hairline py-5">
             <span className="h-1.5 w-1.5 rotate-45 bg-wine" aria-hidden />
-            <p className="text-[13px] uppercase tracking-[0.14em] text-wine">{area.urgency}</p>
+            <p className="text-[13px] uppercase tracking-[0.14em] text-wine-2">{area.urgency}</p>
           </div>
         </Reveal>
 
@@ -130,12 +130,12 @@ export default async function PracticeArea({
           >
             <span>
               <span className="eyebrow !text-steel-2">Next</span>
-              <span className="display mt-3 block text-[clamp(1.75rem,4vw,3rem)] leading-none text-mist/85 transition-colors duration-500 group-hover:text-wine">
+              <span className="display mt-3 block text-[clamp(1.75rem,4vw,3rem)] leading-none text-mist/85 transition-colors duration-500 group-hover:text-wine-2">
                 {next.name}
               </span>
             </span>
             <span
-              className="text-steel-2 transition-all duration-500 group-hover:translate-x-2 group-hover:text-wine"
+              className="text-steel-2 transition-all duration-500 group-hover:translate-x-2 group-hover:text-wine-2"
               style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
               aria-hidden
             >

@@ -11,13 +11,13 @@ export function Promise() {
           </Reveal>
           <LineReveal
             as="h2"
-            className="display text-[clamp(2.25rem,5.5vw,4.25rem)]"
+            className="display max-w-[18ch] text-[clamp(2rem,4.75vw,3.75rem)]"
             lines={["Most firms sell", "you volume.", "We sell you"]}
           />
           <LineReveal
             as="p"
             delay={0.15}
-            className="display text-[clamp(2.25rem,5.5vw,4.25rem)] text-wine"
+            className="display max-w-[18ch] text-[clamp(2rem,4.75vw,3.75rem)] text-wine-2"
             lines={["attention."]}
           />
         </div>
@@ -27,9 +27,9 @@ export function Promise() {
             {promises.map((p, i) => (
               <Reveal as="li" key={p.k} delay={i * 0.09} className="group py-9">
                 <div className="flex gap-6 md:gap-10">
-                  <span className="figure shrink-0 pt-1 text-[13px] text-wine">{p.k}</span>
+                  <span className="figure shrink-0 pt-1 text-[13px] text-wine-2">{p.k}</span>
                   <div>
-                    <h3 className="display text-[clamp(1.5rem,2.6vw,2rem)] leading-tight">{p.title}</h3>
+                    <h3 className="display text-[clamp(1.25rem,2.1vw,1.625rem)] leading-tight">{p.title}</h3>
                     <p className="mt-3 max-w-[52ch] text-[15px] leading-relaxed text-mist/65 text-pretty">
                       {p.body}
                     </p>

@@ -24,7 +24,7 @@ export default function Reviews() {
             {publishedTestimonials.map((t, i) => (
               <Reveal key={i} delay={i * 0.07} className="flex flex-col justify-between bg-ink p-9 md:p-12">
                 <blockquote className="display text-[clamp(1.5rem,2.6vw,2.125rem)] leading-snug text-mist/90">
-                  <span className="text-wine">“</span>{t.quote}<span className="text-wine">”</span>
+                  <span className="text-wine-2">“</span>{t.quote}<span className="text-wine-2">”</span>
                 </blockquote>
                 <footer className="mt-12 border-t border-hairline pt-6">
                   <p className="text-[14px] text-mist/85">{t.author}</p>

@@ -61,7 +61,7 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
 
       <PageHeader
         eyebrow={`${m.kicker} · ${m.stateFull}`}
-        lines={[m.city, <em key="e" className="not-italic text-wine">injury law.</em>]}
+        lines={[m.city, <em key="e" className="not-italic text-wine-2">injury law.</em>]}
         lede={m.lede}
       />
 
@@ -94,7 +94,7 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
                 <dl className="divide-y divide-hairline border-y border-hairline">
                   {m.rules.map((r) => (
                     <div key={r.label} className="grid gap-3 py-6 md:grid-cols-12 md:gap-8">
-                      <dt className="display text-[1.1875rem] leading-snug text-wine md:col-span-4">
+                      <dt className="display text-[1.1875rem] leading-snug text-wine-2 md:col-span-4">
                         {r.label}
                       </dt>
                       <dd className="text-[15px] leading-relaxed text-mist/65 md:col-span-8">
@@ -185,12 +185,12 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
           >
             <span>
               <span className="eyebrow !text-steel-2">Next office</span>
-              <span className="display mt-3 block text-[clamp(1.75rem,4vw,3rem)] leading-none text-mist/85 transition-colors duration-500 group-hover:text-wine">
+              <span className="display mt-3 block text-[clamp(1.75rem,4vw,3rem)] leading-none text-mist/85 transition-colors duration-500 group-hover:text-wine-2">
                 {next.city}
               </span>
             </span>
             <span
-              className="text-steel-2 transition-all duration-500 group-hover:translate-x-2 group-hover:text-wine"
+              className="text-steel-2 transition-all duration-500 group-hover:translate-x-2 group-hover:text-wine-2"
               style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
               aria-hidden
             >

@@ -14,7 +14,7 @@ export function PageHeader({
       <Reveal><p className="eyebrow mb-8">{eyebrow}</p></Reveal>
       <LineReveal
         as="h1"
-        className="display max-w-[16ch] text-[clamp(2.75rem,8vw,7rem)]"
+        className="display display-xl max-w-[22ch] text-[clamp(2.25rem,6.5vw,5.75rem)]"
         lines={lines}
       />
       {lede && (

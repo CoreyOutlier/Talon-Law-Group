@@ -115,11 +115,11 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
         <h3 className="display text-[clamp(2rem,4vw,3rem)]">
           We have it. Expect a call
           <br />
-          <em className="not-italic text-wine">within 15 minutes</em> during business hours.
+          <em className="not-italic text-wine-2">within 15 minutes</em> during business hours.
         </h3>
         <p className="mt-6 max-w-[46ch] text-[15px] leading-relaxed text-mist/65">
           If it is after hours, you will hear from us first thing. If it cannot wait, call{" "}
-          <a href={`tel:${site.phoneRaw}`} className="text-wine link-draw">{site.phone}</a> now — it is answered around the clock.
+          <a href={`tel:${site.phoneRaw}`} className="text-wine-2 link-draw">{site.phone}</a> now — it is answered around the clock.
         </p>
       </div>
     );
@@ -171,7 +171,7 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
                   >
                     <span>{opt}</span>
                     <span
-                      className={`shrink-0 transition-transform duration-500 ${selected ? "text-wine" : "text-steel-2 group-hover:translate-x-1"}`}
+                      className={`shrink-0 transition-transform duration-500 ${selected ? "text-wine-2" : "text-steel-2 group-hover:translate-x-1"}`}
                       style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
                     >
                       →
@@ -236,7 +236,7 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
             </div>
 
             {state === "error" && (
-              <p className="mt-5 text-[13px] text-wine">
+              <p className="mt-5 text-[13px] text-wine-2">
                 That did not send. Please call{" "}
                 <a href={`tel:${site.phoneRaw}`} className="underline">{site.phone}</a> — we will pick up.
               </p>
@@ -263,7 +263,7 @@ function Field({
   return (
     <div>
       <label className="eyebrow mb-2 block !text-steel">
-        {label} {required && <span className="text-wine">*</span>}
+        {label} {required && <span className="text-wine-2">*</span>}
       </label>
       <input
         type={type}

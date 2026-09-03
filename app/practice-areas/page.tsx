@@ -30,7 +30,7 @@ export default function PracticeAreasIndex() {
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="md:col-span-5">
-                    <h2 className="display text-[clamp(1.75rem,3.6vw,2.75rem)] leading-none text-mist/90 transition-colors duration-500 group-hover:text-wine">
+                    <h2 className="display text-[clamp(1.25rem,2.4vw,2rem)] leading-tight text-mist/90 transition-colors duration-500 group-hover:text-wine-2">
                       {p.name}
                     </h2>
                     <p className="eyebrow mt-3 !text-steel-2">{p.kicker}</p>
@@ -39,7 +39,7 @@ export default function PracticeAreasIndex() {
                     {p.intro}
                   </p>
                   <span
-                    className="hidden text-right text-steel-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-wine md:col-span-1 md:block"
+                    className="hidden text-right text-steel-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-wine-2 md:col-span-1 md:block"
                     style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
                     aria-hidden
                   >

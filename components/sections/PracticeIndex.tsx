@@ -25,7 +25,7 @@ export function PracticeIndex() {
             <Reveal><p className="eyebrow mb-6">What we handle</p></Reveal>
             <LineReveal
               as="h2"
-              className="display text-[clamp(2.25rem,5.5vw,4.25rem)]"
+              className="display max-w-[20ch] text-[clamp(2rem,4.75vw,3.75rem)]"
               lines={["Serious injury.", "Nothing smaller."]}
             />
           </div>
@@ -77,12 +77,12 @@ export function PracticeIndex() {
                     <span className="figure text-[12px] text-steel-2">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span className="display block text-[clamp(1.5rem,3.4vw,2.5rem)] leading-none text-mist/85 transition-colors duration-500 group-hover:text-wine">
+                    <span className="display block text-[clamp(1.125rem,2.4vw,1.875rem)] leading-tight text-mist/85 transition-colors duration-500 group-hover:text-wine-2">
                       {p.name}
                     </span>
                   </span>
                   <span
-                    className="shrink-0 text-steel-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-wine"
+                    className="shrink-0 text-steel-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-wine-2"
                     style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
                     aria-hidden
                   >

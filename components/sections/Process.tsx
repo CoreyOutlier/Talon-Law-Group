@@ -3,8 +3,8 @@ import { LineReveal, Reveal } from "@/components/Motion";
 
 export function Process() {
   return (
-    <section className="shell py-24 md:py-40">
-      <div className="mb-16 max-w-[24ch]">
+    <section className="shell py-24 md:py-32">
+      <div className="mb-16 max-w-[36ch]">
         <Reveal><p className="eyebrow mb-7">How it works</p></Reveal>
         <LineReveal
           as="h2"
@@ -17,10 +17,10 @@ export function Process() {
         {process_.map((s, i) => (
           <Reveal as="li" key={s.n} delay={i * 0.07} className="group relative bg-ink p-8 md:p-9">
             <div className="flex items-baseline justify-between">
-              <span className="figure text-[13px] text-wine">{s.n}</span>
+              <span className="figure text-[13px] text-wine-2">{s.n}</span>
               <span className="text-[10px] uppercase tracking-[0.16em] text-steel-2">{s.time}</span>
             </div>
-            <h3 className="display mt-8 text-[1.5rem] leading-tight">{s.title}</h3>
+            <h3 className="display mt-8 text-[1.25rem] leading-tight">{s.title}</h3>
             <p className="mt-4 text-[14px] leading-relaxed text-mist/60">{s.body}</p>
             <span
               className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-wine transition-transform duration-700 group-hover:scale-x-100"

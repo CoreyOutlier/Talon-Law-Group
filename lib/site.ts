@@ -545,7 +545,7 @@ export const process_ = [
   {
     n: "01",
     title: "The call",
-    time: "Today",
+    time: "Day one",
     body: "You tell us what happened. We tell you honestly whether you have a case and what it will take. No pressure, no obligation, no fee to find out.",
   },
   {
@@ -557,13 +557,13 @@ export const process_ = [
   {
     n: "03",
     title: "We build the file",
-    time: "Months one to six",
+    time: "Months 1–6",
     body: "Investigation, experts, medical documentation, wage loss and life-impact proof. We build it the way it would be shown to a jury, because that is the file that gets paid.",
   },
   {
     n: "04",
     title: "We demand. Or we file.",
-    time: "When you are medically stable",
+    time: "Month 6+",
     body: "A documented demand goes to the carrier. If the number is not right, we file suit. That decision is yours, and you make it with real information.",
   },
   {

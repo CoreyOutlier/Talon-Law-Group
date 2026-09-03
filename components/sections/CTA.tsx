@@ -10,7 +10,7 @@ export function CTA() {
           <Reveal><p className="eyebrow mb-7">No fee unless we win</p></Reveal>
           <LineReveal
             as="h2"
-            className="display text-[clamp(2.5rem,6vw,4.75rem)]"
+            className="display display-xl max-w-[18ch] text-[clamp(2.25rem,5vw,4rem)]"
             lines={["Tell us what", "happened."]}
           />
           <Reveal delay={0.2}>
@@ -23,7 +23,7 @@ export function CTA() {
             <div className="mt-10 space-y-4 border-t border-hairline pt-8">
               <a href={`tel:${site.phoneRaw}`} className="block">
                 <p className="eyebrow !text-steel">Or call, 24 hours</p>
-                <p className="display mt-2 text-[clamp(1.75rem,3.5vw,2.5rem)] text-wine link-draw w-fit">
+                <p className="display mt-2 text-[clamp(1.75rem,3.5vw,2.5rem)] text-wine-2 link-draw w-fit">
                   {site.phone}
                 </p>
               </a>

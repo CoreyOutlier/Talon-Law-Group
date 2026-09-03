@@ -18,7 +18,7 @@ export function Proof() {
         <div className="mb-16 flex flex-wrap items-end justify-between gap-8 md:mb-24">
           <div>
             <p className="eyebrow mb-7">The record</p>
-            <h2 className="display display-xl max-w-[12ch] text-[clamp(2.25rem,6.5vw,5.5rem)]">
+            <h2 className="display display-xl max-w-[18ch] text-[clamp(2rem,5.5vw,4.75rem)]">
               Numbers we can
               <br />
               <span className="text-wine-2">document.</span>

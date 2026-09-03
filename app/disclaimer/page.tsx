@@ -9,7 +9,7 @@ export default function Disclaimer() {
     <>
       <PageHeader eyebrow="Legal" lines={["Legal", "notices."]} />
       <section className="shell max-w-[70ch] space-y-6 pb-28 text-[15px] leading-relaxed text-mist/70">
-        <p className="text-wine">
+        <p className="text-wine-2">
           ⚠︎ Placeholder. Have counsel confirm this satisfies attorney-advertising rules in
           every state where the firm advertises.
         </p>

@@ -48,7 +48,7 @@ export function Nav() {
                 key={item.href}
                 href={item.href}
                 className={`link-draw text-[13px] font-medium tracking-wide transition-colors ${
-                  pathname.startsWith(item.href) ? "text-wine" : "text-mist/75 hover:text-mist"
+                  pathname.startsWith(item.href) ? "text-wine-2" : "text-mist/75 hover:text-mist"
                 }`}
               >
                 {item.label}
@@ -59,7 +59,7 @@ export function Nav() {
           <div className="flex items-center gap-3">
             <a
               href={`tel:${site.phoneRaw}`}
-              className="hidden text-[13px] font-medium tracking-wide text-mist/75 transition-colors hover:text-wine md:block"
+              className="hidden text-[13px] font-medium tracking-wide text-mist/75 transition-colors hover:text-wine-2 md:block"
             >
               {site.phone}
             </a>

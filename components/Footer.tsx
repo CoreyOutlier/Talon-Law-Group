@@ -13,7 +13,7 @@ export function Footer() {
               {site.tagline}
             </p>
             <div className="mt-9 flex flex-col gap-2 text-[15px]">
-              <a href={`tel:${site.phoneRaw}`} className="link-draw w-fit text-wine">
+              <a href={`tel:${site.phoneRaw}`} className="link-draw w-fit text-wine-2">
                 {site.phone}
               </a>
               <a href={`mailto:${site.email}`} className="link-draw w-fit text-mist/70">

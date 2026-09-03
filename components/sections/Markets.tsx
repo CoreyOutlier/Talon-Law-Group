@@ -15,7 +15,7 @@ export function Markets() {
           <Reveal><p className="eyebrow mb-6">Where we work</p></Reveal>
           <LineReveal
             as="h2"
-            className="display text-[clamp(2.25rem,5.5vw,4.25rem)]"
+            className="display max-w-[20ch] text-[clamp(2rem,4.75vw,3.75rem)]"
             lines={["Three cities.", "One standard."]}
           />
         </div>
@@ -31,13 +31,13 @@ export function Markets() {
               <div className="flex items-start justify-between gap-4">
                 <span className="eyebrow !text-steel-2">{m.kicker}</span>
                 {m.isHQ && (
-                  <span className="border border-wine/40 px-2 py-1 text-[9px] uppercase tracking-[0.16em] text-wine">
+                  <span className="border border-wine/40 px-2 py-1 text-[9px] uppercase tracking-[0.16em] text-wine-2">
                     Head office
                   </span>
                 )}
               </div>
 
-              <h3 className="display mt-8 text-[clamp(2rem,4vw,3rem)] leading-none text-mist transition-colors duration-500 group-hover:text-wine">
+              <h3 className="display mt-8 text-[clamp(2rem,4vw,3rem)] leading-none text-mist transition-colors duration-500 group-hover:text-wine-2">
                 {m.city}
               </h3>
               <p className="mt-2 text-[11px] uppercase tracking-[0.2em] text-steel">
@@ -47,7 +47,7 @@ export function Markets() {
               <p className="mt-6 flex-1 text-[14px] leading-relaxed text-mist/60">{m.lede}</p>
 
               <span
-                className="mt-8 flex items-center gap-3 text-[11px] uppercase tracking-[0.16em] text-steel transition-all duration-500 group-hover:gap-5 group-hover:text-wine"
+                className="mt-8 flex items-center gap-3 text-[11px] uppercase tracking-[0.16em] text-steel transition-all duration-500 group-hover:gap-5 group-hover:text-wine-2"
                 style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
               >
                 {m.city} injury law <span aria-hidden>→</span>

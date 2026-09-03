@@ -49,7 +49,7 @@ export function Statement({
           </p>
         )}
 
-        <p className="display display-xl max-w-[15ch] text-[clamp(2.5rem,8.5vw,7.5rem)]">
+        <p className="display display-xl max-w-[22ch] text-[clamp(2.25rem,7.5vw,6.5rem)]">
           {words.map((w, i) => (
             <span
               key={i}

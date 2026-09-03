@@ -31,7 +31,7 @@ export default function Contact() {
               <p className="eyebrow mb-4">Call, 24 hours</p>
               <a
                 href={`tel:${site.phoneRaw}`}
-                className="display link-draw block w-fit text-[clamp(1.875rem,4vw,2.75rem)] text-wine"
+                className="display link-draw block w-fit text-[clamp(1.875rem,4vw,2.75rem)] text-wine-2"
               >
                 {site.phone}
               </a>
@@ -59,7 +59,7 @@ export default function Contact() {
                   <li key={m.slug}>
                     <p className="text-[15px] text-mist/90">
                       {m.city}, {m.state}
-                      {m.isHQ && <span className="ml-2 text-[11px] uppercase tracking-[0.14em] text-wine">Head office</span>}
+                      {m.isHQ && <span className="ml-2 text-[11px] uppercase tracking-[0.14em] text-wine-2">Head office</span>}
                     </p>
                     {m.address ? (
                       <>
@@ -74,7 +74,7 @@ export default function Contact() {
                           )}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="link-draw mt-2 inline-block text-[12px] text-wine"
+                          className="link-draw mt-2 inline-block text-[12px] text-wine-2"
                         >
                           Directions
                         </a>

@@ -17,7 +17,7 @@ export default function About() {
     <>
       <PageHeader
         eyebrow="Founder & trial attorney"
-        lines={["Shaheen", <em key="e" className="not-italic text-wine">Wallace,</em>, "Esq."]}
+        lines={["Shaheen", <em key="e" className="not-italic text-wine-2">Wallace,</em>, "Esq."]}
         lede={attorney.lede}
       />
 

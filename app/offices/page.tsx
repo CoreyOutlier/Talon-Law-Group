@@ -31,12 +31,12 @@ export default function Offices() {
                   </span>
 
                   <div className="md:col-span-4">
-                    <h2 className="display text-[clamp(2rem,4.5vw,3.25rem)] leading-none text-mist/90 transition-colors duration-500 group-hover:text-wine">
+                    <h2 className="display text-[clamp(1.5rem,3vw,2.5rem)] leading-tight text-mist/90 transition-colors duration-500 group-hover:text-wine-2">
                       {m.city}
                     </h2>
                     <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-steel">
                       {m.stateFull}
-                      {m.isHQ && <span className="text-wine"> · Head office</span>}
+                      {m.isHQ && <span className="text-wine-2"> · Head office</span>}
                     </p>
                   </div>
 
@@ -52,7 +52,7 @@ export default function Offices() {
                   </div>
 
                   <span
-                    className="hidden text-right text-steel-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-wine md:col-span-1 md:block"
+                    className="hidden text-right text-steel-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-wine-2 md:col-span-1 md:block"
                     style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
                     aria-hidden
                   >
