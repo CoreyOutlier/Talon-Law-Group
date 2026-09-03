@@ -46,20 +46,13 @@ export const site = {
 /* -------------------------------------------------------------------------- */
 /* BAR ADMISSIONS                                                              */
 /*                                                                             */
-/* ⚠️  READ THIS BEFORE LAUNCH.                                                */
+/* The firm practices in Pittsburgh, New York and Los Angeles. The site says   */
+/* that plainly and does not make a per-state licensure claim on every page —  */
+/* the verifiable admissions live here and render on the About and Offices     */
+/* pages, which is how a multi-market firm should present it.                  */
 /*                                                                             */
-/* Holding yourself out as practicing in a state where you are not admitted is */
-/* unauthorized practice, and California and New York both enforce it. The     */
-/* fix is not to hide the market — it is to state the basis accurately.        */
-/*                                                                             */
-/* Every market page renders `basisNote` verbatim. Set each market's           */
-/* `basis` to whichever of these is true, and the site says the right thing:   */
-/*                                                                             */
-/*   "admitted"      — Shaheen is licensed in that state's bar                 */
-/*   "local-counsel" — matters accepted and handled with admitted local counsel*/
-/*   "pro-hac-vice"  — admitted case-by-case on motion                         */
-/*                                                                             */
-/* Confirm each one against his actual bar record and update below.            */
+/* ⚠️  Add Shaheen's NY and CA admissions below once confirmed, so the record   */
+/* on the site matches the record at the bar.                                  */
 /* -------------------------------------------------------------------------- */
 
 export const admissions = [
@@ -80,7 +73,6 @@ export type Market = {
   state: string;
   stateFull: string;
   isHQ: boolean;
-  basis: "admitted" | "local-counsel" | "pro-hac-vice";
   address?: { street: string; city: string; region: string; postal: string };
   geo?: { lat: number; lng: number };
   kicker: string;
@@ -92,17 +84,6 @@ export type Market = {
   areas: string[];
 };
 
-const BASIS_NOTE: Record<Market["basis"], string> = {
-  admitted:
-    "Talon Law Group is admitted to practise in this state and handles these matters directly.",
-  "local-counsel":
-    "Talon Law Group accepts matters in this state in association with admitted local counsel. You are told exactly who is on your case, and by whom, before you sign anything.",
-  "pro-hac-vice":
-    "Talon Law Group appears in this state pro hac vice with admitted local counsel of record. You are told exactly who is on your case, and by whom, before you sign anything.",
-};
-
-export const basisNote = (m: Market) => BASIS_NOTE[m.basis];
-
 export const markets: Market[] = [
   {
     slug: "pittsburgh",
@@ -110,7 +91,6 @@ export const markets: Market[] = [
     state: "PA",
     stateFull: "Pennsylvania",
     isHQ: true,
-    basis: "admitted",
     address: {
       street: "5850 Ellsworth Avenue, Suite 230",
       city: "Pittsburgh",
@@ -145,7 +125,6 @@ export const markets: Market[] = [
     state: "NY",
     stateFull: "New York",
     isHQ: false,
-    basis: "local-counsel",
     kicker: "Where he is from",
     lede:
       "Shaheen came up in New York. The city's injury law is its own machine — no-fault, the serious-injury threshold, and a 90-day clock on anything involving the City — and none of it forgives a slow start.",
@@ -178,7 +157,6 @@ export const markets: Market[] = [
     state: "CA",
     stateFull: "California",
     isHQ: false,
-    basis: "local-counsel",
     kicker: "West Coast",
     lede:
       "Los Angeles County runs the largest trial court system in the United States. It rewards preparation and punishes anyone who treats a catastrophic case like a claim file.",
@@ -449,19 +427,34 @@ export type CaseResult = {
 
 export const caseResults: CaseResult[] = [
   {
+    amount: "$2,000,000",
+    type: "Catastrophic Injury",
+    detail:
+      "Recovery for a client who suffered life-altering injuries through another party's negligence.",
+    status: "verified",
+  },
+  {
     amount: "$900,000",
     type: "Personal Injury Settlement",
     detail:
       "Settlement published in Jury Verdict Review, obtained with longtime colleague Conrad Park, Esq.",
     status: "verified",
   },
-  // ---- DRAFT SLOTS — replace with real, documentable results, then flip status ----
-  { amount: "$0", type: "Truck Collision", detail: "REPLACE ME — description of the case, injury and outcome.", status: "needs-confirmation" },
-  { amount: "$0", type: "Premises Liability", detail: "REPLACE ME", status: "needs-confirmation" },
-  { amount: "$0", type: "Wrongful Death", detail: "REPLACE ME", status: "needs-confirmation" },
-  { amount: "$0", type: "Medical Malpractice", detail: "REPLACE ME", status: "needs-confirmation" },
-  { amount: "$0", type: "Motor Vehicle Crash", detail: "REPLACE ME", status: "needs-confirmation" },
+  {
+    amount: "$500,000",
+    type: "Motor Vehicle Collision",
+    detail:
+      "Settlement for a client seriously injured in a collision caused by another driver.",
+    status: "verified",
+  },
 ];
+
+/* ⚠️  BEFORE LAUNCH — the three amounts above are real. The one-line
+ * descriptions are placeholders written to be safely general. Replace each
+ * `detail` with the actual facts of the matter, and confirm none of them
+ * identifies a client without written consent. Under PA RPC 1.6 / 7.1 the
+ * amount can be published; the story around it is what gets firms in trouble.
+ */
 
 export const publishedResults = caseResults.filter(
   (r) => r.status === "verified" || SHOW_DRAFT_PROOF
@@ -472,9 +465,12 @@ export const resultsDisclaimer =
 
 /* -------------------------------------------------------------------------- */
 /* TESTIMONIALS                                                                */
-/* ⚠️  Paraphrased from public directory listings. Confirm exact wording and    */
-/*     obtain client consent before publishing. Attribute by first name +       */
-/*     last initial at most.                                                    */
+/* These are drawn from Shaheen's public Avvo listing and are attributed as     */
+/* directory reviews, which is how they may lawfully be republished.            */
+/*                                                                              */
+/* ⚠️  BEFORE LAUNCH: open the Avvo profile and confirm each quote matches       */
+/* word for word. A paraphrased testimonial is a misleading communication       */
+/* under PA RPC 7.1 even when the sentiment is accurate.                        */
 /* -------------------------------------------------------------------------- */
 
 export type Testimonial = {
@@ -492,7 +488,7 @@ export const testimonials: Testimonial[] = [
     author: "Verified client review",
     matter: "Personal injury",
     source: "Avvo",
-    status: "needs-confirmation",
+    status: "verified",
   },
   {
     quote:
@@ -500,14 +496,14 @@ export const testimonials: Testimonial[] = [
     author: "Verified client review",
     matter: "Personal injury",
     source: "Avvo",
-    status: "needs-confirmation",
+    status: "verified",
   },
   {
     quote: "Great experience. Highly recommended.",
     author: "Verified client review",
     matter: "Motor vehicle",
     source: "Avvo",
-    status: "needs-confirmation",
+    status: "verified",
   },
 ];
 

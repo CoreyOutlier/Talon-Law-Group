@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Jost } from "next/font/google";
+import { Cabin, Jost } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
@@ -8,13 +8,24 @@ import { Intro } from "@/components/Intro";
 import { Cursor } from "@/components/Cursor";
 import { site, attorney, markets, practiceAreas } from "@/lib/site";
 
-// Jost is the brand's header face and the closest available match to the
-// logotype. Gill Sans is the body face and drops in from /public/media/fonts;
-// until it does, Jost carries body copy too.
+// Jost carries the logotype and every header, per the brand sheet.
+//
+// The sheet specifies Gill Sans for body copy, but Gill Sans is a Monotype
+// face whose desktop license does not permit web embedding. Cabin is the
+// substitute: it was drawn directly from Eric Gill's and Edward Johnston's
+// humanist sans work, it is open source, and it holds the same warmth at
+// paragraph sizes. Nobody but a type designer will clock the difference.
 const jost = Jost({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-jost",
+  display: "swap",
+});
+
+const cabin = Cabin({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-cabin",
   display: "swap",
 });
 
@@ -89,7 +100,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={jost.variable}>
+    <html lang="en" className={`${jost.variable} ${cabin.variable}`}>
       <body className="grain">
         <script
           type="application/ld+json"

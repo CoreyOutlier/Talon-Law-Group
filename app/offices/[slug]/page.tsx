@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { basisNote, markets, practiceAreas, site } from "@/lib/site";
+import { markets, practiceAreas, site } from "@/lib/site";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Motion";
 import { CTA } from "@/components/sections/CTA";
@@ -173,7 +173,6 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
                   </ul>
                 </div>
 
-                <p className="mt-6 text-[11px] leading-relaxed text-steel-2">{basisNote(m)}</p>
               </div>
             </Reveal>
           </aside>

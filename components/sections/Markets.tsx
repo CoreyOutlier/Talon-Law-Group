@@ -59,10 +59,7 @@ export function Markets() {
 
       <Reveal delay={0.2}>
         <p className="mt-8 max-w-[74ch] text-[12px] leading-relaxed text-steel-2">
-          Also accepting matters in {site.alsoServing.join(", ")}. Talon Law Group is admitted
-          in Pennsylvania. Matters outside its admitting jurisdictions are handled in
-          association with admitted local counsel, disclosed to you in writing before
-          engagement.
+          Also accepting matters in {site.alsoServing.join(", ")}.
         </p>
       </Reveal>
     </section>

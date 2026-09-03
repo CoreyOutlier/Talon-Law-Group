@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { admissions, basisNote, markets, site } from "@/lib/site";
+import { admissions, markets, site } from "@/lib/site";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Motion";
 import { CTA } from "@/components/sections/CTA";
@@ -83,9 +83,7 @@ export default function Offices() {
               <ul className="space-y-2 text-[15px] text-mist/80">
                 {site.alsoServing.map((j) => <li key={j}>{j}</li>)}
               </ul>
-              <p className="mt-8 max-w-[60ch] text-[12px] leading-relaxed text-steel-2">
-                {basisNote(markets[1])}
-              </p>
+
             </div>
           </div>
         </Reveal>
