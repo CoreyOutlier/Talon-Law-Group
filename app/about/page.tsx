@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { attorney, site } from "@/lib/site";
+import { admissions, attorney, markets, site } from "@/lib/site";
 import { Figure } from "@/components/Figure";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Motion";
@@ -34,9 +34,19 @@ export default function About() {
                 note="Vertical portrait, 1600×2000 or larger."
               />
               <div className="mt-8 border-t border-hairline pt-6">
-                <p className="eyebrow mb-4">Admitted & serving</p>
+                <p className="eyebrow mb-4">Admissions</p>
+                <ul className="space-y-3 text-[13px] leading-snug text-bone/75">
+                  {admissions.map((a) => (
+                    <li key={a.court}>
+                      {a.court}
+                      <span className="mt-0.5 block text-[11px] text-slate-2">{a.meta}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="eyebrow mb-3 mt-7">Practising in</p>
                 <ul className="space-y-1 text-[14px] text-bone/75">
-                  {site.jurisdictions.map((j) => <li key={j}>{j}</li>)}
+                  {markets.map((m) => <li key={m.slug}>{m.city}, {m.state}</li>)}
+                  {site.alsoServing.map((j) => <li key={j} className="text-slate-2">{j}</li>)}
                 </ul>
               </div>
             </div>

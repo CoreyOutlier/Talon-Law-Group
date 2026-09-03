@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { site } from "@/lib/site";
+import { markets, site } from "@/lib/site";
 import { PageHeader } from "@/components/PageHeader";
 import { CaseIntake } from "@/components/CaseIntake";
 import { Reveal } from "@/components/Motion";
@@ -53,29 +53,43 @@ export default function Contact() {
             </div>
 
             <div className="border-t border-hairline pt-8">
-              <p className="eyebrow mb-4">Office</p>
-              <address className="not-italic text-[15px] leading-relaxed text-bone/85">
-                {site.address.street}
-                <br />
-                {site.address.city}, {site.address.region} {site.address.postal}
-              </address>
-              <a
-                href={`https://maps.google.com/?q=${encodeURIComponent(
-                  `${site.address.street}, ${site.address.city}, ${site.address.region} ${site.address.postal}`
-                )}`}
-                target="_blank"
-                rel="noreferrer"
-                className="link-draw mt-3 inline-block text-[13px] text-brass"
-              >
-                Directions
-              </a>
-            </div>
-
-            <div className="border-t border-hairline pt-8">
-              <p className="eyebrow mb-4">Serving</p>
-              <ul className="space-y-1 text-[15px] text-bone/85">
-                {site.jurisdictions.map((j) => <li key={j}>{j}</li>)}
+              <p className="eyebrow mb-5">Offices</p>
+              <ul className="space-y-6">
+                {markets.map((m) => (
+                  <li key={m.slug}>
+                    <p className="text-[15px] text-bone/90">
+                      {m.city}, {m.state}
+                      {m.isHQ && <span className="ml-2 text-[11px] uppercase tracking-[0.14em] text-brass">Head office</span>}
+                    </p>
+                    {m.address ? (
+                      <>
+                        <address className="mt-1 not-italic text-[13px] leading-relaxed text-slate">
+                          {m.address.street}
+                          <br />
+                          {m.address.city}, {m.address.region} {m.address.postal}
+                        </address>
+                        <a
+                          href={`https://maps.google.com/?q=${encodeURIComponent(
+                            `${m.address.street}, ${m.address.city}, ${m.address.region} ${m.address.postal}`
+                          )}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="link-draw mt-2 inline-block text-[12px] text-brass"
+                        >
+                          Directions
+                        </a>
+                      </>
+                    ) : (
+                      <p className="mt-1 text-[13px] leading-relaxed text-slate">
+                        By phone, video or in-person by arrangement.
+                      </p>
+                    )}
+                  </li>
+                ))}
               </ul>
+              <p className="mt-6 text-[13px] text-slate-2">
+                Also accepting matters in {site.alsoServing.join(", ")}.
+              </p>
             </div>
           </div>
         </Reveal>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { disclaimer, nav, practiceAreas, resultsDisclaimer, site } from "@/lib/site";
+import { disclaimer, markets, nav, practiceAreas, resultsDisclaimer, site } from "@/lib/site";
 import { Wordmark } from "./Wordmark";
 
 export function Footer() {
@@ -61,10 +61,20 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-2">
-            <p className="eyebrow mb-6">Jurisdictions</p>
-            <ul className="space-y-3 text-[14px] text-bone/70">
-              {site.jurisdictions.map((j) => (
-                <li key={j}>{j}</li>
+            <p className="eyebrow mb-6">Offices</p>
+            <ul className="space-y-3">
+              {markets.map((m) => (
+                <li key={m.slug}>
+                  <Link
+                    href={`/offices/${m.slug}`}
+                    className="link-draw text-[14px] text-bone/70 transition-colors hover:text-bone"
+                  >
+                    {m.city}, {m.state}
+                  </Link>
+                </li>
+              ))}
+              {site.alsoServing.map((j) => (
+                <li key={j} className="text-[14px] text-slate-2">{j}</li>
               ))}
             </ul>
           </div>

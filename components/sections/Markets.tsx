@@ -1,0 +1,70 @@
+import Link from "next/link";
+import { markets, site } from "@/lib/site";
+import { LineReveal, Reveal } from "@/components/Motion";
+
+/* ---------------------------------------------------------------------------
+ * Markets — three cities as the positioning statement.
+ * Pittsburgh alone reads local. Pittsburgh, New York and Los Angeles reads
+ * like a trial practice with reach. That is the point of this section.
+ * ------------------------------------------------------------------------- */
+export function Markets() {
+  return (
+    <section className="shell py-24 md:py-36">
+      <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <Reveal><p className="eyebrow mb-6">Where we work</p></Reveal>
+          <LineReveal
+            as="h2"
+            className="display text-[clamp(2.25rem,5.5vw,4.25rem)]"
+            lines={["Three cities.", "One standard."]}
+          />
+        </div>
+        <Reveal delay={0.2}>
+          <Link href="/offices" className="btn btn-ghost">All offices</Link>
+        </Reveal>
+      </div>
+
+      <div className="grid gap-px bg-hairline md:grid-cols-3">
+        {markets.map((m, i) => (
+          <Reveal key={m.slug} delay={i * 0.09} className="bg-ink">
+            <Link href={`/offices/${m.slug}`} className="group flex h-full flex-col p-8 md:p-10">
+              <div className="flex items-start justify-between gap-4">
+                <span className="eyebrow !text-slate-2">{m.kicker}</span>
+                {m.isHQ && (
+                  <span className="border border-brass/40 px-2 py-1 text-[9px] uppercase tracking-[0.16em] text-brass">
+                    Head office
+                  </span>
+                )}
+              </div>
+
+              <h3 className="display mt-8 text-[clamp(2rem,4vw,3rem)] leading-none text-bone transition-colors duration-500 group-hover:text-brass">
+                {m.city}
+              </h3>
+              <p className="mt-2 text-[11px] uppercase tracking-[0.2em] text-slate">
+                {m.stateFull}
+              </p>
+
+              <p className="mt-6 flex-1 text-[14px] leading-relaxed text-bone/60">{m.lede}</p>
+
+              <span
+                className="mt-8 flex items-center gap-3 text-[11px] uppercase tracking-[0.16em] text-slate transition-all duration-500 group-hover:gap-5 group-hover:text-brass"
+                style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
+              >
+                {m.city} injury law <span aria-hidden>→</span>
+              </span>
+            </Link>
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal delay={0.2}>
+        <p className="mt-8 max-w-[74ch] text-[12px] leading-relaxed text-slate-2">
+          Also accepting matters in {site.alsoServing.join(", ")}. Talon Law Group is admitted
+          in Pennsylvania. Matters outside its admitting jurisdictions are handled in
+          association with admitted local counsel, disclosed to you in writing before
+          engagement.
+        </p>
+      </Reveal>
+    </section>
+  );
+}

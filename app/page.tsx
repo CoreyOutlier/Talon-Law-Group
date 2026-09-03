@@ -2,6 +2,7 @@ import { Hero } from "@/components/Hero";
 import { Ticker } from "@/components/sections/Ticker";
 import { Promise as PromiseSection } from "@/components/sections/Promise";
 import { PracticeIndex } from "@/components/sections/PracticeIndex";
+import { Markets } from "@/components/sections/Markets";
 import { Proof } from "@/components/sections/Proof";
 import { AttorneyPanel } from "@/components/sections/AttorneyPanel";
 import { Process } from "@/components/sections/Process";
@@ -16,6 +17,7 @@ export default function Home() {
       <PromiseSection />
       <PracticeIndex />
       <Proof />
+      <Markets />
       <AttorneyPanel />
       <Process />
       <Voices />

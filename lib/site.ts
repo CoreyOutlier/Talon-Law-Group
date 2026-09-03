@@ -17,7 +17,7 @@ export const site = {
   domain: "https://www.wallaceinjury.com",
   tagline: "Injury law with a closer's instinct.",
   description:
-    "Talon Law Group is a Pittsburgh trial practice representing seriously injured people across Pennsylvania, New York and Georgia. Founded by Shaheen Wallace, Esq.",
+    "Talon Law Group is a trial practice representing seriously injured people in Pittsburgh, New York and Los Angeles. Founded by Shaheen Wallace, Esq.",
   phone: "(844) 474-2448",
   phoneRaw: "+18444742448",
   smsRaw: "+18444742448",
@@ -32,13 +32,178 @@ export const site = {
   geo: { lat: 40.4527, lng: -79.9245 }, // Shadyside, Pittsburgh — verify before launch
   hours: "Answered 24/7. A lawyer calls back — not a call center.",
   founded: "2015",
-  jurisdictions: ["Pennsylvania", "New York", "Georgia"],
+  /** Cities we hold ourselves out in. Full detail lives in `markets` below. */
+  cities: ["Pittsburgh", "New York", "Los Angeles"],
+  /** Additional states where matters are accepted. */
+  alsoServing: ["Georgia"],
   social: {
     facebook: "https://www.facebook.com/shaheenesq/",
     linkedin: "https://www.linkedin.com/in/shaheen-wallace-esq-bb60b06/",
     instagram: "", // TODO
   },
 } as const;
+
+/* -------------------------------------------------------------------------- */
+/* BAR ADMISSIONS                                                              */
+/*                                                                             */
+/* ⚠️  READ THIS BEFORE LAUNCH.                                                */
+/*                                                                             */
+/* Holding yourself out as practising in a state where you are not admitted is */
+/* unauthorised practice, and California and New York both enforce it. The     */
+/* fix is not to hide the market — it is to state the basis accurately.        */
+/*                                                                             */
+/* Every market page renders `basisNote` verbatim. Set each market's           */
+/* `basis` to whichever of these is true, and the site says the right thing:   */
+/*                                                                             */
+/*   "admitted"      — Shaheen is licensed in that state's bar                 */
+/*   "local-counsel" — matters accepted and handled with admitted local counsel*/
+/*   "pro-hac-vice"  — admitted case-by-case on motion                         */
+/*                                                                             */
+/* Confirm each one against his actual bar record and update below.            */
+/* -------------------------------------------------------------------------- */
+
+export const admissions = [
+  { court: "Commonwealth of Pennsylvania", meta: "State bar admission", status: "verified" },
+  { court: "U.S. District Court, Eastern District of Pennsylvania", meta: "Federal", status: "verified" },
+  { court: "U.S. District Court, Middle District of Pennsylvania", meta: "Federal", status: "verified" },
+  { court: "U.S. District Court, Middle District of Georgia", meta: "Federal", status: "verified" },
+  // TODO: add New York and California state admissions here if Shaheen holds them.
+] as const;
+
+/* -------------------------------------------------------------------------- */
+/* MARKETS                                                                     */
+/* -------------------------------------------------------------------------- */
+
+export type Market = {
+  slug: string;
+  city: string;
+  state: string;
+  stateFull: string;
+  isHQ: boolean;
+  basis: "admitted" | "local-counsel" | "pro-hac-vice";
+  address?: { street: string; city: string; region: string; postal: string };
+  geo?: { lat: number; lng: number };
+  kicker: string;
+  lede: string;
+  body: string[];
+  /** The local rules that actually decide cases here. Real leverage, real SEO. */
+  rules: { label: string; detail: string }[];
+  courts: string[];
+  areas: string[];
+};
+
+const BASIS_NOTE: Record<Market["basis"], string> = {
+  admitted:
+    "Talon Law Group is admitted to practise in this state and handles these matters directly.",
+  "local-counsel":
+    "Talon Law Group accepts matters in this state in association with admitted local counsel. You are told exactly who is on your case, and by whom, before you sign anything.",
+  "pro-hac-vice":
+    "Talon Law Group appears in this state pro hac vice with admitted local counsel of record. You are told exactly who is on your case, and by whom, before you sign anything.",
+};
+
+export const basisNote = (m: Market) => BASIS_NOTE[m.basis];
+
+export const markets: Market[] = [
+  {
+    slug: "pittsburgh",
+    city: "Pittsburgh",
+    state: "PA",
+    stateFull: "Pennsylvania",
+    isHQ: true,
+    basis: "admitted",
+    address: {
+      street: "5850 Ellsworth Avenue, Suite 230",
+      city: "Pittsburgh",
+      region: "PA",
+      postal: "15232",
+    },
+    geo: { lat: 40.4527, lng: -79.9245 },
+    kicker: "Home court",
+    lede:
+      "The practice was built here. Allegheny County juries, the carriers who write policies in this market, and the defence bar that shows up across the table — all of it is familiar ground.",
+    body: [
+      "Pittsburgh is where Talon Law Group has tried and resolved cases since 2015. That matters more than it sounds. Case value in this county is set by what local juries have actually done, by which defence firm the carrier assigns, and by which judge draws the case. A lawyer who works this courthouse knows those variables before the complaint is filed.",
+      "Pennsylvania also carries two rules that quietly decide more cases than liability ever does. The first is the limited-tort election on your own auto policy — a single checkbox that can bar recovery for pain and suffering entirely, with exceptions most people never learn exist. The second is stacking: household and resident-relative coverage that is frequently worth more than the at-fault driver's policy and is routinely left on the table.",
+      "We read the declarations pages before we read the police report. That order is deliberate.",
+    ],
+    rules: [
+      { label: "Two-year filing deadline", detail: "Most Pennsylvania injury claims must be filed within two years of the incident. Miss it and the claim is gone regardless of merit." },
+      { label: "Limited tort election", detail: "If your policy elects limited tort, recovery for pain and suffering is restricted — but serious-impairment, drunk-driver, uninsured-driver and out-of-state-vehicle exceptions all exist." },
+      { label: "Modified comparative negligence", detail: "You can recover as long as you are 50% or less at fault. Your award is reduced by your share." },
+      { label: "Stacking", detail: "Underinsured and uninsured coverage across household vehicles can often be stacked. This is where most serious Pennsylvania recoveries actually come from." },
+    ],
+    courts: [
+      "Allegheny County Court of Common Pleas",
+      "U.S. District Court, Western District of Pennsylvania",
+      "Westmoreland, Butler, Beaver and Washington County Courts",
+    ],
+    areas: ["Shadyside", "Squirrel Hill", "Oakland", "Downtown", "East Liberty", "the South Side", "the North Shore", "Mt. Lebanon", "Monroeville", "Allegheny County"],
+  },
+  {
+    slug: "new-york",
+    city: "New York",
+    state: "NY",
+    stateFull: "New York",
+    isHQ: false,
+    basis: "local-counsel",
+    kicker: "Where he is from",
+    lede:
+      "Shaheen came up in New York. The city's injury law is its own machine — no-fault, the serious-injury threshold, and a 90-day clock on anything involving the City — and none of it forgives a slow start.",
+    body: [
+      "New York does not work like anywhere else. Every crash begins inside the no-fault system, which pays medical bills and lost wages regardless of blame, but only if the application reaches the insurer within thirty days. Miss that window and the benefits that were supposed to carry you through treatment simply do not arrive.",
+      "Getting past no-fault into a real claim for pain and suffering requires clearing the serious-injury threshold under Insurance Law § 5102(d). Defence counsel litigates that threshold aggressively and early, usually on summary judgment, and cases die there when the medical documentation was not built for it from the first visit. We build for it from the first visit.",
+      "Anything involving the City, the MTA, the Transit Authority, NYCHA or a public hospital carries a ninety-day notice of claim requirement. That is not a filing deadline — it is a notice deadline months ahead of the lawsuit, and it is the single most common way a strong New York case is lost before it starts.",
+      "Construction injuries occupy their own category. Labor Law §§ 240 and 241 impose near-absolute liability on owners and general contractors for gravity-related and code-violation injuries. It is the most powerful plaintiff's statute in the country and it applies far more often than injured workers realise.",
+    ],
+    rules: [
+      { label: "30 days for no-fault", detail: "The no-fault application must reach the insurer within 30 days of the crash. This is the deadline people miss while still in hospital." },
+      { label: "90-day notice of claim", detail: "Claims against the City, MTA, NYCHA, Transit or a public hospital require a notice of claim within 90 days — long before any lawsuit." },
+      { label: "Serious injury threshold", detail: "Insurance Law § 5102(d) must be cleared before you can recover for pain and suffering. It is won or lost on medical documentation." },
+      { label: "Pure comparative fault", detail: "New York reduces your award by your share of fault but never bars recovery — even at 90% at fault, you recover 10%." },
+      { label: "Labor Law §§ 240 / 241", detail: "Owners and general contractors face near-absolute liability for height-related and code-violation construction injuries." },
+      { label: "Three-year filing deadline", detail: "Most negligence claims: three years. Medical malpractice and wrongful death run shorter." },
+    ],
+    courts: [
+      "Supreme Court, New York County",
+      "Supreme Court, Kings County (Brooklyn)",
+      "Supreme Court, Bronx County",
+      "Supreme Court, Queens County",
+      "U.S. District Courts, Southern and Eastern Districts of New York",
+    ],
+    areas: ["Manhattan", "Brooklyn", "Queens", "the Bronx", "Staten Island", "Westchester", "Nassau", "Suffolk"],
+  },
+  {
+    slug: "los-angeles",
+    city: "Los Angeles",
+    state: "CA",
+    stateFull: "California",
+    isHQ: false,
+    basis: "local-counsel",
+    kicker: "West Coast",
+    lede:
+      "Los Angeles County runs the largest trial court system in the United States. It rewards preparation and punishes anyone who treats a catastrophic case like a claim file.",
+    body: [
+      "California is a pure comparative fault state, which means fault is apportioned rather than used as a gate. Being partly to blame reduces a recovery; it almost never ends one. That single difference makes cases viable here that would be dead elsewhere, and it is why the defence invests so heavily in shifting percentages.",
+      "Two California rules cut the other way and cost unrepresented people enormous sums. Proposition 213 bars an uninsured driver from recovering non-economic damages at all, no matter who caused the collision. And in medical negligence cases, MICRA caps non-economic damages at a figure fixed by statute and rising annually under AB 35 — which makes the economic side of the case, the life-care plan and the earning-capacity analysis, where the real work has to go.",
+      "Claims against a public entity — the City of Los Angeles, the County, Metro, a school district, Caltrans — require a government claim within six months. Not two years. Six months. It is the deadline that ends the most meritorious California cases.",
+      "The freeway network generates the volume: the 405, the 10, the 101, the 110. Rideshare adds another layer, where a driver on an active trip triggers a commercial policy up to one million dollars that many people never learn was available to them.",
+    ],
+    rules: [
+      { label: "Six-month government claim", detail: "Claims against the City, County, Metro, Caltrans or a school district require a formal claim within six months of the incident." },
+      { label: "Two-year filing deadline", detail: "Most California personal injury claims: two years. Medical malpractice: one year from discovery, three years outside." },
+      { label: "Pure comparative fault", detail: "Your recovery is reduced by your share of fault, but partial fault never bars a claim outright." },
+      { label: "Proposition 213", detail: "An uninsured driver cannot recover non-economic damages even when the other driver was entirely at fault. Insurance status matters enormously here." },
+      { label: "MICRA cap", detail: "Non-economic damages in medical negligence cases are capped by statute and rise annually under AB 35. Economic damages are not capped." },
+      { label: "Rideshare coverage", detail: "A driver on an active Uber or Lyft trip carries commercial coverage up to $1,000,000 — frequently the largest policy in the case." },
+    ],
+    courts: [
+      "Los Angeles County Superior Court — Stanley Mosk Courthouse",
+      "Los Angeles County Superior Court — Spring Street, Van Nuys, Long Beach",
+      "U.S. District Court, Central District of California",
+    ],
+    areas: ["Downtown LA", "the Westside", "the San Fernando Valley", "South Bay", "Long Beach", "Pasadena", "Santa Monica", "Orange County", "the Inland Empire"],
+  },
+];
 
 /* -------------------------------------------------------------------------- */
 /* THE PROMISE — the three things that make a stranger pick up the phone       */
@@ -360,18 +525,18 @@ export const attorney = {
   role: "Founder & Trial Attorney",
   portrait: "/media/shaheen/portrait.jpg",
   lede:
-    "A trial lawyer from New York who built his practice in Pittsburgh, and who has spent a decade taking on the largest insurance carriers in the country on behalf of people they hoped would go away.",
+    "A New Yorker who built his trial practice in Pittsburgh and now takes cases in Los Angeles as well — a decade spent against the largest insurance carriers in the country, on behalf of people they hoped would go away.",
   bio: [
     "Shaheen Wallace opened his own practice in 2015. Since then he has represented people seriously hurt in motor vehicle crashes, truck wrecks, medical negligence and falls — going up against some of the biggest insurance companies in the nation, and doing it as the lawyer who actually knows the client's name.",
     "He came to law through advocacy, not through a boardroom. He studied at John Jay College of Criminal Justice in New York City, then earned his J.D. at the University of Pittsburgh School of Law, where he was a prominent member of the National Mock Trial Team and was inducted into the Order of Barristers — a national distinction reserved for the most gifted oral advocates.",
-    "He has litigated civil matters throughout Pennsylvania ranging from auto collisions and premises liability to nursing home abuse and wrongful death, and today serves injured people across Pennsylvania, New York and Georgia.",
+    "He has litigated civil matters throughout Pennsylvania ranging from auto collisions and premises liability to nursing home abuse and wrongful death. Today the practice reaches across three markets — Pittsburgh, New York and Los Angeles — with matters outside his admitting jurisdictions handled alongside admitted local counsel.",
   ],
   credentials: [
     { label: "J.D., University of Pittsburgh School of Law", meta: "Order of Barristers" },
     { label: "National Mock Trial Team", meta: "University of Pittsburgh School of Law" },
     { label: "John Jay College of Criminal Justice", meta: "New York, NY" },
     { label: "Published in Jury Verdict Review", meta: "$900,000 personal injury settlement" },
-    { label: "Admitted in Pennsylvania", meta: "Serving PA, NY and GA" },
+    { label: "Admitted in Pennsylvania", meta: "Plus E.D. Pa., M.D. Pa. and M.D. Ga." },
     { label: "In practice since 2015", meta: "Founder, Talon Law Group" },
   ],
 };
@@ -419,6 +584,7 @@ export const process_ = [
 
 export const nav = [
   { label: "Practice", href: "/practice-areas" },
+  { label: "Offices", href: "/offices" },
   { label: "Shaheen Wallace", href: "/about" },
   { label: "Results", href: "/results" },
   { label: "Reviews", href: "/reviews" },

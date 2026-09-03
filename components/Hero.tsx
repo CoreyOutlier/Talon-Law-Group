@@ -101,7 +101,7 @@ export function Hero() {
           transition={{ delay: 0.15, duration: 0.8 }}
           className="eyebrow mb-7"
         >
-          Pittsburgh · Serving {site.jurisdictions.join(" · ")}
+          {site.cities.join(" · ")}
         </motion.p>
 
         <h1 className="display max-w-[16ch] text-[clamp(2.9rem,9.5vw,8.5rem)]">

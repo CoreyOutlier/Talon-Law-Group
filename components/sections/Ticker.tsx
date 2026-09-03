@@ -6,7 +6,7 @@ const ITEMS = [
   "Order of Barristers",
   "Published in Jury Verdict Review",
   "Trial practice since 2015",
-  "Pennsylvania · New York · Georgia",
+  "Pittsburgh · New York · Los Angeles",
   "You talk to the lawyer, not a call centre",
 ];
 

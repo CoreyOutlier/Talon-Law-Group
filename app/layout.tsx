@@ -4,7 +4,7 @@ import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { ActionBar } from "@/components/ActionBar";
-import { site, attorney, practiceAreas } from "@/lib/site";
+import { site, attorney, markets, practiceAreas } from "@/lib/site";
 
 const display = Instrument_Serif({
   subsets: ["latin"],
@@ -64,7 +64,10 @@ const jsonLd = {
     addressCountry: site.address.country,
   },
   geo: { "@type": "GeoCoordinates", latitude: site.geo.lat, longitude: site.geo.lng },
-  areaServed: site.jurisdictions.map((n) => ({ "@type": "State", name: n })),
+  areaServed: [
+    ...markets.map((m) => ({ "@type": "City", name: `${m.city}, ${m.state}` })),
+    ...site.alsoServing.map((n) => ({ "@type": "State", name: n })),
+  ],
   founder: {
     "@type": "Attorney",
     name: `${attorney.name}, ${attorney.suffix}`,
