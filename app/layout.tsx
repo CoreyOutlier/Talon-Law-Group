@@ -1,26 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Inter } from "next/font/google";
+import { Jost } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { ActionBar } from "@/components/ActionBar";
+import { Intro } from "@/components/Intro";
+import { Cursor } from "@/components/Cursor";
 import { site, attorney, markets, practiceAreas } from "@/lib/site";
 
-const display = Instrument_Serif({
+// Jost is the brand's header face and the closest available match to the
+// logotype. Gill Sans is the body face and drops in from /public/media/fonts;
+// until it does, Jost carries body copy too.
+const jost = Jost({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-display-loaded",
-  display: "swap",
-});
-
-const sans = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans-loaded",
+  weight: ["400", "500", "600"],
+  variable: "--font-jost",
   display: "swap",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#08080A",
+  themeColor: "#070707",
   width: "device-width",
   initialScale: 1,
 };
@@ -90,7 +89,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable}`}>
+    <html lang="en" className={jost.variable}>
       <body className="grain">
         <script
           type="application/ld+json"
@@ -98,10 +97,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-brass focus:px-4 focus:py-2 focus:text-ink"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-wine focus:px-4 focus:py-2 focus:text-ink"
         >
           Skip to content
         </a>
+        <Intro />
+        <Cursor />
         <Nav />
         <main id="main">{children}</main>
         <Footer />

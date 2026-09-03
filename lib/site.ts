@@ -48,8 +48,8 @@ export const site = {
 /*                                                                             */
 /* ⚠️  READ THIS BEFORE LAUNCH.                                                */
 /*                                                                             */
-/* Holding yourself out as practising in a state where you are not admitted is */
-/* unauthorised practice, and California and New York both enforce it. The     */
+/* Holding yourself out as practicing in a state where you are not admitted is */
+/* unauthorized practice, and California and New York both enforce it. The     */
 /* fix is not to hide the market — it is to state the basis accurately.        */
 /*                                                                             */
 /* Every market page renders `basisNote` verbatim. Set each market's           */
@@ -153,7 +153,7 @@ export const markets: Market[] = [
       "New York does not work like anywhere else. Every crash begins inside the no-fault system, which pays medical bills and lost wages regardless of blame, but only if the application reaches the insurer within thirty days. Miss that window and the benefits that were supposed to carry you through treatment simply do not arrive.",
       "Getting past no-fault into a real claim for pain and suffering requires clearing the serious-injury threshold under Insurance Law § 5102(d). Defence counsel litigates that threshold aggressively and early, usually on summary judgment, and cases die there when the medical documentation was not built for it from the first visit. We build for it from the first visit.",
       "Anything involving the City, the MTA, the Transit Authority, NYCHA or a public hospital carries a ninety-day notice of claim requirement. That is not a filing deadline — it is a notice deadline months ahead of the lawsuit, and it is the single most common way a strong New York case is lost before it starts.",
-      "Construction injuries occupy their own category. Labor Law §§ 240 and 241 impose near-absolute liability on owners and general contractors for gravity-related and code-violation injuries. It is the most powerful plaintiff's statute in the country and it applies far more often than injured workers realise.",
+      "Construction injuries occupy their own category. Labor Law §§ 240 and 241 impose near-absolute liability on owners and general contractors for gravity-related and code-violation injuries. It is the most powerful plaintiff's statute in the country and it applies far more often than injured workers realize.",
     ],
     rules: [
       { label: "30 days for no-fault", detail: "The no-fault application must reach the insurer within 30 days of the crash. This is the deadline people miss while still in hospital." },
@@ -422,7 +422,7 @@ export const practiceAreas: PracticeArea[] = [
     body: [
       "Phantom-vehicle and hit-and-run claims are made against your own uninsured motorist coverage, which most policies include. There are strict notice requirements and, in some cases, a corroboration requirement — which is why prompt reporting to police matters.",
       "Your own carrier now sits on the other side of the claim. It is friendly right up until the number is discussed. Treat the recorded statement accordingly.",
-      "We also pursue identification of the driver where it is realistic — canvassing for cameras, body-shop reports and debris analysis.",
+      "We also pursue identification of the driver where it is realiztic — canvassing for cameras, body-shop reports and debris analysis.",
     ],
     urgency: "UM claims carry short notice deadlines under your own policy.",
     faqs: [

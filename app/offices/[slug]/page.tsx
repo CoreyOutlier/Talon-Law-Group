@@ -61,7 +61,7 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
 
       <PageHeader
         eyebrow={`${m.kicker} · ${m.stateFull}`}
-        lines={[m.city, <em key="e" className="not-italic text-brass">injury law.</em>]}
+        lines={[m.city, <em key="e" className="not-italic text-wine">injury law.</em>]}
         lede={m.lede}
       />
 
@@ -73,8 +73,8 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
                 <p
                   className={
                     i === 0
-                      ? "display text-[clamp(1.25rem,2.2vw,1.625rem)] leading-snug text-bone/90"
-                      : "mt-7 text-[1.0625rem] leading-relaxed text-bone/70 text-pretty"
+                      ? "display text-[clamp(1.25rem,2.2vw,1.625rem)] leading-snug text-mist/90"
+                      : "mt-7 text-[1.0625rem] leading-relaxed text-mist/70 text-pretty"
                   }
                 >
                   {para}
@@ -86,7 +86,7 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
             <Reveal delay={0.15}>
               <div className="mt-16 border-t border-hairline pt-10">
                 <p className="eyebrow mb-3">The rules that decide {m.city} cases</p>
-                <p className="mb-8 max-w-[56ch] text-[14px] leading-relaxed text-slate">
+                <p className="mb-8 max-w-[56ch] text-[14px] leading-relaxed text-steel">
                   Injury law is local law. These are the {m.stateFull} provisions that most
                   often determine whether a claim is worth what it should be — or worth
                   nothing at all.
@@ -94,10 +94,10 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
                 <dl className="divide-y divide-hairline border-y border-hairline">
                   {m.rules.map((r) => (
                     <div key={r.label} className="grid gap-3 py-6 md:grid-cols-12 md:gap-8">
-                      <dt className="display text-[1.1875rem] leading-snug text-brass md:col-span-4">
+                      <dt className="display text-[1.1875rem] leading-snug text-wine md:col-span-4">
                         {r.label}
                       </dt>
-                      <dd className="text-[15px] leading-relaxed text-bone/65 md:col-span-8">
+                      <dd className="text-[15px] leading-relaxed text-mist/65 md:col-span-8">
                         {r.detail}
                       </dd>
                     </div>
@@ -111,8 +111,8 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
                 <p className="eyebrow mb-6">Courts we appear in</p>
                 <ul className="space-y-3">
                   {m.courts.map((c) => (
-                    <li key={c} className="flex gap-4 text-[15px] text-bone/75">
-                      <span className="mt-2 h-1 w-1 shrink-0 rotate-45 bg-brass" aria-hidden />
+                    <li key={c} className="flex gap-4 text-[15px] text-mist/75">
+                      <span className="mt-2 h-1 w-1 shrink-0 rotate-45 bg-wine" aria-hidden />
                       {c}
                     </li>
                   ))}
@@ -123,7 +123,7 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
             <Reveal delay={0.25}>
               <div className="mt-14 border-t border-hairline pt-10">
                 <p className="eyebrow mb-6">Serving</p>
-                <p className="max-w-[62ch] text-[15px] leading-relaxed text-bone/70">
+                <p className="max-w-[62ch] text-[15px] leading-relaxed text-mist/70">
                   {m.areas.join(", ")}.
                 </p>
               </div>
@@ -136,25 +136,25 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
                 <div className="border border-hairline p-7">
                   <p className="eyebrow mb-4">{m.isHQ ? "Office" : "Contact"}</p>
                   {m.address ? (
-                    <address className="not-italic text-[15px] leading-relaxed text-bone/85">
+                    <address className="not-italic text-[15px] leading-relaxed text-mist/85">
                       {m.address.street}
                       <br />
                       {m.address.city}, {m.address.region} {m.address.postal}
                     </address>
                   ) : (
-                    <p className="text-[15px] leading-relaxed text-bone/85">
+                    <p className="text-[15px] leading-relaxed text-mist/85">
                       Consultations by phone, video or in person by arrangement across{" "}
                       {m.city}.
                     </p>
                   )}
 
-                  <a href={`tel:${site.phoneRaw}`} className="btn btn-brass mt-6 w-full">
+                  <a href={`tel:${site.phoneRaw}`} className="btn btn-wine mt-6 w-full">
                     {site.phone}
                   </a>
                   <Link href="/contact" className="btn btn-ghost mt-3 w-full">
                     Start your case
                   </Link>
-                  <p className="mt-5 text-[12px] leading-relaxed text-slate">{site.hours}</p>
+                  <p className="mt-5 text-[12px] leading-relaxed text-steel">{site.hours}</p>
                 </div>
 
                 <div className="mt-8 border border-hairline p-7">
@@ -164,7 +164,7 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
                       <li key={p.slug}>
                         <Link
                           href={`/practice-areas/${p.slug}`}
-                          className="link-draw text-[14px] text-bone/70"
+                          className="link-draw text-[14px] text-mist/70"
                         >
                           {p.short}
                         </Link>
@@ -173,7 +173,7 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
                   </ul>
                 </div>
 
-                <p className="mt-6 text-[11px] leading-relaxed text-slate-2">{basisNote(m)}</p>
+                <p className="mt-6 text-[11px] leading-relaxed text-steel-2">{basisNote(m)}</p>
               </div>
             </Reveal>
           </aside>
@@ -185,13 +185,13 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
             className="group mt-24 flex items-center justify-between gap-6 border-t border-hairline pt-10"
           >
             <span>
-              <span className="eyebrow !text-slate-2">Next office</span>
-              <span className="display mt-3 block text-[clamp(1.75rem,4vw,3rem)] leading-none text-bone/85 transition-colors duration-500 group-hover:text-brass">
+              <span className="eyebrow !text-steel-2">Next office</span>
+              <span className="display mt-3 block text-[clamp(1.75rem,4vw,3rem)] leading-none text-mist/85 transition-colors duration-500 group-hover:text-wine">
                 {next.city}
               </span>
             </span>
             <span
-              className="text-slate-2 transition-all duration-500 group-hover:translate-x-2 group-hover:text-brass"
+              className="text-steel-2 transition-all duration-500 group-hover:translate-x-2 group-hover:text-wine"
               style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
               aria-hidden
             >

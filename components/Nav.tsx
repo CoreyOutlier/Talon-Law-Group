@@ -48,7 +48,7 @@ export function Nav() {
                 key={item.href}
                 href={item.href}
                 className={`link-draw text-[13px] font-medium tracking-wide transition-colors ${
-                  pathname.startsWith(item.href) ? "text-brass" : "text-bone/75 hover:text-bone"
+                  pathname.startsWith(item.href) ? "text-wine" : "text-mist/75 hover:text-mist"
                 }`}
               >
                 {item.label}
@@ -59,11 +59,11 @@ export function Nav() {
           <div className="flex items-center gap-3">
             <a
               href={`tel:${site.phoneRaw}`}
-              className="hidden text-[13px] font-medium tracking-wide text-bone/75 transition-colors hover:text-brass md:block"
+              className="hidden text-[13px] font-medium tracking-wide text-mist/75 transition-colors hover:text-wine md:block"
             >
               {site.phone}
             </a>
-            <Link href="/contact" className="btn btn-brass hidden !h-11 !px-6 sm:inline-flex">
+            <Link href="/contact" className="btn btn-wine hidden !h-11 !px-6 sm:inline-flex">
               Start your case
             </Link>
             <button
@@ -75,11 +75,11 @@ export function Nav() {
               <span className="sr-only">Menu</span>
               <span className="flex flex-col gap-[5px]">
                 <span
-                  className={`block h-px w-6 bg-bone transition-transform duration-500 ${open ? "translate-y-[3px] rotate-45" : ""}`}
+                  className={`block h-px w-6 bg-mist transition-transform duration-500 ${open ? "translate-y-[3px] rotate-45" : ""}`}
                   style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
                 />
                 <span
-                  className={`block h-px w-6 bg-bone transition-transform duration-500 ${open ? "-translate-y-[3px] -rotate-45" : ""}`}
+                  className={`block h-px w-6 bg-mist transition-transform duration-500 ${open ? "-translate-y-[3px] -rotate-45" : ""}`}
                   style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
                 />
               </span>
@@ -108,7 +108,7 @@ export function Nav() {
                     >
                       <Link
                         href={item.href}
-                        className="display block py-5 text-[2.5rem] leading-none text-bone"
+                        className="display block py-5 text-[2.5rem] leading-none text-mist"
                       >
                         {item.label}
                       </Link>
@@ -123,10 +123,10 @@ export function Nav() {
                 transition={{ delay: 0.4, duration: 0.7, ease: EASE }}
                 className="space-y-4"
               >
-                <a href={`tel:${site.phoneRaw}`} className="btn btn-brass w-full">
+                <a href={`tel:${site.phoneRaw}`} className="btn btn-wine w-full">
                   Call {site.phone}
                 </a>
-                <p className="text-[12px] leading-relaxed text-slate">
+                <p className="text-[12px] leading-relaxed text-steel">
                   {site.address.street}
                   <br />
                   {site.address.city}, {site.address.region} {site.address.postal}

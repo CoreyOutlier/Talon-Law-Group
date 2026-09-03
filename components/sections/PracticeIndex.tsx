@@ -56,7 +56,7 @@ export function PracticeIndex() {
                 </AnimatePresence>
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-2 to-transparent p-7 pt-20">
                   <p className="eyebrow">{practiceAreas[active].kicker}</p>
-                  <p className="mt-3 max-w-[36ch] text-[15px] leading-relaxed text-bone/80">
+                  <p className="mt-3 max-w-[36ch] text-[15px] leading-relaxed text-mist/80">
                     {practiceAreas[active].intro}
                   </p>
                 </div>
@@ -74,22 +74,22 @@ export function PracticeIndex() {
                   className="group flex items-center justify-between gap-6 py-6 md:py-8"
                 >
                   <span className="flex items-baseline gap-5 md:gap-8">
-                    <span className="figure text-[12px] text-slate-2">
+                    <span className="figure text-[12px] text-steel-2">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span className="display block text-[clamp(1.5rem,3.4vw,2.5rem)] leading-none text-bone/85 transition-colors duration-500 group-hover:text-brass">
+                    <span className="display block text-[clamp(1.5rem,3.4vw,2.5rem)] leading-none text-mist/85 transition-colors duration-500 group-hover:text-wine">
                       {p.name}
                     </span>
                   </span>
                   <span
-                    className="shrink-0 text-slate-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-brass"
+                    className="shrink-0 text-steel-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-wine"
                     style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
                     aria-hidden
                   >
                     →
                   </span>
                 </Link>
-                <p className="-mt-2 mb-6 max-w-[46ch] pl-11 text-[13px] leading-relaxed text-slate lg:hidden">
+                <p className="-mt-2 mb-6 max-w-[46ch] pl-11 text-[13px] leading-relaxed text-steel lg:hidden">
                   {p.intro}
                 </p>
               </li>

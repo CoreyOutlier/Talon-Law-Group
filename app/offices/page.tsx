@@ -26,24 +26,24 @@ export default function Offices() {
             <Reveal as="li" key={m.slug} delay={i * 0.06} className="border-b border-hairline">
               <Link href={`/offices/${m.slug}`} className="group block py-10 md:py-14">
                 <div className="grid gap-6 md:grid-cols-12 md:items-start">
-                  <span className="figure text-[12px] text-slate-2 md:col-span-1">
+                  <span className="figure text-[12px] text-steel-2 md:col-span-1">
                     {String(i + 1).padStart(2, "0")}
                   </span>
 
                   <div className="md:col-span-4">
-                    <h2 className="display text-[clamp(2rem,4.5vw,3.25rem)] leading-none text-bone/90 transition-colors duration-500 group-hover:text-brass">
+                    <h2 className="display text-[clamp(2rem,4.5vw,3.25rem)] leading-none text-mist/90 transition-colors duration-500 group-hover:text-wine">
                       {m.city}
                     </h2>
-                    <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-slate">
+                    <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-steel">
                       {m.stateFull}
-                      {m.isHQ && <span className="text-brass"> · Head office</span>}
+                      {m.isHQ && <span className="text-wine"> · Head office</span>}
                     </p>
                   </div>
 
                   <div className="md:col-span-6">
-                    <p className="max-w-[52ch] text-[15px] leading-relaxed text-bone/65">{m.lede}</p>
+                    <p className="max-w-[52ch] text-[15px] leading-relaxed text-mist/65">{m.lede}</p>
                     {m.address && (
-                      <address className="mt-5 not-italic text-[13px] leading-relaxed text-slate">
+                      <address className="mt-5 not-italic text-[13px] leading-relaxed text-steel">
                         {m.address.street}
                         <br />
                         {m.address.city}, {m.address.region} {m.address.postal}
@@ -52,7 +52,7 @@ export default function Offices() {
                   </div>
 
                   <span
-                    className="hidden text-right text-slate-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-brass md:col-span-1 md:block"
+                    className="hidden text-right text-steel-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-wine md:col-span-1 md:block"
                     style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
                     aria-hidden
                   >
@@ -71,8 +71,8 @@ export default function Offices() {
               <ul className="space-y-4">
                 {admissions.map((adm) => (
                   <li key={adm.court} className="border-l border-hairline pl-5">
-                    <p className="text-[14px] leading-snug text-bone/85">{adm.court}</p>
-                    <p className="mt-1 text-[12px] text-slate">{adm.meta}</p>
+                    <p className="text-[14px] leading-snug text-mist/85">{adm.court}</p>
+                    <p className="mt-1 text-[12px] text-steel">{adm.meta}</p>
                   </li>
                 ))}
               </ul>
@@ -80,10 +80,10 @@ export default function Offices() {
 
             <div className="lg:col-span-6 lg:col-start-7">
               <p className="eyebrow mb-6">Also accepting matters in</p>
-              <ul className="space-y-2 text-[15px] text-bone/80">
+              <ul className="space-y-2 text-[15px] text-mist/80">
                 {site.alsoServing.map((j) => <li key={j}>{j}</li>)}
               </ul>
-              <p className="mt-8 max-w-[60ch] text-[12px] leading-relaxed text-slate-2">
+              <p className="mt-8 max-w-[60ch] text-[12px] leading-relaxed text-steel-2">
                 {basisNote(markets[1])}
               </p>
             </div>

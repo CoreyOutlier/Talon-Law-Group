@@ -9,23 +9,23 @@ export function Footer() {
         <div className="grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Wordmark className="h-7 w-auto" />
-            <p className="mt-7 max-w-[34ch] text-[1.375rem] leading-tight text-bone/85 display">
+            <p className="mt-7 max-w-[34ch] text-[1.375rem] leading-tight text-mist/85 display">
               {site.tagline}
             </p>
             <div className="mt-9 flex flex-col gap-2 text-[15px]">
-              <a href={`tel:${site.phoneRaw}`} className="link-draw w-fit text-brass">
+              <a href={`tel:${site.phoneRaw}`} className="link-draw w-fit text-wine">
                 {site.phone}
               </a>
-              <a href={`mailto:${site.email}`} className="link-draw w-fit text-bone/70">
+              <a href={`mailto:${site.email}`} className="link-draw w-fit text-mist/70">
                 {site.email}
               </a>
             </div>
-            <address className="mt-6 not-italic text-[14px] leading-relaxed text-slate">
+            <address className="mt-6 not-italic text-[14px] leading-relaxed text-steel">
               {site.address.street}
               <br />
               {site.address.city}, {site.address.region} {site.address.postal}
             </address>
-            <p className="mt-4 text-[13px] text-slate-2">{site.hours}</p>
+            <p className="mt-4 text-[13px] text-steel-2">{site.hours}</p>
           </div>
 
           <div className="lg:col-span-3">
@@ -35,7 +35,7 @@ export function Footer() {
                 <li key={p.slug}>
                   <Link
                     href={`/practice-areas/${p.slug}`}
-                    className="link-draw text-[14px] text-bone/70 transition-colors hover:text-bone"
+                    className="link-draw text-[14px] text-mist/70 transition-colors hover:text-mist"
                   >
                     {p.short}
                   </Link>
@@ -51,7 +51,7 @@ export function Footer() {
                 <li key={n.href}>
                   <Link
                     href={n.href}
-                    className="link-draw text-[14px] text-bone/70 transition-colors hover:text-bone"
+                    className="link-draw text-[14px] text-mist/70 transition-colors hover:text-mist"
                   >
                     {n.label}
                   </Link>
@@ -67,20 +67,20 @@ export function Footer() {
                 <li key={m.slug}>
                   <Link
                     href={`/offices/${m.slug}`}
-                    className="link-draw text-[14px] text-bone/70 transition-colors hover:text-bone"
+                    className="link-draw text-[14px] text-mist/70 transition-colors hover:text-mist"
                   >
                     {m.city}, {m.state}
                   </Link>
                 </li>
               ))}
               {site.alsoServing.map((j) => (
-                <li key={j} className="text-[14px] text-slate-2">{j}</li>
+                <li key={j} className="text-[14px] text-steel-2">{j}</li>
               ))}
             </ul>
           </div>
         </div>
 
-        <div className="mt-16 space-y-4 border-t border-hairline pt-8 text-[11px] leading-relaxed text-slate-2">
+        <div className="mt-16 space-y-4 border-t border-hairline pt-8 text-[11px] leading-relaxed text-steel-2">
           <p className="max-w-[92ch]">{disclaimer}</p>
           <p className="max-w-[92ch]">{resultsDisclaimer}</p>
           <div className="flex flex-wrap items-center justify-between gap-4 pt-4">

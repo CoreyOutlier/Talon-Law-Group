@@ -1,37 +1,88 @@
 @import "tailwindcss";
 
+/* ============================================================================
+   CUSTOM FONTS — drop-in, no code change required
+   ----------------------------------------------------------------------------
+   Put the firm's fonts in /public/media/fonts/ using these exact names and the
+   whole site switches typeface. If a file is absent the browser silently falls
+   through to the next family in the stack, so nothing breaks while you wait.
+
+     display.woff2          display face, regular      (headlines)
+     display-italic.woff2   display face, italic        (optional)
+     display-medium.woff2   display face, medium        (optional)
+     sans-regular.woff2     UI face, 400
+     sans-medium.woff2      UI face, 500
+     sans-semibold.woff2    UI face, 600
+
+   .woff2 is required — convert .otf/.ttf at transfonter.org (subset: Latin).
+   ========================================================================== */
+
+@font-face {
+  font-family: "TalonDisplay";
+  src: url("/media/fonts/display.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "TalonDisplay";
+  src: url("/media/fonts/display-italic.woff2") format("woff2");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "TalonDisplay";
+  src: url("/media/fonts/display-medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "TalonSans";
+  src: url("/media/fonts/sans-regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "TalonSans";
+  src: url("/media/fonts/sans-medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "TalonSans";
+  src: url("/media/fonts/sans-semibold.woff2") format("woff2");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+
 /* ============================================================
    TALON LAW GROUP — DESIGN SYSTEM
-   Editorial luxury. Ink, bone, brass. Motion is subtractive.
+   Editorial luxury. Ink, bone, wine. Motion is subtractive.
    ============================================================ */
 
 @theme {
-  /* Surfaces */
-  --color-ink: #08080A;
-  --color-ink-2: #0F0F13;
-  --color-ink-3: #17171C;
-  --color-hairline: #24242B;
+  /* ---- Brand palette (Outlier Creative Agency brand sheet) ---------------- */
+  --color-ink:      #070707;   /* brand black       */
+  --color-ink-2:    #0C0C0E;
+  --color-ink-3:    #131318;
+  --color-hairline: #23252C;
 
-  /* Paper */
-  --color-bone: #F5F2EC;
-  --color-bone-2: #E8E3D9;
-  --color-slate: #8A8A93;
-  --color-slate-2: #5E5E66;
+  --color-wine:     #630330;   /* brand maroon      */
+  --color-wine-2:   #85103E;   /* lifted, for text on black */
+  --color-wine-3:   #3E021F;
 
-  /* Accent — aged brass */
-  --color-brass: #C9A227;
-  --color-brass-2: #E3C765;
-  --color-brass-3: #7A6218;
+  --color-navy:     #083954;   /* brand navy        */
+  --color-navy-2:   #0E5479;
+  --color-green:    #0B6E4F;   /* brand green       */
 
-  /* Type */
-  --font-display: var(--font-display-loaded), "Instrument Serif", "Times New Roman", serif;
-  --font-sans: var(--font-sans-loaded), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --color-mist:     #C2CAD6;   /* brand light — primary text on black */
+  --color-steel:    #8797AF;   /* brand mid  — secondary text */
+  --color-steel-2:  #5C6879;
+  --color-paper:    #F2F4F7;
 
-  /* Motion */
+  /* ---- Type ----
+     Jost carries the logo and every header. Gill Sans is the body face and
+     drops in from /public/media/fonts. Both fall back gracefully.            */
+  --font-display: "Jost", var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "TalonSans", "Gill Sans", "Gill Sans MT", var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+
+  /* ---- Motion ---- */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
 
-  /* Rhythm */
   --spacing-gutter: 1.5rem;
 }
 
@@ -51,24 +102,40 @@
 
   body {
     background: var(--color-ink);
-    color: var(--color-bone);
+    color: var(--color-mist);
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "cv01";
     overflow-x: hidden;
   }
 
-  ::selection { background: var(--color-brass); color: var(--color-ink); }
+  ::selection { background: var(--color-wine-2); color: var(--color-ink); }
 
+  /* H1 — Jost Medium, caps, open tracking. Tightens as it scales up so
+     very large headlines stay a block of type rather than a smear.          */
   h1, h2, h3, .display {
     font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    line-height: 0.94;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.055em;
+    line-height: 1.02;
   }
+  .display-xl { letter-spacing: 0.012em; line-height: 0.98; }
+
+  /* H2 — Jost Regular, sentence case, 25 tracking */
+  .h2-soft {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0.025em;
+    line-height: 1.1;
+  }
+
+  /* Body — Gill Sans, 10 tracking */
+  p, li, dd, address, input, textarea, button { letter-spacing: 0.01em; }
 
   /* Focus ring — accessible and on-brand */
   :where(a, button, input, textarea, select, [tabindex]):focus-visible {
-    outline: 2px solid var(--color-brass);
+    outline: 2px solid var(--color-wine-2);
     outline-offset: 3px;
     border-radius: 2px;
   }
@@ -78,11 +145,12 @@
   .shell { padding-inline: var(--shell-x); max-width: 100rem; margin-inline: auto; }
 
   .eyebrow {
+    font-family: var(--font-display);
     font-size: 0.6875rem;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     font-weight: 500;
-    color: var(--color-brass);
+    color: var(--color-wine-2);
   }
 
   .rule { height: 1px; background: var(--color-hairline); }
@@ -114,7 +182,7 @@
     content: "";
     position: absolute; left: 0; bottom: -3px;
     width: 100%; height: 1px;
-    background: var(--color-brass);
+    background: var(--color-wine-2);
     transform: scaleX(0); transform-origin: right;
     transition: transform .6s var(--ease-out-expo);
   }
@@ -132,11 +200,11 @@
   }
   .btn:active { transform: scale(.97) }
 
-  .btn-brass { background: var(--color-brass); color: var(--color-ink); }
-  .btn-brass:hover { background: var(--color-brass-2); }
+  .btn-wine { background: var(--color-wine-2); color: var(--color-ink); }
+  .btn-wine:hover { background: var(--color-wine-2); }
 
-  .btn-ghost { border: 1px solid var(--color-hairline); color: var(--color-bone); }
-  .btn-ghost:hover { border-color: var(--color-brass); color: var(--color-brass); }
+  .btn-ghost { border: 1px solid var(--color-hairline); color: var(--color-mist); }
+  .btn-ghost:hover { border-color: var(--color-wine-2); color: var(--color-wine-2); }
 
   /* Editorial figure numbers */
   .figure { font-family: var(--font-display); font-variant-numeric: tabular-nums lining-nums; }
@@ -168,4 +236,129 @@
     transition-duration: .001ms !important;
   }
   .grain::after { display: none; }
+}
+
+
+/* ============================================================================
+   CINEMA LAYER
+   Fragrance-film mechanics: hard cuts, mask wipes, drifting frames, a cursor
+   that behaves like a lens. Everything here is transform/opacity only, so it
+   composites on the GPU and never triggers layout.
+   ========================================================================== */
+
+/* --- Custom cursor: a wine lens ring that lags the pointer --- */
+@media (hover: hover) and (pointer: fine) {
+  .cursor-lens {
+    position: fixed; top: 0; left: 0; z-index: 90;
+    width: 34px; height: 34px; margin: -17px 0 0 -17px;
+    border: 1px solid var(--color-wine-2);
+    border-radius: 999px;
+    pointer-events: none;
+    mix-blend-mode: difference;
+    transition: width .5s var(--ease-out-expo), height .5s var(--ease-out-expo),
+                margin .5s var(--ease-out-expo), opacity .3s, background-color .4s;
+    will-change: transform;
+  }
+  .cursor-lens[data-state="hot"] {
+    width: 84px; height: 84px; margin: -42px 0 0 -42px;
+    background: rgba(133,16,62,.22);
+  }
+  .cursor-lens[data-state="hidden"] { opacity: 0; }
+  .cursor-dot {
+    position: fixed; top: 0; left: 0; z-index: 91;
+    width: 4px; height: 4px; margin: -2px 0 0 -2px;
+    background: var(--color-wine-2); border-radius: 999px;
+    pointer-events: none; will-change: transform;
+  }
+  .hide-native-cursor, .hide-native-cursor * { cursor: none !important; }
+}
+
+/* --- Mask wipe: images arrive by uncovering, never by fading --- */
+.wipe { clip-path: inset(0 0 100% 0); }
+.wipe-in { animation: wipeIn 1.4s var(--ease-out-expo) forwards; }
+@keyframes wipeIn {
+  from { clip-path: inset(0 0 100% 0); }
+  to   { clip-path: inset(0 0 0% 0); }
+}
+
+/* --- Ken Burns: a frame that never sits still --- */
+.drift { animation: drift 24s ease-in-out infinite alternate; }
+@keyframes drift {
+  from { transform: scale(1.06) translate3d(0,0,0); }
+  to   { transform: scale(1.16) translate3d(-1.5%, -2%, 0); }
+}
+
+/* --- Letterspace open: the fragrance-title move --- */
+.tracking-open { animation: trackOpen 2.2s var(--ease-out-expo) forwards; }
+@keyframes trackOpen {
+  from { letter-spacing: .58em; opacity: 0; filter: blur(6px); }
+  to   { letter-spacing: .22em; opacity: 1; filter: blur(0); }
+}
+
+/* --- Curtain: the chapter cut --- */
+@keyframes curtainUp {
+  from { transform: translate3d(0,0,0); }
+  to   { transform: translate3d(0,-101%,0); }
+}
+.curtain-up { animation: curtainUp 1.1s var(--ease-in-out-quint) forwards; }
+
+/* --- Vignette: keeps type legible over any frame --- */
+.vignette::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 100% at 50% 45%, transparent 38%, rgba(7,7,7,.74) 100%);
+}
+
+/* --- Hairline that draws itself --- */
+@keyframes drawX { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+.draw-x { transform-origin: left; animation: drawX 1.6s var(--ease-out-expo) forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .drift, .tracking-open, .wipe-in, .curtain-up, .draw-x { animation: none !important; }
+  .wipe { clip-path: none !important; }
+  .cursor-lens, .cursor-dot { display: none !important; }
+  .hide-native-cursor, .hide-native-cursor * { cursor: auto !important; }
+}
+
+/* ---- Intro title card (pure CSS, see components/Intro.tsx) ---- */
+@keyframes introMark {
+  from { opacity: 0; transform: scale(.93); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes introRule { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+@keyframes introSub  { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
+
+.intro-mark { animation: introMark 1.4s var(--ease-out-expo) both; }
+.intro-rule { animation: introRule 1.3s .25s var(--ease-out-expo) both; }
+.intro-sub  { animation: introSub 1s .7s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-mark, .intro-rule, .intro-sub { animation: none !important; }
+}
+
+/* ---- Hero entrance (CSS, so it never competes with the scroll loop) ---- */
+@keyframes heroLine { from { transform: translate3d(0,115%,0) } to { transform: none } }
+@keyframes heroFade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes heroRule { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+@keyframes scrollTick { 0% { transform: translateY(-16px) } 100% { transform: translateY(40px) } }
+
+.hero-line   { animation: heroLine 1.5s var(--ease-out-expo) both; }
+.hero-meta   { animation: heroFade 1.4s 1.4s ease-out both; }
+.hero-rule   { animation: heroRule 1.6s 1.6s var(--ease-out-expo) both; }
+.scroll-tick { animation: scrollTick 2s ease-in-out infinite; }
+.hero-still  { animation: drift 26s ease-in-out infinite alternate; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-line, .hero-meta, .hero-rule, .scroll-tick, .hero-still { animation: none !important; }
+}
+
+/* ---- Statement word entrance ---- */
+.stmt-item {
+  opacity: 0;
+  transform: translate3d(0, 38px, 0);
+  transition: opacity 1.1s var(--ease-out-expo), transform 1.1s var(--ease-out-expo);
+}
+.stmt-item.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stmt-item { opacity: 1 !important; transform: none !important; transition: none !important; }
 }

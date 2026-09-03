@@ -17,7 +17,7 @@ export default function About() {
     <>
       <PageHeader
         eyebrow="Founder & trial attorney"
-        lines={["Shaheen", <em key="e" className="not-italic text-brass">Wallace,</em>, "Esq."]}
+        lines={["Shaheen", <em key="e" className="not-italic text-wine">Wallace,</em>, "Esq."]}
         lede={attorney.lede}
       />
 
@@ -35,18 +35,18 @@ export default function About() {
               />
               <div className="mt-8 border-t border-hairline pt-6">
                 <p className="eyebrow mb-4">Admissions</p>
-                <ul className="space-y-3 text-[13px] leading-snug text-bone/75">
+                <ul className="space-y-3 text-[13px] leading-snug text-mist/75">
                   {admissions.map((a) => (
                     <li key={a.court}>
                       {a.court}
-                      <span className="mt-0.5 block text-[11px] text-slate-2">{a.meta}</span>
+                      <span className="mt-0.5 block text-[11px] text-steel-2">{a.meta}</span>
                     </li>
                   ))}
                 </ul>
                 <p className="eyebrow mb-3 mt-7">Practising in</p>
-                <ul className="space-y-1 text-[14px] text-bone/75">
+                <ul className="space-y-1 text-[14px] text-mist/75">
                   {markets.map((m) => <li key={m.slug}>{m.city}, {m.state}</li>)}
-                  {site.alsoServing.map((j) => <li key={j} className="text-slate-2">{j}</li>)}
+                  {site.alsoServing.map((j) => <li key={j} className="text-steel-2">{j}</li>)}
                 </ul>
               </div>
             </div>
@@ -59,8 +59,8 @@ export default function About() {
               <p
                 className={
                   i === 0
-                    ? "text-[clamp(1.25rem,2.2vw,1.625rem)] leading-snug text-bone/90 display"
-                    : "mt-7 text-[1.0625rem] leading-relaxed text-bone/70 text-pretty"
+                    ? "text-[clamp(1.25rem,2.2vw,1.625rem)] leading-snug text-mist/90 display"
+                    : "mt-7 text-[1.0625rem] leading-relaxed text-mist/70 text-pretty"
                 }
               >
                 {para}
@@ -74,8 +74,8 @@ export default function About() {
               <ul className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
                 {attorney.credentials.map((c) => (
                   <li key={c.label} className="border-l border-hairline pl-5">
-                    <p className="text-[15px] leading-snug text-bone/90">{c.label}</p>
-                    <p className="mt-1 text-[12px] text-slate">{c.meta}</p>
+                    <p className="text-[15px] leading-snug text-mist/90">{c.label}</p>
+                    <p className="mt-1 text-[12px] text-steel">{c.meta}</p>
                   </li>
                 ))}
               </ul>
@@ -83,12 +83,12 @@ export default function About() {
           </Reveal>
 
           <Reveal delay={0.35}>
-            <blockquote className="mt-14 border-l-2 border-brass pl-7">
-              <p className="display text-[clamp(1.5rem,2.8vw,2.125rem)] leading-snug text-bone">
+            <blockquote className="mt-14 border-l-2 border-wine pl-7">
+              <p className="display text-[clamp(1.5rem,2.8vw,2.125rem)] leading-snug text-mist">
                 Insurance companies price a case by the lawyer holding it. That is the
                 entire business. My job is to make that calculation expensive.
               </p>
-              <footer className="mt-5 text-[12px] uppercase tracking-[0.18em] text-slate">
+              <footer className="mt-5 text-[12px] uppercase tracking-[0.18em] text-steel">
                 {attorney.name}, {attorney.suffix}
               </footer>
             </blockquote>

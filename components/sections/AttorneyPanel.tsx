@@ -15,7 +15,7 @@ export function AttorneyPanel() {
               ratio="4 / 5"
               note="Vertical portrait, 1600×2000 or larger."
             />
-            <div className="absolute -bottom-5 -right-5 hidden bg-brass px-6 py-5 md:block">
+            <div className="absolute -bottom-5 -right-5 hidden bg-wine px-6 py-5 md:block">
               <p className="figure text-[2rem] leading-none text-ink">10+</p>
               <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-ink/70">
                 Years in practice
@@ -29,10 +29,10 @@ export function AttorneyPanel() {
           <LineReveal
             as="h2"
             className="display text-[clamp(2.25rem,5.5vw,4.25rem)]"
-            lines={["Shaheen Wallace,", <em key="e" className="not-italic text-brass">Esq.</em>]}
+            lines={["Shaheen Wallace,", <em key="e" className="not-italic text-wine">Esq.</em>]}
           />
           <Reveal delay={0.15}>
-            <p className="mt-8 max-w-[54ch] text-[1.0625rem] leading-relaxed text-bone/75 text-pretty">
+            <p className="mt-8 max-w-[54ch] text-[1.0625rem] leading-relaxed text-mist/75 text-pretty">
               {attorney.lede}
             </p>
           </Reveal>
@@ -41,8 +41,8 @@ export function AttorneyPanel() {
             <ul className="mt-10 grid gap-x-10 gap-y-5 border-t border-hairline pt-8 sm:grid-cols-2">
               {attorney.credentials.map((c) => (
                 <li key={c.label}>
-                  <p className="text-[14px] leading-snug text-bone/85">{c.label}</p>
-                  <p className="mt-1 text-[12px] text-slate">{c.meta}</p>
+                  <p className="text-[14px] leading-snug text-mist/85">{c.label}</p>
+                  <p className="mt-1 text-[12px] text-steel">{c.meta}</p>
                 </li>
               ))}
             </ul>

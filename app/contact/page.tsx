@@ -31,23 +31,23 @@ export default function Contact() {
               <p className="eyebrow mb-4">Call, 24 hours</p>
               <a
                 href={`tel:${site.phoneRaw}`}
-                className="display link-draw block w-fit text-[clamp(1.875rem,4vw,2.75rem)] text-brass"
+                className="display link-draw block w-fit text-[clamp(1.875rem,4vw,2.75rem)] text-wine"
               >
                 {site.phone}
               </a>
-              <p className="mt-3 text-[13px] text-slate">{site.hours}</p>
+              <p className="mt-3 text-[13px] text-steel">{site.hours}</p>
             </div>
 
             <div className="border-t border-hairline pt-8">
               <p className="eyebrow mb-4">Text</p>
-              <a href={`sms:${site.smsRaw}`} className="link-draw text-[16px] text-bone/85">
+              <a href={`sms:${site.smsRaw}`} className="link-draw text-[16px] text-mist/85">
                 {site.phone}
               </a>
             </div>
 
             <div className="border-t border-hairline pt-8">
               <p className="eyebrow mb-4">Email</p>
-              <a href={`mailto:${site.email}`} className="link-draw text-[16px] text-bone/85">
+              <a href={`mailto:${site.email}`} className="link-draw text-[16px] text-mist/85">
                 {site.email}
               </a>
             </div>
@@ -57,13 +57,13 @@ export default function Contact() {
               <ul className="space-y-6">
                 {markets.map((m) => (
                   <li key={m.slug}>
-                    <p className="text-[15px] text-bone/90">
+                    <p className="text-[15px] text-mist/90">
                       {m.city}, {m.state}
-                      {m.isHQ && <span className="ml-2 text-[11px] uppercase tracking-[0.14em] text-brass">Head office</span>}
+                      {m.isHQ && <span className="ml-2 text-[11px] uppercase tracking-[0.14em] text-wine">Head office</span>}
                     </p>
                     {m.address ? (
                       <>
-                        <address className="mt-1 not-italic text-[13px] leading-relaxed text-slate">
+                        <address className="mt-1 not-italic text-[13px] leading-relaxed text-steel">
                           {m.address.street}
                           <br />
                           {m.address.city}, {m.address.region} {m.address.postal}
@@ -74,20 +74,20 @@ export default function Contact() {
                           )}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="link-draw mt-2 inline-block text-[12px] text-brass"
+                          className="link-draw mt-2 inline-block text-[12px] text-wine"
                         >
                           Directions
                         </a>
                       </>
                     ) : (
-                      <p className="mt-1 text-[13px] leading-relaxed text-slate">
+                      <p className="mt-1 text-[13px] leading-relaxed text-steel">
                         By phone, video or in-person by arrangement.
                       </p>
                     )}
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 text-[13px] text-slate-2">
+              <p className="mt-6 text-[13px] text-steel-2">
                 Also accepting matters in {site.alsoServing.join(", ")}.
               </p>
             </div>

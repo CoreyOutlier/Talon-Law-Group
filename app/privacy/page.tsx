@@ -8,8 +8,8 @@ export default function Privacy() {
   return (
     <>
       <PageHeader eyebrow="Legal" lines={["Privacy", "policy."]} />
-      <section className="shell max-w-[70ch] space-y-6 pb-28 text-[15px] leading-relaxed text-bone/70">
-        <p className="text-brass">
+      <section className="shell max-w-[70ch] space-y-6 pb-28 text-[15px] leading-relaxed text-mist/70">
+        <p className="text-wine">
           ⚠︎ Placeholder. Have counsel review and replace this before launch — it must reflect
           how leads are actually stored, who receives them, and any tracking pixels you run.
         </p>
@@ -28,7 +28,7 @@ export default function Privacy() {
         </p>
         <p>
           To request deletion of information you have submitted, contact{" "}
-          <a href={`mailto:${site.email}`} className="text-brass link-draw">{site.email}</a>.
+          <a href={`mailto:${site.email}`} className="text-wine link-draw">{site.email}</a>.
         </p>
       </section>
     </>

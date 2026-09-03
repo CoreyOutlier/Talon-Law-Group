@@ -12,7 +12,7 @@ Replaces the previous site at wallaceinjury.com.
 
 - **Next.js 15** (App Router, TypeScript) — static-generated marketing pages
 - **Tailwind CSS v4** — design tokens live in `app/globals.css` under `@theme`
-- **Framer Motion** — all animation, with `prefers-reduced-motion` honoured throughout
+- **Framer Motion** — all animation, with `prefers-reduced-motion` honored throughout
 
 ```bash
 npm install
@@ -75,19 +75,51 @@ so the site is never broken while assets are outstanding.
 
 ---
 
-## Motion doctrine
+## Brand
 
-The animation here is deliberate and rule-bound:
+Palette and type come straight from the Outlier brand sheet and live in
+`app/globals.css` under `@theme`:
+
+| Token | Value | Role |
+|---|---|---|
+| `ink` | `#070707` | brand black, the ground |
+| `wine` / `wine-2` | `#630330` / `#85103E` | brand maroon; `wine-2` is the lifted tint used for type on black |
+| `navy` | `#083954` | secondary |
+| `green` | `#0B6E4F` | secondary |
+| `mist` / `steel` | `#C2CAD6` / `#8797AF` | primary and secondary text |
+
+**Jost** carries the logotype and every header (Medium, caps, open tracking,
+per the sheet). **Gill Sans** is the body face — see
+[`public/media/fonts/README.md`](public/media/fonts/README.md) for the drop-in
+and, importantly, the web-licensing question.
+
+Drop the real logo at `public/media/brand/logo.svg` and it replaces the built-in
+Jost lockup everywhere, automatically.
+
+## Motion
+
+Two systems, deliberately separated:
+
+- **Entrances** are framer-motion (`components/Motion.tsx`: `Reveal`,
+  `LineReveal`, `Counter`, `Magnetic`) or plain CSS keyframes.
+- **Scroll-linked motion** — the hero drift, the pinned film sequence, the
+  gallery parallax, the statement drift — is driven by `lib/scrollfx.ts`,
+  which writes transforms straight to the element inside a rAF loop.
+
+That split is not stylistic. Binding library MotionValues into `style` across
+the hydration boundary crashed this page; direct writes are both correct and
+faster, since scroll never touches React.
+
+The rules:
 
 1. **No scroll-jacking.** The scrollbar always does what the user expects.
 2. **Reveal once.** Nothing re-animates on scroll-up.
-3. **Subtractive motion** — masks, fades and weight. Nothing bounces.
-4. **`prefers-reduced-motion` is fully honoured**, including the grain overlay.
+3. **Subtractive motion** — masks, wipes, weight. Nothing bounces.
+4. **`prefers-reduced-motion` is fully honored** — the film sequence degrades
+   to a plain stacked list, the grain and cursor disappear, the intro is
+   skipped.
 5. **Video is conditional** — muted, `playsInline`, skipped entirely on
    save-data and sub-4G connections.
-
-`components/Motion.tsx` holds the primitives (`Reveal`, `LineReveal`,
-`Counter`, `Magnetic`). Use them rather than writing one-off animations.
 
 ---
 

@@ -23,12 +23,12 @@ export default function Reviews() {
           <div className="grid gap-px border border-hairline bg-hairline md:grid-cols-2">
             {publishedTestimonials.map((t, i) => (
               <Reveal key={i} delay={i * 0.07} className="flex flex-col justify-between bg-ink p-9 md:p-12">
-                <blockquote className="display text-[clamp(1.5rem,2.6vw,2.125rem)] leading-snug text-bone/90">
-                  <span className="text-brass">“</span>{t.quote}<span className="text-brass">”</span>
+                <blockquote className="display text-[clamp(1.5rem,2.6vw,2.125rem)] leading-snug text-mist/90">
+                  <span className="text-wine">“</span>{t.quote}<span className="text-wine">”</span>
                 </blockquote>
                 <footer className="mt-12 border-t border-hairline pt-6">
-                  <p className="text-[14px] text-bone/85">{t.author}</p>
-                  <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-slate-2">
+                  <p className="text-[14px] text-mist/85">{t.author}</p>
+                  <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-steel-2">
                     {t.matter} · via {t.source}
                   </p>
                 </footer>
@@ -36,13 +36,13 @@ export default function Reviews() {
             ))}
           </div>
         ) : (
-          <p className="border-y border-hairline py-16 text-[15px] text-slate">
+          <p className="border-y border-hairline py-16 text-[15px] text-steel">
             Reviews are being verified for publication. In the meantime, they can be read on
             independent directories.
           </p>
         )}
 
-        <p className="mt-10 max-w-[80ch] text-[12px] leading-relaxed text-slate-2">
+        <p className="mt-10 max-w-[80ch] text-[12px] leading-relaxed text-steel-2">
           Testimonials reflect the experience of individual clients and are not a guarantee,
           warranty or prediction regarding the outcome of any other matter.
         </p>

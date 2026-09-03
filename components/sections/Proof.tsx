@@ -14,7 +14,7 @@ export function Proof() {
             lines={["Numbers we", "can document."]}
           />
           <Reveal delay={0.2}>
-            <p className="mt-7 max-w-[44ch] text-[15px] leading-relaxed text-bone/65">
+            <p className="mt-7 max-w-[44ch] text-[15px] leading-relaxed text-mist/65">
               We publish results we can stand behind. If a firm shows you a wall of figures
               with no case behind them, ask which ones they tried.
             </p>
@@ -27,12 +27,12 @@ export function Proof() {
               {publishedResults.map((r, i) => (
                 <Reveal as="li" key={`${r.amount}-${i}`} delay={i * 0.07} className="py-8">
                   <div className="flex flex-wrap items-baseline justify-between gap-4">
-                    <p className="figure text-[clamp(2.5rem,6vw,4rem)] leading-none text-brass">
+                    <p className="figure text-[clamp(2.5rem,6vw,4rem)] leading-none text-wine">
                       {r.amount}
                     </p>
-                    <p className="text-[11px] uppercase tracking-[0.2em] text-slate">{r.type}</p>
+                    <p className="text-[11px] uppercase tracking-[0.2em] text-steel">{r.type}</p>
                   </div>
-                  <p className="mt-4 max-w-[60ch] text-[15px] leading-relaxed text-bone/65">
+                  <p className="mt-4 max-w-[60ch] text-[15px] leading-relaxed text-mist/65">
                     {r.detail}
                   </p>
                 </Reveal>
@@ -54,7 +54,7 @@ export function Proof() {
           <Reveal delay={0.3}>
             <div className="mt-10 flex flex-wrap items-center gap-6">
               <Link href="/results" className="btn btn-ghost">See case results</Link>
-              <p className="max-w-[46ch] text-[11px] leading-relaxed text-slate-2">
+              <p className="max-w-[46ch] text-[11px] leading-relaxed text-steel-2">
                 {resultsDisclaimer}
               </p>
             </div>
@@ -68,8 +68,8 @@ export function Proof() {
 function Stat({ value, label }: { value: React.ReactNode; label: string }) {
   return (
     <div>
-      <p className="figure text-[clamp(2rem,4vw,3rem)] leading-none text-bone">{value}</p>
-      <p className="mt-3 text-[11px] uppercase tracking-[0.18em] text-slate">{label}</p>
+      <p className="figure text-[clamp(2rem,4vw,3rem)] leading-none text-mist">{value}</p>
+      <p className="mt-3 text-[11px] uppercase tracking-[0.18em] text-steel">{label}</p>
     </div>
   );
 }

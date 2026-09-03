@@ -29,25 +29,25 @@ export function Markets() {
           <Reveal key={m.slug} delay={i * 0.09} className="bg-ink">
             <Link href={`/offices/${m.slug}`} className="group flex h-full flex-col p-8 md:p-10">
               <div className="flex items-start justify-between gap-4">
-                <span className="eyebrow !text-slate-2">{m.kicker}</span>
+                <span className="eyebrow !text-steel-2">{m.kicker}</span>
                 {m.isHQ && (
-                  <span className="border border-brass/40 px-2 py-1 text-[9px] uppercase tracking-[0.16em] text-brass">
+                  <span className="border border-wine/40 px-2 py-1 text-[9px] uppercase tracking-[0.16em] text-wine">
                     Head office
                   </span>
                 )}
               </div>
 
-              <h3 className="display mt-8 text-[clamp(2rem,4vw,3rem)] leading-none text-bone transition-colors duration-500 group-hover:text-brass">
+              <h3 className="display mt-8 text-[clamp(2rem,4vw,3rem)] leading-none text-mist transition-colors duration-500 group-hover:text-wine">
                 {m.city}
               </h3>
-              <p className="mt-2 text-[11px] uppercase tracking-[0.2em] text-slate">
+              <p className="mt-2 text-[11px] uppercase tracking-[0.2em] text-steel">
                 {m.stateFull}
               </p>
 
-              <p className="mt-6 flex-1 text-[14px] leading-relaxed text-bone/60">{m.lede}</p>
+              <p className="mt-6 flex-1 text-[14px] leading-relaxed text-mist/60">{m.lede}</p>
 
               <span
-                className="mt-8 flex items-center gap-3 text-[11px] uppercase tracking-[0.16em] text-slate transition-all duration-500 group-hover:gap-5 group-hover:text-brass"
+                className="mt-8 flex items-center gap-3 text-[11px] uppercase tracking-[0.16em] text-steel transition-all duration-500 group-hover:gap-5 group-hover:text-wine"
                 style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
               >
                 {m.city} injury law <span aria-hidden>→</span>
@@ -58,7 +58,7 @@ export function Markets() {
       </div>
 
       <Reveal delay={0.2}>
-        <p className="mt-8 max-w-[74ch] text-[12px] leading-relaxed text-slate-2">
+        <p className="mt-8 max-w-[74ch] text-[12px] leading-relaxed text-steel-2">
           Also accepting matters in {site.alsoServing.join(", ")}. Talon Law Group is admitted
           in Pennsylvania. Matters outside its admitting jurisdictions are handled in
           association with admitted local counsel, disclosed to you in writing before

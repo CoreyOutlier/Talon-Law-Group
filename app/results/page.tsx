@@ -26,28 +26,28 @@ export default function Results() {
               <Reveal as="li" key={i} delay={i * 0.06} className="group border-b border-hairline">
                 <div className="grid gap-6 py-10 md:grid-cols-12 md:py-14">
                   <div className="md:col-span-4">
-                    <p className="figure text-[clamp(2.75rem,7vw,5rem)] leading-none text-brass transition-transform duration-700 group-hover:translate-x-1"
+                    <p className="figure text-[clamp(2.75rem,7vw,5rem)] leading-none text-wine transition-transform duration-700 group-hover:translate-x-1"
                        style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}>
                       {r.amount}
                     </p>
                   </div>
                   <div className="md:col-span-3">
-                    <p className="text-[11px] uppercase tracking-[0.2em] text-slate">{r.type}</p>
+                    <p className="text-[11px] uppercase tracking-[0.2em] text-steel">{r.type}</p>
                   </div>
                   <div className="md:col-span-5">
-                    <p className="max-w-[52ch] text-[15px] leading-relaxed text-bone/70">{r.detail}</p>
+                    <p className="max-w-[52ch] text-[15px] leading-relaxed text-mist/70">{r.detail}</p>
                   </div>
                 </div>
               </Reveal>
             ))}
           </ul>
         ) : (
-          <p className="border-y border-hairline py-16 text-[15px] text-slate">
+          <p className="border-y border-hairline py-16 text-[15px] text-steel">
             Results are being compiled. Call us and we will discuss comparable matters directly.
           </p>
         )}
 
-        <p className="mt-10 max-w-[80ch] text-[12px] leading-relaxed text-slate-2">
+        <p className="mt-10 max-w-[80ch] text-[12px] leading-relaxed text-steel-2">
           {resultsDisclaimer}
         </p>
       </section>

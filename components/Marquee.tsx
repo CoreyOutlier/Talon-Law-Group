@@ -21,7 +21,7 @@ export function Marquee({
         {doubled.map((item, i) => (
           <div key={i} className="flex shrink-0 items-center gap-14">
             {item}
-            <span aria-hidden className="h-1 w-1 rotate-45 bg-brass" />
+            <span aria-hidden className="h-1 w-1 rotate-45 bg-wine" />
           </div>
         ))}
       </div>

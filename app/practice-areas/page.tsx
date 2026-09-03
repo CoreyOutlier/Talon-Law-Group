@@ -26,20 +26,20 @@ export default function PracticeAreasIndex() {
             <Reveal as="li" key={p.slug} delay={i * 0.05} className="border-b border-hairline">
               <Link href={`/practice-areas/${p.slug}`} className="group block py-9 md:py-12">
                 <div className="grid gap-5 md:grid-cols-12 md:items-baseline">
-                  <span className="figure text-[12px] text-slate-2 md:col-span-1">
+                  <span className="figure text-[12px] text-steel-2 md:col-span-1">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="md:col-span-5">
-                    <h2 className="display text-[clamp(1.75rem,3.6vw,2.75rem)] leading-none text-bone/90 transition-colors duration-500 group-hover:text-brass">
+                    <h2 className="display text-[clamp(1.75rem,3.6vw,2.75rem)] leading-none text-mist/90 transition-colors duration-500 group-hover:text-wine">
                       {p.name}
                     </h2>
-                    <p className="eyebrow mt-3 !text-slate-2">{p.kicker}</p>
+                    <p className="eyebrow mt-3 !text-steel-2">{p.kicker}</p>
                   </div>
-                  <p className="max-w-[46ch] text-[15px] leading-relaxed text-bone/65 md:col-span-5">
+                  <p className="max-w-[46ch] text-[15px] leading-relaxed text-mist/65 md:col-span-5">
                     {p.intro}
                   </p>
                   <span
-                    className="hidden text-right text-slate-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-brass md:col-span-1 md:block"
+                    className="hidden text-right text-steel-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-wine md:col-span-1 md:block"
                     style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
                     aria-hidden
                   >

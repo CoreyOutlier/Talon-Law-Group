@@ -29,6 +29,8 @@ export function Figure({
   const [failed, setFailed] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
+  const wrapRef = useRef<HTMLDivElement>(null);
+
   // An <img> that 404s before hydration never fires onError into React.
   // Re-check on mount so the placeholder still appears.
   useEffect(() => {
@@ -36,8 +38,27 @@ export function Figure({
     if (el && el.complete && el.naturalWidth === 0) setFailed(true);
   }, []);
 
+  // Frames arrive by uncovering, never by fading. Fires once, on entry.
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    el.classList.add("wipe");
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        el.classList.add("wipe-in");
+        io.disconnect();
+      },
+      { rootMargin: "-8% 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <div
+      ref={wrapRef}
       className={`relative overflow-hidden bg-ink-2 ${className}`}
       style={{ aspectRatio: ratio }}
     >
@@ -59,13 +80,13 @@ export function Figure({
             className="pointer-events-none absolute inset-0 opacity-[0.06]"
             style={{
               backgroundImage:
-                "repeating-linear-gradient(45deg, var(--color-brass) 0 1px, transparent 1px 14px)",
+                "repeating-linear-gradient(45deg, var(--color-wine) 0 1px, transparent 1px 14px)",
             }}
           />
           <div className="relative">
             <p className="eyebrow mb-2">Asset slot</p>
-            <p className="font-mono text-[11px] leading-relaxed text-slate">{src}</p>
-            {note && <p className="mt-2 max-w-[26ch] text-[11px] text-slate-2">{note}</p>}
+            <p className="font-mono text-[11px] leading-relaxed text-steel">{src}</p>
+            {note && <p className="mt-2 max-w-[26ch] text-[11px] text-steel-2">{note}</p>}
           </div>
         </div>
       )}

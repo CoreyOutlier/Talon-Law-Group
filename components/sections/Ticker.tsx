@@ -7,7 +7,7 @@ const ITEMS = [
   "Published in Jury Verdict Review",
   "Trial practice since 2015",
   "Pittsburgh · New York · Los Angeles",
-  "You talk to the lawyer, not a call centre",
+  "You talk to the lawyer, not a call center",
 ];
 
 export function Ticker() {
@@ -16,7 +16,7 @@ export function Ticker() {
       <Marquee
         duration={54}
         items={ITEMS.map((t) => (
-          <span key={t} className="whitespace-nowrap text-[11px] uppercase tracking-[0.24em] text-slate">
+          <span key={t} className="whitespace-nowrap text-[11px] uppercase tracking-[0.24em] text-steel">
             {t}
           </span>
         ))}

@@ -7,21 +7,20 @@ const LOGO_SRC = "/media/brand/logo.svg";
 /* ---------------------------------------------------------------------------
  * Wordmark
  *
- * Renders a typographic lockup by default and swaps in the real logo only
- * once it is confirmed to load. This avoids the broken-image flash you get
- * when an <img> 404s before React hydrates and the onError handler is lost.
- *
- * Drop the firm's logo at /public/media/brand/logo.svg and it takes over.
+ * Renders a Jost lockup built to the brand sheet, and swaps in the real logo
+ * the moment /public/media/brand/logo.svg exists. Probing first (rather than
+ * relying on onError) avoids the broken-image flash you get when an <img>
+ * 404s before React hydrates.
  * ------------------------------------------------------------------------- */
-export function Wordmark({ className = "" }: { className?: string }) {
+export function Wordmark({ className = "", stacked = false }: { className?: string; stacked?: boolean }) {
   const [logo, setLogo] = useState(false);
 
   useEffect(() => {
-    let cancelled = false;
+    let dead = false;
     const img = new Image();
-    img.onload = () => { if (!cancelled && img.naturalWidth > 0) setLogo(true); };
+    img.onload = () => { if (!dead && img.naturalWidth > 0) setLogo(true); };
     img.src = LOGO_SRC;
-    return () => { cancelled = true; };
+    return () => { dead = true; };
   }, []);
 
   if (logo) {
@@ -29,53 +28,66 @@ export function Wordmark({ className = "" }: { className?: string }) {
     return <img src={LOGO_SRC} alt="Talon Law Group" className={className} />;
   }
 
-  return (
-    <span className={`flex items-baseline gap-2.5 ${className}`} style={{ height: "auto" }}>
-      <TalonMark />
-      <span className="display text-[1.3rem] leading-none tracking-[0.02em] text-bone md:text-[1.45rem]">
-        TALON
+  if (stacked) {
+    return (
+      <span className={`inline-flex flex-col items-center ${className}`}>
+        <span className="flex items-center gap-[0.12em]">
+          <LetterRun>TAL</LetterRun>
+          <TalonMark className="h-[0.92em] w-[0.92em] translate-y-[0.02em]" />
+          <LetterRun>N</LetterRun>
+        </span>
+        <span className="mt-[0.18em] text-[0.44em] font-medium uppercase leading-none tracking-[0.14em] text-mist">
+          Law Group
+        </span>
       </span>
-      <span className="h-[13px] w-px bg-brass" aria-hidden />
-      <span className="text-[9.5px] font-medium uppercase leading-none tracking-[0.26em] text-slate">
-        Law&nbsp;Group
+    );
+  }
+
+  return (
+    <span className={`flex items-center gap-2.5 ${className}`} style={{ height: "auto" }}>
+      <TalonMark className="h-[22px] w-[22px] shrink-0" />
+      <span className="flex flex-col justify-center leading-none">
+        <span className="text-[1.05rem] font-medium uppercase leading-none tracking-[0.14em] text-mist md:text-[1.15rem]">
+          Talon
+        </span>
+        <span className="mt-[0.28em] text-[0.5rem] font-medium uppercase leading-none tracking-[0.3em] text-steel">
+          Law Group
+        </span>
       </span>
     </span>
   );
 }
 
-/* A minimal talon: three tapering claws. Reads at 20px. */
-function TalonMark() {
+function LetterRun({ children }: { children: React.ReactNode }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      className="h-[18px] w-[18px] shrink-0 self-center"
-      fill="none"
-      aria-hidden
-    >
+    <span className="text-[1em] font-medium uppercase leading-none tracking-[0.06em] text-mist">
+      {children}
+    </span>
+  );
+}
+
+/* The talon: a ring the claw curls around — the mark from the brand sheet,
+   rebuilt as geometry so it stays crisp at 18px. */
+function TalonMark({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 100 100" className={className} aria-hidden>
+      {/* the ring */}
       <path
-        d="M4 3c0 6.2 1.6 10.4 5 13.4"
-        stroke="var(--color-brass)"
-        strokeWidth="1.6"
+        d="M62 20 A34 34 0 1 0 84 52"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="13"
         strokeLinecap="round"
+        className="text-mist"
+      />
+      {/* the claw, curling over and tapering to a point */}
+      <path
+        d="M40 12c26-7 47 8 50 32 2 19-6 34-18 44 8-16 10-32 6-45-5-16-18-26-38-31Z"
+        fill="var(--color-wine-2)"
       />
       <path
-        d="M12 2c0 7.6.8 12.6 2.4 15.8"
-        stroke="var(--color-brass)"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
-      <path
-        d="M20 3.6c-.6 6.2-2.2 10.2-5 12.9"
-        stroke="var(--color-brass)"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
-      <path
-        d="M6.5 18.4c2.2 2.3 4.2 3.4 5.7 3.4 1.5 0 3.3-1 5.3-3.1"
-        stroke="var(--color-brass)"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        opacity=".55"
+        d="M40 12c-6 1-9 5-8 10 1 4 5 7 10 7 4 0 7-2 8-6"
+        fill="var(--color-wine-2)"
       />
     </svg>
   );

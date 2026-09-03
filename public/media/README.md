@@ -13,7 +13,7 @@ fallback. Drop a file at the exact path below and it takes over automatically.
 ## Shaheen
 | Path | Spec | Notes |
 |---|---|---|
-| `shaheen/hero-poster.jpg` | 2400 × 1600 JPG, ~250 KB after compression | First frame of the hero video, or a strong environmental portrait. Subject **right of centre** — the headline sits on the left |
+| `shaheen/hero-poster.jpg` | 2400 × 1600 JPG, ~250 KB after compression | First frame of the hero video, or a strong environmental portrait. Subject **right of center** — the headline sits on the left |
 | `shaheen/portrait.jpg` | 1600 × 2000 JPG (4:5 vertical) | Used on the home page attorney panel and the About page |
 
 ## Video

@@ -30,21 +30,21 @@ export function ActionBar() {
       <div className="grid grid-cols-3 divide-x divide-hairline">
         <a
           href={`tel:${site.phoneRaw}`}
-          className="flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-bone"
+          className="flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-mist"
         >
           <PhoneIcon />
           Call
         </a>
         <a
           href={`sms:${site.smsRaw}`}
-          className="flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-bone"
+          className="flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-mist"
         >
           <MsgIcon />
           Text
         </a>
         <Link
           href="/contact"
-          className="flex h-16 flex-col items-center justify-center gap-1 bg-brass text-[11px] font-semibold uppercase tracking-[0.14em] text-ink"
+          className="flex h-16 flex-col items-center justify-center gap-1 bg-wine text-[11px] font-semibold uppercase tracking-[0.14em] text-ink"
         >
           <FileIcon />
           Start case

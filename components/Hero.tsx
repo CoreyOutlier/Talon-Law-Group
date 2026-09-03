@@ -1,87 +1,70 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { site } from "@/lib/site";
-import { Magnetic } from "./Motion";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { useScrollProgress } from "@/lib/scrollfx";
 
 /* ---------------------------------------------------------------------------
- * Hero — cinematic, but honest about performance.
+ * Hero — a film frame, not a landing page.
  *
- * • Poster paints first. Video only loads on connections that can take it.
- * • No autoplay video on save-data or slow networks; poster stands alone.
- * • Headline enters as masked lines. Nothing bounces.
+ * One image, one line, nothing else. Everything transactional lives below the
+ * fold or in the fixed chrome, so the first screen reads like the opening shot
+ * of a commercial rather than a lead form with a photo behind it.
  * ------------------------------------------------------------------------- */
 export function Hero() {
-  const reduced = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
+  const section = useRef<HTMLElement>(null);
+  const bed = useRef<HTMLDivElement>(null);
+  const copy = useRef<HTMLDivElement>(null);
+  const cue = useRef<HTMLDivElement>(null);
   const [playVideo, setPlayVideo] = useState(false);
-  const [hasPoster, setHasPoster] = useState(false);
 
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-  const fade = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
+  useScrollProgress(
+    section,
+    (p) => {
+      if (bed.current) bed.current.style.transform = `translate3d(0, ${p * 22}%, 0) scale(${1 + p * 0.12})`;
+      const fade = String(Math.max(0, 1 - p * 1.45));
+      if (copy.current) {
+        copy.current.style.opacity = fade;
+        copy.current.style.transform = `translate3d(0, ${p * -5}%, 0)`;
+      }
+      if (cue.current) cue.current.style.opacity = fade;
+    },
+    "leave"
+  );
 
-  // Only paint the poster once we know it exists — no broken frame, ever.
   useEffect(() => {
-    let cancelled = false;
-    const img = new Image();
-    img.onload = () => { if (!cancelled && img.naturalWidth > 0) setHasPoster(true); };
-    img.src = "/media/shaheen/hero-poster.jpg";
-    return () => { cancelled = true; };
-  }, []);
-
-  useEffect(() => {
-    if (reduced) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const c = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
     if (c?.saveData) return;
-    if (c?.effectiveType && !["4g"].includes(c.effectiveType)) return;
-    const t = setTimeout(() => setPlayVideo(true), 400);
+    if (c?.effectiveType && c.effectiveType !== "4g") return;
+    const t = setTimeout(() => setPlayVideo(true), 500);
     return () => clearTimeout(t);
-  }, [reduced]);
+  }, []);
 
-  const lines = ["They have a", "team on this", "within hours."];
+  const LINES = ["Some people", "fight back", "for a living."];
 
   return (
-    <section ref={ref} className="relative min-h-[100svh] overflow-hidden">
-      {/* Media bed */}
-      <motion.div style={{ y }} className="absolute inset-0 -z-10">
-        {/* Designed ground. Visible on its own until the poster is dropped in,
-            and it still reads as intentional art direction underneath it. */}
+    <section ref={section} className="relative h-[100svh] overflow-hidden">
+      {/* ---------- The frame ---------- */}
+      <div ref={bed} className="vignette absolute inset-0 -z-10 will-change-transform">
         <div className="absolute inset-0 bg-ink-2" />
         <div
           className="absolute inset-0 opacity-70"
           style={{
             background:
-              "radial-gradient(120% 90% at 78% 18%, rgba(201,162,39,.16) 0%, rgba(201,162,39,.05) 34%, transparent 66%)",
+              "radial-gradient(110% 80% at 72% 24%, rgba(142,17,72,.22) 0%, rgba(8,57,84,.14) 40%, transparent 72%)",
           }}
         />
+
         <div
-          className="absolute inset-0 opacity-[0.055]"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(115deg, var(--color-brass) 0 1px, transparent 1px 46px)",
-          }}
+          className="hero-still absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url(/media/shaheen/hero-poster.jpg)" }}
         />
 
-        {hasPoster && (
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url(/media/shaheen/hero-poster.jpg)" }}
-          />
-        )}
-
-        {playVideo && hasPoster && (
+        {playVideo && (
           <video
             className="absolute inset-0 h-full w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="none"
+            autoPlay muted loop playsInline preload="none"
             poster="/media/shaheen/hero-poster.jpg"
             aria-hidden
           >
@@ -89,94 +72,55 @@ export function Hero() {
           </video>
         )}
 
-        {/* Cinematic grading — keeps the headline legible over any frame */}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/35" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/92 via-ink/35 to-transparent" />
-      </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/25 to-transparent" />
+      </div>
 
-      <motion.div style={{ opacity: fade }} className="shell relative flex min-h-[100svh] flex-col justify-end pb-20 pt-32 md:pb-28">
-        <motion.p
-          initial={reduced ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.15, duration: 0.8 }}
-          className="eyebrow mb-7"
-        >
-          {site.cities.join(" · ")}
-        </motion.p>
-
-        <h1 className="display max-w-[16ch] text-[clamp(2.9rem,9.5vw,8.5rem)]">
-          {lines.map((l, i) => (
+      {/* ---------- The line ---------- */}
+      <div
+        ref={copy}
+        className="shell relative flex h-full flex-col justify-end pb-[15vh] will-change-transform"
+      >
+        <h1 className="display display-xl max-w-[15ch] text-[clamp(2.5rem,9vw,8.5rem)]">
+          {LINES.map((l, i) => (
             <span key={i} className="line-mask">
-              <motion.span
-                initial={reduced ? false : { y: "112%" }}
-                animate={{ y: 0 }}
-                transition={{ delay: 0.2 + i * 0.09, duration: 1.15, ease: EASE }}
+              <span
+                className={`hero-line block ${i === 2 ? "text-wine-2" : ""}`}
+                style={{ animationDelay: `${0.35 + i * 0.13}s` }}
               >
-                {i === 2 ? (
-                  <>
-                    within <em className="not-italic text-brass">hours.</em>
-                  </>
-                ) : (
-                  l
-                )}
-              </motion.span>
+                {l}
+              </span>
             </span>
           ))}
         </h1>
 
-        <motion.div
-          initial={reduced ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.75, duration: 1, ease: EASE }}
-          className="mt-9 flex flex-col gap-9 md:flex-row md:items-end md:justify-between"
-        >
-          <p className="max-w-[46ch] text-[1.0625rem] leading-relaxed text-bone/70 text-pretty md:text-[1.1875rem]">
-            The insurance company assigned your crash to a professional the day it happened.
-            You should have one too. Talon Law Group is a trial practice built for the
-            cases carriers hoped you would handle alone.
+        <div className="hero-meta mt-10 flex items-end justify-between gap-8">
+          <p className="max-w-[30ch] text-[11px] uppercase leading-[2] tracking-[0.26em] text-steel">
+            {site.name}
+            <br />
+            Injury trial practice
           </p>
+          <a
+            href={`tel:${site.phoneRaw}`}
+            className="hidden text-[11px] uppercase tracking-[0.26em] text-mist/60 transition-colors hover:text-wine-2 md:block"
+          >
+            {site.phone}
+          </a>
+        </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Magnetic>
-              <Link href="/contact" className="btn btn-brass w-full sm:w-auto">
-                Start your case
-              </Link>
-            </Magnetic>
-            <a href={`tel:${site.phoneRaw}`} className="btn btn-ghost w-full sm:w-auto">
-              {site.phone}
-            </a>
-          </div>
-        </motion.div>
+        <span className="hero-rule mt-8 block h-px w-full origin-left bg-hairline" />
+      </div>
 
-        <motion.div
-          initial={reduced ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.3, duration: 1 }}
-          className="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-hairline pt-6 text-[11px] uppercase tracking-[0.18em] text-slate"
-        >
-          <span>No fee unless we win</span>
-          <span className="hidden h-3 w-px bg-hairline sm:block" />
-          <span>Order of Barristers</span>
-          <span className="hidden h-3 w-px bg-hairline sm:block" />
-          <span>Trial practice since {site.founded}</span>
-        </motion.div>
-      </motion.div>
-
-      {/* Scroll cue */}
-      <motion.div
+      <div
+        ref={cue}
         aria-hidden
-        style={{ opacity: fade }}
-        className="pointer-events-none absolute bottom-6 right-[var(--shell-x)] hidden items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-slate md:flex"
+        className="hero-meta pointer-events-none absolute bottom-6 right-[var(--shell-x)] hidden items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-steel md:flex"
       >
         Scroll
         <span className="relative block h-10 w-px overflow-hidden bg-hairline">
-          <motion.span
-            className="absolute inset-x-0 top-0 block h-4 bg-brass"
-            animate={{ y: [-16, 40] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
+          <span className="scroll-tick absolute inset-x-0 top-0 block h-4 bg-wine-2" />
         </span>
-      </motion.div>
+      </div>
     </section>
   );
 }

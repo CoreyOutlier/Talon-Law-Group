@@ -19,7 +19,7 @@ export function PageHeader({
       />
       {lede && (
         <Reveal delay={0.25}>
-          <p className="mt-9 max-w-[58ch] text-[1.0625rem] leading-relaxed text-bone/70 text-pretty md:text-[1.1875rem]">
+          <p className="mt-9 max-w-[58ch] text-[1.0625rem] leading-relaxed text-mist/70 text-pretty md:text-[1.1875rem]">
             {lede}
           </p>
         </Reveal>
