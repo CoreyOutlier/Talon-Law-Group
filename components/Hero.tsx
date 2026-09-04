@@ -49,7 +49,7 @@ export function Hero() {
       <div ref={bed} className="vignette absolute inset-0 -z-10 will-change-transform">
         <div className="absolute inset-0 bg-ink-2" />
         <div
-          className="absolute inset-0 opacity-70"
+          className="absolute inset-0 opacity-40"
           style={{
             background:
               "radial-gradient(110% 80% at 72% 24%, rgba(142,17,72,.22) 0%, rgba(8,57,84,.14) 40%, transparent 72%)",
@@ -72,8 +72,10 @@ export function Hero() {
           </video>
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/25 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-transparent" />
+        {/* top scrim — keeps the nav readable over a bright frame */}
+        <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-ink/80 via-ink/35 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/25 to-transparent" />
       </div>
 
       {/* ---------- The line ---------- */}

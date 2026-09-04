@@ -305,7 +305,7 @@
 /* --- Vignette: keeps type legible over any frame --- */
 .vignette::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(120% 100% at 50% 45%, transparent 38%, rgba(7,7,7,.74) 100%);
+  background: radial-gradient(125% 105% at 50% 45%, transparent 52%, rgba(7,7,7,.52) 100%);
 }
 
 /* --- Hairline that draws itself --- */

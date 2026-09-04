@@ -78,8 +78,9 @@ export function Film() {
                 className="absolute inset-0 bg-cover bg-center"
                 style={{ backgroundImage: `url(${f.src})` }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/35" />
-              <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
+              <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-ink/80 via-ink/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-ink/75 via-ink/15 to-transparent" />
             </div>
 
             <div
