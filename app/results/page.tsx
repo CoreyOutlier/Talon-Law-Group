@@ -17,6 +17,7 @@ export default function Results() {
         eyebrow="The record"
         lines={["Results we", "can document."]}
         lede="We publish figures we can stand behind. Every recovery below is a real matter with a real file. Prior results never guarantee a future outcome — but they do tell you what a firm is willing to put its name on."
+        photo="/media/photos/brick-standing-2.jpg"
       />
 
       <section className="shell pb-20 md:pb-28">

@@ -16,6 +16,7 @@ export default function Reviews() {
         eyebrow="In their words"
         lines={["What it is", "like to be", "represented."]}
         lede="Reviews published here come from independent platforms. We do not write them, we do not edit them, and we do not pay for them."
+        photo="/media/photos/couch-laugh.jpg"
       />
 
       <section className="shell pb-20 md:pb-28">

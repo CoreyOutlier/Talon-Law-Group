@@ -16,6 +16,7 @@ export default function Contact() {
         eyebrow="No fee unless we win"
         lines={["Tell us what", "happened."]}
         lede="Five questions, under ninety seconds. A lawyer reads every submission and calls back — usually within fifteen minutes during business hours."
+        photo="/media/photos/couch-glasses-laugh.jpg"
       />
 
       <section className="shell grid gap-14 pb-24 md:pb-36 lg:grid-cols-12 lg:gap-16">

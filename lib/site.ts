@@ -68,6 +68,7 @@ export const admissions = [
 /* -------------------------------------------------------------------------- */
 
 export type Market = {
+  photo: string;
   slug: string;
   city: string;
   state: string;
@@ -86,6 +87,7 @@ export type Market = {
 
 export const markets: Market[] = [
   {
+    photo: "/media/photos/brick-standing-2.jpg",
     slug: "pittsburgh",
     city: "Pittsburgh",
     state: "PA",
@@ -100,9 +102,9 @@ export const markets: Market[] = [
     geo: { lat: 40.4527, lng: -79.9245 },
     kicker: "Home court",
     lede:
-      "The practice was built here. Allegheny County juries, the carriers who write policies in this market, and the defence bar that shows up across the table — all of it is familiar ground.",
+      "The practice was built here. Allegheny County juries, the carriers who write policies in this market, and the defense bar that shows up across the table — all of it is familiar ground.",
     body: [
-      "Pittsburgh is where Talon Law Group has tried and resolved cases since 2015. That matters more than it sounds. Case value in this county is set by what local juries have actually done, by which defence firm the carrier assigns, and by which judge draws the case. A lawyer who works this courthouse knows those variables before the complaint is filed.",
+      "Pittsburgh is where Talon Law Group has tried and resolved cases since 2015. That matters more than it sounds. Case value in this county is set by what local juries have actually done, by which defense firm the carrier assigns, and by which judge draws the case. A lawyer who works this courthouse knows those variables before the complaint is filed.",
       "Pennsylvania also carries two rules that quietly decide more cases than liability ever does. The first is the limited-tort election on your own auto policy — a single checkbox that can bar recovery for pain and suffering entirely, with exceptions most people never learn exist. The second is stacking: household and resident-relative coverage that is frequently worth more than the at-fault driver's policy and is routinely left on the table.",
       "We read the declarations pages before we read the police report. That order is deliberate.",
     ],
@@ -120,6 +122,7 @@ export const markets: Market[] = [
     areas: ["Shadyside", "Squirrel Hill", "Oakland", "Downtown", "East Liberty", "the South Side", "the North Shore", "Mt. Lebanon", "Monroeville", "Allegheny County"],
   },
   {
+    photo: "/media/photos/couch-standing.jpg",
     slug: "new-york",
     city: "New York",
     state: "NY",
@@ -130,7 +133,7 @@ export const markets: Market[] = [
       "Shaheen came up in New York. The city's injury law is its own machine — no-fault, the serious-injury threshold, and a 90-day clock on anything involving the City — and none of it forgives a slow start.",
     body: [
       "New York does not work like anywhere else. Every crash begins inside the no-fault system, which pays medical bills and lost wages regardless of blame, but only if the application reaches the insurer within thirty days. Miss that window and the benefits that were supposed to carry you through treatment simply do not arrive.",
-      "Getting past no-fault into a real claim for pain and suffering requires clearing the serious-injury threshold under Insurance Law § 5102(d). Defence counsel litigates that threshold aggressively and early, usually on summary judgment, and cases die there when the medical documentation was not built for it from the first visit. We build for it from the first visit.",
+      "Getting past no-fault into a real claim for pain and suffering requires clearing the serious-injury threshold under Insurance Law § 5102(d). Defense counsel litigates that threshold aggressively and early, usually on summary judgment, and cases die there when the medical documentation was not built for it from the first visit. We build for it from the first visit.",
       "Anything involving the City, the MTA, the Transit Authority, NYCHA or a public hospital carries a ninety-day notice of claim requirement. That is not a filing deadline — it is a notice deadline months ahead of the lawsuit, and it is the single most common way a strong New York case is lost before it starts.",
       "Construction injuries occupy their own category. Labor Law §§ 240 and 241 impose near-absolute liability on owners and general contractors for gravity-related and code-violation injuries. It is the most powerful plaintiff's statute in the country and it applies far more often than injured workers realize.",
     ],
@@ -152,6 +155,7 @@ export const markets: Market[] = [
     areas: ["Manhattan", "Brooklyn", "Queens", "the Bronx", "Staten Island", "Westchester", "Nassau", "Suffolk"],
   },
   {
+    photo: "/media/photos/bench-laugh.jpg",
     slug: "los-angeles",
     city: "Los Angeles",
     state: "CA",
@@ -161,7 +165,7 @@ export const markets: Market[] = [
     lede:
       "Los Angeles County runs the largest trial court system in the United States. It rewards preparation and punishes anyone who treats a catastrophic case like a claim file.",
     body: [
-      "California is a pure comparative fault state, which means fault is apportioned rather than used as a gate. Being partly to blame reduces a recovery; it almost never ends one. That single difference makes cases viable here that would be dead elsewhere, and it is why the defence invests so heavily in shifting percentages.",
+      "California is a pure comparative fault state, which means fault is apportioned rather than used as a gate. Being partly to blame reduces a recovery; it almost never ends one. That single difference makes cases viable here that would be dead elsewhere, and it is why the defense invests so heavily in shifting percentages.",
       "Two California rules cut the other way and cost unrepresented people enormous sums. Proposition 213 bars an uninsured driver from recovering non-economic damages at all, no matter who caused the collision. And in medical negligence cases, MICRA caps non-economic damages at a figure fixed by statute and rising annually under AB 35 — which makes the economic side of the case, the life-care plan and the earning-capacity analysis, where the real work has to go.",
       "Claims against a public entity — the City of Los Angeles, the County, Metro, a school district, Caltrans — require a government claim within six months. Not two years. Six months. It is the deadline that ends the most meritorious California cases.",
       "The freeway network generates the volume: the 405, the 10, the 101, the 110. Rideshare adds another layer, where a driver on an active trip triggers a commercial policy up to one million dollars that many people never learn was available to them.",

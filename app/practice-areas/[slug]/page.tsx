@@ -52,7 +52,7 @@ export default async function PracticeArea({
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
 
-      <PageHeader eyebrow={area.kicker} lines={[area.name]} lede={area.intro} />
+      <PageHeader eyebrow={area.kicker} lines={[area.name]} lede={area.intro} photo={area.photo} />
 
       <section className="shell pb-20 md:pb-28">
         <Reveal>
@@ -69,7 +69,7 @@ export default async function PracticeArea({
                 <p
                   className={
                     i === 0
-                      ? "display text-[clamp(1.25rem,2.2vw,1.625rem)] leading-snug text-fg/90"
+                      ? "h2-soft text-[clamp(1.375rem,2.3vw,1.75rem)] text-fg"
                       : "mt-7 text-[1.0625rem] leading-relaxed text-fg/70 text-pretty"
                   }
                 >
@@ -85,7 +85,7 @@ export default async function PracticeArea({
                   <dl className="divide-y divide-line border-y border-line">
                     {area.faqs.map((f) => (
                       <div key={f.q} className="py-7">
-                        <dt className="display text-[1.25rem] leading-snug text-fg">{f.q}</dt>
+                        <dt className="h2-soft text-[1.25rem] text-fg">{f.q}</dt>
                         <dd className="mt-3 max-w-[62ch] text-[15px] leading-relaxed text-fg/65">
                           {f.a}
                         </dd>
@@ -101,8 +101,8 @@ export default async function PracticeArea({
             <Reveal delay={0.15}>
               <div className="lg:sticky lg:top-28">
                 <Figure
-                  src={area.photo}
-                  alt={area.name}
+                  src="/media/photos/coffee-espresso.jpg"
+                  alt="Shaheen Wallace"
                   ratio="3 / 4"
                   note="Optional supporting image."
                 />

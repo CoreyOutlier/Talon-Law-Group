@@ -58,7 +58,7 @@ export default function About() {
               <p
                 className={
                   i === 0
-                    ? "text-[clamp(1.25rem,2.2vw,1.625rem)] leading-snug text-fg/90 display"
+                    ? "h2-soft text-[clamp(1.375rem,2.3vw,1.75rem)] text-fg"
                     : "mt-7 text-[1.0625rem] leading-relaxed text-fg/70 text-pretty"
                 }
               >
@@ -83,7 +83,7 @@ export default function About() {
 
           <Reveal delay={0.35}>
             <blockquote className="mt-14 border-l-2 border-accent pl-7">
-              <p className="display text-[clamp(1.5rem,2.8vw,2.125rem)] leading-snug text-fg">
+              <p className="h2-soft text-[clamp(1.5rem,2.8vw,2.125rem)] text-fg">
                 Insurance companies price a case by the lawyer holding it. That is the
                 entire business. My job is to make that calculation expensive.
               </p>

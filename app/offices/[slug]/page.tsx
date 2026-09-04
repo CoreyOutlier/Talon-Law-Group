@@ -63,6 +63,7 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
         eyebrow={`${m.kicker} · ${m.stateFull}`}
         lines={[m.city, <em key="e" className="not-italic text-accent">injury law.</em>]}
         lede={m.lede}
+        photo={m.photo}
       />
 
       <section className="shell pb-20 md:pb-28">
@@ -73,7 +74,7 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
                 <p
                   className={
                     i === 0
-                      ? "display text-[clamp(1.25rem,2.2vw,1.625rem)] leading-snug text-fg/90"
+                      ? "h2-soft text-[clamp(1.375rem,2.3vw,1.75rem)] text-fg"
                       : "mt-7 text-[1.0625rem] leading-relaxed text-fg/70 text-pretty"
                   }
                 >
@@ -94,7 +95,7 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
                 <dl className="divide-y divide-line border-y border-line">
                   {m.rules.map((r) => (
                     <div key={r.label} className="grid gap-3 py-6 md:grid-cols-12 md:gap-8">
-                      <dt className="display text-[1.1875rem] leading-snug text-accent md:col-span-4">
+                      <dt className="h2-soft text-[1.1875rem] text-accent md:col-span-4">
                         {r.label}
                       </dt>
                       <dd className="text-[15px] leading-relaxed text-fg/65 md:col-span-8">
