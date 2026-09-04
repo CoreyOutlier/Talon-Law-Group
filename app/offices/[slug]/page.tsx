@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { markets, practiceAreas, site } from "@/lib/site";
+import { cityPhoto } from "@/lib/env";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Motion";
 import { CTA } from "@/components/sections/CTA";
@@ -63,7 +64,7 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
         eyebrow={`${m.kicker} · ${m.stateFull}`}
         lines={[m.city, <em key="e" className="not-italic text-accent">injury law.</em>]}
         lede={m.lede}
-        photo={m.photo}
+        photo={cityPhoto[m.slug] ?? m.photo}
       />
 
       <section className="shell pb-20 md:pb-28">
