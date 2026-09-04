@@ -21,29 +21,29 @@ export default function Offices() {
       />
 
       <section className="shell pb-20 md:pb-28">
-        <ul className="border-t border-hairline">
+        <ul className="border-t border-line">
           {markets.map((m, i) => (
-            <Reveal as="li" key={m.slug} delay={i * 0.06} className="border-b border-hairline">
+            <Reveal as="li" key={m.slug} delay={i * 0.06} className="border-b border-line">
               <Link href={`/offices/${m.slug}`} className="group block py-10 md:py-14">
                 <div className="grid gap-6 md:grid-cols-12 md:items-start">
-                  <span className="figure text-[12px] text-steel-2 md:col-span-1">
+                  <span className="figure text-[12px] text-fg-3 md:col-span-1">
                     {String(i + 1).padStart(2, "0")}
                   </span>
 
                   <div className="md:col-span-4">
-                    <h2 className="display text-[clamp(1.5rem,3vw,2.5rem)] leading-tight text-mist/90 transition-colors duration-500 group-hover:text-wine-2">
+                    <h2 className="display text-[clamp(1.5rem,3vw,2.5rem)] leading-tight text-fg/90 transition-colors duration-500 group-hover:text-accent">
                       {m.city}
                     </h2>
-                    <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-steel">
+                    <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-fg-3">
                       {m.stateFull}
-                      {m.isHQ && <span className="text-wine-2"> · Head office</span>}
+                      {m.isHQ && <span className="text-accent"> · Head office</span>}
                     </p>
                   </div>
 
                   <div className="md:col-span-6">
-                    <p className="max-w-[52ch] text-[15px] leading-relaxed text-mist/65">{m.lede}</p>
+                    <p className="max-w-[52ch] text-[15px] leading-relaxed text-fg/65">{m.lede}</p>
                     {m.address && (
-                      <address className="mt-5 not-italic text-[13px] leading-relaxed text-steel">
+                      <address className="mt-5 not-italic text-[13px] leading-relaxed text-fg-3">
                         {m.address.street}
                         <br />
                         {m.address.city}, {m.address.region} {m.address.postal}
@@ -52,7 +52,7 @@ export default function Offices() {
                   </div>
 
                   <span
-                    className="hidden text-right text-steel-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-wine-2 md:col-span-1 md:block"
+                    className="hidden text-right text-fg-3 transition-all duration-500 group-hover:translate-x-1 group-hover:text-accent md:col-span-1 md:block"
                     style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
                     aria-hidden
                   >
@@ -65,14 +65,14 @@ export default function Offices() {
         </ul>
 
         <Reveal delay={0.15}>
-          <div className="mt-16 grid gap-12 border-t border-hairline pt-12 lg:grid-cols-12">
+          <div className="mt-16 grid gap-12 border-t border-line pt-12 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <p className="eyebrow mb-6">Admissions</p>
               <ul className="space-y-4">
                 {admissions.map((adm) => (
-                  <li key={adm.court} className="border-l border-hairline pl-5">
-                    <p className="text-[14px] leading-snug text-mist/85">{adm.court}</p>
-                    <p className="mt-1 text-[12px] text-steel">{adm.meta}</p>
+                  <li key={adm.court} className="border-l border-line pl-5">
+                    <p className="text-[14px] leading-snug text-fg/85">{adm.court}</p>
+                    <p className="mt-1 text-[12px] text-fg-3">{adm.meta}</p>
                   </li>
                 ))}
               </ul>
@@ -80,7 +80,7 @@ export default function Offices() {
 
             <div className="lg:col-span-6 lg:col-start-7">
               <p className="eyebrow mb-6">Also accepting matters in</p>
-              <ul className="space-y-2 text-[15px] text-mist/80">
+              <ul className="space-y-2 text-[15px] text-fg/80">
                 {site.alsoServing.map((j) => <li key={j}>{j}</li>)}
               </ul>
 

@@ -21,33 +21,33 @@ export default function Results() {
 
       <section className="shell pb-20 md:pb-28">
         {publishedResults.length > 0 ? (
-          <ul className="border-t border-hairline">
+          <ul className="border-t border-line">
             {publishedResults.map((r, i) => (
-              <Reveal as="li" key={i} delay={i * 0.06} className="group border-b border-hairline">
+              <Reveal as="li" key={i} delay={i * 0.06} className="group border-b border-line">
                 <div className="grid gap-6 py-10 md:grid-cols-12 md:py-14">
                   <div className="md:col-span-4">
-                    <p className="figure text-[clamp(2.75rem,7vw,5rem)] leading-none text-wine-2 transition-transform duration-700 group-hover:translate-x-1"
+                    <p className="figure text-[clamp(2.75rem,7vw,5rem)] leading-none text-accent transition-transform duration-700 group-hover:translate-x-1"
                        style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}>
                       {r.amount}
                     </p>
                   </div>
                   <div className="md:col-span-3">
-                    <p className="text-[11px] uppercase tracking-[0.2em] text-steel">{r.type}</p>
+                    <p className="text-[11px] uppercase tracking-[0.2em] text-fg-3">{r.type}</p>
                   </div>
                   <div className="md:col-span-5">
-                    <p className="max-w-[52ch] text-[15px] leading-relaxed text-mist/70">{r.detail}</p>
+                    <p className="max-w-[52ch] text-[15px] leading-relaxed text-fg/70">{r.detail}</p>
                   </div>
                 </div>
               </Reveal>
             ))}
           </ul>
         ) : (
-          <p className="border-y border-hairline py-16 text-[15px] text-steel">
+          <p className="border-y border-line py-16 text-[15px] text-fg-3">
             Results are being compiled. Call us and we will discuss comparable matters directly.
           </p>
         )}
 
-        <p className="mt-10 max-w-[80ch] text-[12px] leading-relaxed text-steel-2">
+        <p className="mt-10 max-w-[80ch] text-[12px] leading-relaxed text-fg-3">
           {resultsDisclaimer}
         </p>
       </section>

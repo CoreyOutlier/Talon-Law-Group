@@ -1,127 +1,56 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { site } from "@/lib/site";
+import Link from "next/link";
+import { useRef } from "react";
+import { photos, site } from "@/lib/site";
 import { useScrollProgress } from "@/lib/scrollfx";
 
-/* ---------------------------------------------------------------------------
- * Hero — a film frame, not a landing page.
- *
- * One image, one line, nothing else. Everything transactional lives below the
- * fold or in the fixed chrome, so the first screen reads like the opening shot
- * of a commercial rather than a lead form with a photo behind it.
- * ------------------------------------------------------------------------- */
+/* Split editorial hero: type on paper, one photograph at full height. */
 export function Hero() {
   const section = useRef<HTMLElement>(null);
-  const bed = useRef<HTMLDivElement>(null);
+  const photo = useRef<HTMLDivElement>(null);
   const copy = useRef<HTMLDivElement>(null);
-  const cue = useRef<HTMLDivElement>(null);
-  const [playVideo, setPlayVideo] = useState(false);
 
-  useScrollProgress(
-    section,
-    (p) => {
-      if (bed.current) bed.current.style.transform = `translate3d(0, ${p * 22}%, 0) scale(${1 + p * 0.12})`;
-      const fade = String(Math.max(0, 1 - p * 1.45));
-      if (copy.current) {
-        copy.current.style.opacity = fade;
-        copy.current.style.transform = `translate3d(0, ${p * -5}%, 0)`;
-      }
-      if (cue.current) cue.current.style.opacity = fade;
-    },
-    "leave"
-  );
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const c = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
-    if (c?.saveData) return;
-    if (c?.effectiveType && c.effectiveType !== "4g") return;
-    const t = setTimeout(() => setPlayVideo(true), 500);
-    return () => clearTimeout(t);
-  }, []);
+  useScrollProgress(section, (p) => {
+    if (photo.current) photo.current.style.transform = `translate3d(0, ${p * 14}%, 0) scale(${1 + p * 0.06})`;
+    if (copy.current) { copy.current.style.transform = `translate3d(0, ${p * -6}%, 0)`; copy.current.style.opacity = String(Math.max(0, 1 - p * 1.3)); }
+  }, "leave");
 
   const LINES = ["Some people", "fight back", "for a living."];
 
   return (
-    <section ref={section} className="relative h-[100svh] overflow-hidden">
-      {/* ---------- The frame ---------- */}
-      <div ref={bed} className="vignette absolute inset-0 -z-10 will-change-transform">
-        <div className="absolute inset-0 bg-ink-2" />
-        <div
-          className="absolute inset-0 opacity-40"
-          style={{
-            background:
-              "radial-gradient(110% 80% at 72% 24%, rgba(142,17,72,.22) 0%, rgba(8,57,84,.14) 40%, transparent 72%)",
-          }}
-        />
-
-        <div
-          className="hero-still absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url(/media/shaheen/hero-poster.jpg)" }}
-        />
-
-        {playVideo && (
-          <video
-            className="absolute inset-0 h-full w-full object-cover"
-            autoPlay muted loop playsInline preload="none"
-            poster="/media/shaheen/hero-poster.jpg"
-            aria-hidden
-          >
-            <source src="/media/video/hero.mp4" type="video/mp4" />
-          </video>
-        )}
-
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-transparent" />
-        {/* top scrim — keeps the nav readable over a bright frame */}
-        <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-ink/80 via-ink/35 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/25 to-transparent" />
-      </div>
-
-      {/* ---------- The line ---------- */}
-      <div
-        ref={copy}
-        className="shell relative flex h-full flex-col justify-end pb-[15vh] will-change-transform"
-      >
-        <h1 className="display display-xl max-w-[15ch] text-[clamp(2.5rem,9vw,8.5rem)]">
-          {LINES.map((l, i) => (
-            <span key={i} className="line-mask">
-              <span
-                className={`hero-line block ${i === 2 ? "text-wine-2" : ""}`}
-                style={{ animationDelay: `${0.35 + i * 0.13}s` }}
-              >
-                {l}
+    <section ref={section} className="relative overflow-hidden bg-paper text-ink">
+      <div className="shell grid min-h-[100svh] grid-cols-1 lg:grid-cols-12">
+        {/* copy */}
+        <div ref={copy} className="order-2 flex flex-col justify-center py-14 will-change-transform lg:order-1 lg:col-span-7 lg:pb-16 lg:pr-12 lg:pt-32">
+          <p className="hero-meta eyebrow mb-8">{site.cities.join(" · ")}</p>
+          <h1 className="display display-xl text-[clamp(2.75rem,7.2vw,6.75rem)]">
+            {LINES.map((l, i) => (
+              <span key={i} className="line-mask">
+                <span className={`hero-line block ${i === 2 ? "text-wine" : ""}`} style={{ animationDelay: `${0.25 + i * 0.12}s` }}>{l}</span>
               </span>
-            </span>
-          ))}
-        </h1>
-
-        <div className="hero-meta mt-10 flex items-end justify-between gap-8">
-          <p className="max-w-[30ch] text-[11px] uppercase leading-[2] tracking-[0.26em] text-steel">
-            {site.name}
-            <br />
-            Injury trial practice
+            ))}
+          </h1>
+          <p className="hero-meta mt-9 max-w-[46ch] text-[1.0625rem] leading-relaxed text-ink/70 text-pretty md:text-[1.1875rem]">
+            The insurance company assigned your crash to a professional the day it happened. You should have one too.
           </p>
-          <a
-            href={`tel:${site.phoneRaw}`}
-            className="hidden text-[11px] uppercase tracking-[0.26em] text-mist/60 transition-colors hover:text-wine-2 md:block"
-          >
-            {site.phone}
-          </a>
+          <div className="hero-meta mt-10 flex flex-col gap-3 sm:flex-row">
+            <Link href="/contact" className="btn btn-wine">Start your case</Link>
+            <a href={`tel:${site.phoneRaw}`} className="btn btn-ghost">{site.phone}</a>
+          </div>
+          <span className="hero-rule mt-12 block h-px w-full origin-left bg-[#D9D3C8]" />
+          <p className="hero-meta mt-5 font-display text-[10px] uppercase tracking-[0.26em] text-ink/50">
+            No fee unless we win · Order of Barristers · Trial practice since {site.founded}
+          </p>
         </div>
 
-        <span className="hero-rule mt-8 block h-px w-full origin-left bg-hairline" />
-      </div>
-
-      <div
-        ref={cue}
-        aria-hidden
-        className="hero-meta pointer-events-none absolute bottom-6 right-[var(--shell-x)] hidden items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-steel md:flex"
-      >
-        Scroll
-        <span className="relative block h-10 w-px overflow-hidden bg-hairline">
-          <span className="scroll-tick absolute inset-x-0 top-0 block h-4 bg-wine-2" />
-        </span>
+        {/* photograph */}
+        <div className="order-1 relative -mx-[var(--shell-x)] h-[62svh] overflow-hidden lg:order-2 lg:col-span-5 lg:mx-0 lg:-mr-[var(--shell-x)] lg:h-auto lg:min-h-[100svh]">
+          <div ref={photo} className="hero-photo absolute inset-0 will-change-transform">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={photos.hero} alt="Shaheen Wallace on the courthouse steps" className="h-full w-full object-cover object-[50%_20%]" decoding="async" fetchPriority="high" />
+          </div>
+        </div>
       </div>
     </section>
   );

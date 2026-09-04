@@ -210,6 +210,7 @@ export const promises = [
 /* -------------------------------------------------------------------------- */
 
 export type PracticeArea = {
+  photo: string;
   slug: string;
   name: string;
   short: string;
@@ -223,6 +224,7 @@ export type PracticeArea = {
 
 export const practiceAreas: PracticeArea[] = [
   {
+    photo: "/media/photos/couch-wide-serious.jpg",
     slug: "truck-accidents",
     name: "Truck & Tractor-Trailer",
     short: "Truck Accidents",
@@ -247,6 +249,7 @@ export const practiceAreas: PracticeArea[] = [
     ],
   },
   {
+    photo: "/media/photos/brick-window.jpg",
     slug: "car-accidents",
     name: "Car & Motor Vehicle Crashes",
     short: "Car Accidents",
@@ -271,6 +274,7 @@ export const practiceAreas: PracticeArea[] = [
     ],
   },
   {
+    photo: "/media/photos/couch-glasses-serious.jpg",
     slug: "medical-malpractice",
     name: "Medical Malpractice",
     short: "Medical Malpractice",
@@ -291,6 +295,7 @@ export const practiceAreas: PracticeArea[] = [
     ],
   },
   {
+    photo: "/media/photos/brick-chair-out.jpg",
     slug: "wrongful-death",
     name: "Wrongful Death",
     short: "Wrongful Death",
@@ -311,6 +316,7 @@ export const practiceAreas: PracticeArea[] = [
     ],
   },
   {
+    photo: "/media/photos/couch-chin.jpg",
     slug: "slip-and-fall",
     name: "Slip, Trip & Fall",
     short: "Slip & Fall",
@@ -331,6 +337,7 @@ export const practiceAreas: PracticeArea[] = [
     ],
   },
   {
+    photo: "/media/photos/brick-chair-left.jpg",
     slug: "nursing-home-abuse",
     name: "Nursing Home Neglect & Abuse",
     short: "Nursing Home",
@@ -351,6 +358,7 @@ export const practiceAreas: PracticeArea[] = [
     ],
   },
   {
+    photo: "/media/photos/couch-hands.jpg",
     slug: "birth-injuries",
     name: "Birth Injury",
     short: "Birth Injury",
@@ -371,6 +379,7 @@ export const practiceAreas: PracticeArea[] = [
     ],
   },
   {
+    photo: "/media/photos/brick-chair-pen.jpg",
     slug: "pedestrian-and-bicycle-accidents",
     name: "Pedestrian & Bicycle",
     short: "Pedestrian & Bicycle",
@@ -391,6 +400,7 @@ export const practiceAreas: PracticeArea[] = [
     ],
   },
   {
+    photo: "/media/photos/couch-writing.jpg",
     slug: "hit-and-run",
     name: "Hit & Run",
     short: "Hit & Run",
@@ -519,7 +529,7 @@ export const attorney = {
   name: "Shaheen Z. Wallace",
   suffix: "Esq.",
   role: "Founder & Trial Attorney",
-  portrait: "/media/shaheen/portrait.jpg",
+  portrait: "/media/photos/brick-standing.jpg",
   lede:
     "A New Yorker who built his trial practice in Pittsburgh and now takes cases in Los Angeles as well — a decade spent against the largest insurance carriers in the country, on behalf of people they hoped would go away.",
   bio: [
@@ -589,3 +599,20 @@ export const nav = [
 
 export const disclaimer =
   "The information on this website is for general informational purposes only and is not legal advice. Viewing this site or contacting Talon Law Group does not create an attorney-client relationship. That relationship is formed only by a signed written agreement. Do not send confidential information through this website until an attorney-client relationship is established.";
+
+/* -------------------------------------------------------------------------- */
+/* PHOTOGRAPHY — the real shoot. Three setups.                                 */
+/* -------------------------------------------------------------------------- */
+export const photos = {
+  hero: "/media/photos/courthouse-steps.jpg",
+  portrait: "/media/photos/brick-standing.jpg",
+  phone: "/media/photos/coffee-espresso.jpg",
+  film: ["/media/photos/couch-wide-serious.jpg", "/media/photos/brick-chair-wide.jpg", "/media/photos/brick-window.jpg"],
+  strip: ["/media/photos/bench-laugh.jpg", "/media/photos/coffee-table.jpg", "/media/photos/brick-smile.jpg"],
+  gallery: [
+    "/media/photos/couch-glasses-laugh.jpg", "/media/photos/brick-chair-pen.jpg", "/media/photos/bench-laugh.jpg",
+    "/media/photos/couch-writing.jpg", "/media/photos/brick-chair-left.jpg", "/media/photos/couch-hands.jpg",
+    "/media/photos/brick-chair-out.jpg", "/media/photos/coffee-table.jpg", "/media/photos/couch-standing.jpg",
+  ],
+  og: "/media/photos/couch-wide-smile.jpg",
+} as const;

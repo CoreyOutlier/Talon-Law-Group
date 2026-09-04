@@ -56,9 +56,9 @@ export default async function PracticeArea({
 
       <section className="shell pb-20 md:pb-28">
         <Reveal>
-          <div className="mb-16 flex flex-wrap items-center gap-4 border-y border-hairline py-5">
+          <div className="mb-16 flex flex-wrap items-center gap-4 border-y border-line py-5">
             <span className="h-1.5 w-1.5 rotate-45 bg-wine" aria-hidden />
-            <p className="text-[13px] uppercase tracking-[0.14em] text-wine-2">{area.urgency}</p>
+            <p className="text-[13px] uppercase tracking-[0.14em] text-accent">{area.urgency}</p>
           </div>
         </Reveal>
 
@@ -69,8 +69,8 @@ export default async function PracticeArea({
                 <p
                   className={
                     i === 0
-                      ? "display text-[clamp(1.25rem,2.2vw,1.625rem)] leading-snug text-mist/90"
-                      : "mt-7 text-[1.0625rem] leading-relaxed text-mist/70 text-pretty"
+                      ? "display text-[clamp(1.25rem,2.2vw,1.625rem)] leading-snug text-fg/90"
+                      : "mt-7 text-[1.0625rem] leading-relaxed text-fg/70 text-pretty"
                   }
                 >
                   {para}
@@ -80,13 +80,13 @@ export default async function PracticeArea({
 
             {area.faqs.length > 0 && (
               <Reveal delay={0.2}>
-                <div className="mt-16 border-t border-hairline pt-10">
+                <div className="mt-16 border-t border-line pt-10">
                   <p className="eyebrow mb-8">Questions we get</p>
-                  <dl className="divide-y divide-hairline border-y border-hairline">
+                  <dl className="divide-y divide-line border-y border-line">
                     {area.faqs.map((f) => (
                       <div key={f.q} className="py-7">
-                        <dt className="display text-[1.25rem] leading-snug text-mist">{f.q}</dt>
-                        <dd className="mt-3 max-w-[62ch] text-[15px] leading-relaxed text-mist/65">
+                        <dt className="display text-[1.25rem] leading-snug text-fg">{f.q}</dt>
+                        <dd className="mt-3 max-w-[62ch] text-[15px] leading-relaxed text-fg/65">
                           {f.a}
                         </dd>
                       </div>
@@ -101,14 +101,14 @@ export default async function PracticeArea({
             <Reveal delay={0.15}>
               <div className="lg:sticky lg:top-28">
                 <Figure
-                  src={`/media/practice/${area.slug}.jpg`}
+                  src={area.photo}
                   alt={area.name}
                   ratio="3 / 4"
                   note="Optional supporting image."
                 />
-                <div className="mt-8 border border-hairline p-7">
+                <div className="mt-8 border border-line p-7">
                   <p className="eyebrow mb-4">Talk it through</p>
-                  <p className="text-[14px] leading-relaxed text-mist/70">
+                  <p className="text-[14px] leading-relaxed text-fg/70">
                     Free, confidential, no obligation. You will speak with the attorney.
                   </p>
                   <a href={`tel:${site.phoneRaw}`} className="btn btn-wine mt-6 w-full">
@@ -126,16 +126,16 @@ export default async function PracticeArea({
         <Reveal delay={0.2}>
           <Link
             href={`/practice-areas/${next.slug}`}
-            className="group mt-24 flex items-center justify-between gap-6 border-t border-hairline pt-10"
+            className="group mt-24 flex items-center justify-between gap-6 border-t border-line pt-10"
           >
             <span>
-              <span className="eyebrow !text-steel-2">Next</span>
-              <span className="display mt-3 block text-[clamp(1.75rem,4vw,3rem)] leading-none text-mist/85 transition-colors duration-500 group-hover:text-wine-2">
+              <span className="eyebrow !text-fg-3">Next</span>
+              <span className="display mt-3 block text-[clamp(1.75rem,4vw,3rem)] leading-none text-fg/85 transition-colors duration-500 group-hover:text-accent">
                 {next.name}
               </span>
             </span>
             <span
-              className="text-steel-2 transition-all duration-500 group-hover:translate-x-2 group-hover:text-wine-2"
+              className="text-fg-3 transition-all duration-500 group-hover:translate-x-2 group-hover:text-accent"
               style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
               aria-hidden
             >

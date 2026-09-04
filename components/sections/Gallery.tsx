@@ -1,68 +1,38 @@
 "use client";
 
 import { useRef } from "react";
-import { Figure } from "@/components/Figure";
+import { photos } from "@/lib/site";
 import { useScrollProgress } from "@/lib/scrollfx";
 
-/* ---------------------------------------------------------------------------
- * Gallery — a contact sheet that breathes.
- * Three columns moving at different rates against the scroll. The offset rates
- * are what make it read as depth rather than a grid of photos.
- * ------------------------------------------------------------------------- */
-
-const COLUMNS: { src: string; ratio: string; alt: string }[][] = [
-  [
-    { src: "/media/shaheen/gallery-1.jpg", ratio: "3 / 4", alt: "Shaheen Wallace" },
-    { src: "/media/shaheen/gallery-2.jpg", ratio: "3 / 4", alt: "Talon Law Group" },
-  ],
-  [
-    { src: "/media/shaheen/gallery-3.jpg", ratio: "3 / 4", alt: "Shaheen Wallace" },
-    { src: "/media/shaheen/gallery-4.jpg", ratio: "3 / 4", alt: "Shaheen Wallace" },
-    { src: "/media/shaheen/gallery-5.jpg", ratio: "3 / 4", alt: "Talon Law Group" },
-  ],
-  [
-    { src: "/media/shaheen/gallery-6.jpg", ratio: "3 / 4", alt: "Shaheen Wallace" },
-    { src: "/media/shaheen/gallery-7.jpg", ratio: "3 / 4", alt: "Talon Law Group" },
-  ],
-];
-
-const RATES = [-13, 9, -20];
-
+/* A horizontal contact sheet that the page scroll drives sideways. */
 export function Gallery() {
   const section = useRef<HTMLElement>(null);
-  const cols = useRef<(HTMLDivElement | null)[]>([]);
-
+  const track = useRef<HTMLDivElement>(null);
   useScrollProgress(section, (p) => {
-    for (let i = 0; i < RATES.length; i++) {
-      const el = cols.current[i];
-      if (el) el.style.transform = `translate3d(0, ${(p - 0.5) * 2 * RATES[i]}%, 0)`;
-    }
-  });
+    const t = track.current; if (!t) return;
+    const max = t.scrollWidth - window.innerWidth;
+    t.style.transform = `translate3d(${-p * Math.max(max, 0)}px, 0, 0)`;
+  }, "pin");
 
   return (
-    <section
-      ref={section}
-      className="relative overflow-hidden border-y border-hairline bg-ink-2 py-24 md:py-32"
-    >
-      <div className="shell">
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5">
-          {COLUMNS.map((col, ci) => (
-            <div
-              key={ci}
-              ref={(el) => { cols.current[ci] = el; }}
-              className={`flex flex-col gap-3 will-change-transform md:gap-5 ${ci === 2 ? "hidden md:flex" : ""}`}
-            >
-              {col.map((item) => (
-                <Figure
-                  key={item.src}
-                  src={item.src}
-                  alt={item.alt}
-                  ratio={item.ratio}
-                  imgClassName="transition-transform duration-[1.6s] hover:scale-[1.05]"
-                />
-              ))}
-            </div>
-          ))}
+    <section ref={section} className="relative border-y border-line bg-ground-2" style={{ height: "260vh" }}>
+      <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden">
+        <div className="shell mb-8 flex w-full items-end justify-between">
+          <p className="eyebrow">Pittsburgh · the loft · the courthouse</p>
+          <p className="hidden font-display text-[10px] uppercase tracking-[0.25em] text-fg-3 md:block">Scroll →</p>
+        </div>
+        <div className="w-full overflow-hidden">
+        <div ref={track} className="flex w-max items-end gap-5 pl-[var(--shell-x)] pr-[var(--shell-x)] will-change-transform md:gap-8">
+          {photos.gallery.map((src, i) => {
+            const tall = /standing|chair-pen|chair-left|coffee-table/.test(src);
+            return (
+              <div key={src} className={`shrink-0 overflow-hidden bg-ground ${tall ? "w-[58vw] md:w-[24vw]" : "w-[80vw] md:w-[36vw]"} ${i % 3 === 1 ? "mb-10 md:mb-16" : ""}`} style={{ aspectRatio: tall ? "3 / 4" : "3 / 2" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={src} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-[1.6s] hover:scale-[1.04]" />
+              </div>
+            );
+          })}
+        </div>
         </div>
       </div>
     </section>

@@ -115,11 +115,11 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
         <h3 className="display text-[clamp(2rem,4vw,3rem)]">
           We have it. Expect a call
           <br />
-          <em className="not-italic text-wine-2">within 15 minutes</em> during business hours.
+          <em className="not-italic text-accent">within 15 minutes</em> during business hours.
         </h3>
-        <p className="mt-6 max-w-[46ch] text-[15px] leading-relaxed text-mist/65">
+        <p className="mt-6 max-w-[46ch] text-[15px] leading-relaxed text-fg/65">
           If it is after hours, you will hear from us first thing. If it cannot wait, call{" "}
-          <a href={`tel:${site.phoneRaw}`} className="text-wine-2 link-draw">{site.phone}</a> now — it is answered around the clock.
+          <a href={`tel:${site.phoneRaw}`} className="text-accent link-draw">{site.phone}</a> now — it is answered around the clock.
         </p>
       </div>
     );
@@ -129,14 +129,14 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
     <div className={compact ? "" : "min-h-[480px]"}>
       {/* Progress */}
       <div className="mb-9 flex items-center gap-4">
-        <div className="h-px flex-1 bg-hairline">
+        <div className="h-px flex-1 bg-line">
           <motion.div
             className="h-px bg-wine"
             animate={{ width: `${Math.max(progress, 6)}%` }}
             transition={{ duration: 0.7, ease: EASE }}
           />
         </div>
-        <span className="figure text-[12px] tabular-nums text-steel">
+        <span className="figure text-[12px] tabular-nums text-fg-3">
           {String(Math.min(step + 1, total)).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </span>
       </div>
@@ -152,7 +152,7 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
           >
             <h3 className="display text-[clamp(1.75rem,3.4vw,2.75rem)]">{STEPS[step].q}</h3>
             {STEPS[step].sub && (
-              <p className="mt-3 max-w-[44ch] text-[14px] leading-relaxed text-steel">{STEPS[step].sub}</p>
+              <p className="mt-3 max-w-[44ch] text-[14px] leading-relaxed text-fg-3">{STEPS[step].sub}</p>
             )}
 
             <div className="mt-8 grid gap-2 sm:grid-cols-2">
@@ -165,13 +165,13 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
                     onClick={() => pick(STEPS[step].key, opt)}
                     className={`group flex min-h-[60px] items-center justify-between gap-4 border px-5 py-4 text-left text-[15px] transition-all duration-300 ${
                       selected
-                        ? "border-wine bg-wine/10 text-mist"
-                        : "border-hairline text-mist/80 hover:border-wine/60 hover:bg-white/[0.02]"
+                        ? "border-accent bg-accent/10 text-fg"
+                        : "border-line text-fg/80 hover:border-accent/60 hover:bg-fg/[0.03]"
                     }`}
                   >
                     <span>{opt}</span>
                     <span
-                      className={`shrink-0 transition-transform duration-500 ${selected ? "text-wine-2" : "text-steel-2 group-hover:translate-x-1"}`}
+                      className={`shrink-0 transition-transform duration-500 ${selected ? "text-accent" : "text-fg-3 group-hover:translate-x-1"}`}
                       style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
                     >
                       →
@@ -185,7 +185,7 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
               <button
                 type="button"
                 onClick={() => setStep((s) => s - 1)}
-                className="mt-8 text-[12px] uppercase tracking-[0.16em] text-steel transition-colors hover:text-mist"
+                className="mt-8 text-[12px] uppercase tracking-[0.16em] text-fg-3 transition-colors hover:text-fg"
               >
                 ← Back
               </button>
@@ -200,7 +200,7 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
             transition={{ duration: 0.45, ease: EASE }}
           >
             <h3 className="display text-[clamp(1.75rem,3.4vw,2.75rem)]">Where do we reach you?</h3>
-            <p className="mt-3 max-w-[46ch] text-[14px] leading-relaxed text-steel">
+            <p className="mt-3 max-w-[46ch] text-[14px] leading-relaxed text-fg-3">
               A lawyer reviews this — not a call center. Free, confidential, no obligation.
             </p>
 
@@ -211,12 +211,12 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
                 <Field label="Email" type="email" value={a.email} onChange={(v) => setA({ ...a, email: v })} autoComplete="email" />
               </div>
               <div className="sm:col-span-2">
-                <label className="eyebrow mb-2 block !text-steel">Anything we should know first</label>
+                <label className="eyebrow mb-2 block !text-fg-3">Anything we should know first</label>
                 <textarea
                   rows={4}
                   value={a.detail}
                   onChange={(e) => setA({ ...a, detail: e.target.value })}
-                  className="w-full resize-none border border-hairline bg-transparent px-4 py-3 text-[15px] text-mist outline-none transition-colors placeholder:text-steel-2 focus:border-wine"
+                  className="w-full resize-none border border-line bg-transparent px-4 py-3 text-[15px] text-fg outline-none transition-colors placeholder:text-fg-3 focus:border-accent"
                   placeholder="Optional. Do not include confidential details until we have spoken."
                 />
               </div>
@@ -229,20 +229,20 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
               <button
                 type="button"
                 onClick={() => setStep((s) => s - 1)}
-                className="text-[12px] uppercase tracking-[0.16em] text-steel transition-colors hover:text-mist"
+                className="text-[12px] uppercase tracking-[0.16em] text-fg-3 transition-colors hover:text-fg"
               >
                 ← Back
               </button>
             </div>
 
             {state === "error" && (
-              <p className="mt-5 text-[13px] text-wine-2">
+              <p className="mt-5 text-[13px] text-accent">
                 That did not send. Please call{" "}
                 <a href={`tel:${site.phoneRaw}`} className="underline">{site.phone}</a> — we will pick up.
               </p>
             )}
 
-            <p className="mt-7 max-w-[62ch] text-[11px] leading-relaxed text-steel-2">
+            <p className="mt-7 max-w-[62ch] text-[11px] leading-relaxed text-fg-3">
               Submitting this form does not create an attorney-client relationship. Do not send
               confidential or time-sensitive information until that relationship is established
               in writing.
@@ -262,8 +262,8 @@ function Field({
 }) {
   return (
     <div>
-      <label className="eyebrow mb-2 block !text-steel">
-        {label} {required && <span className="text-wine-2">*</span>}
+      <label className="eyebrow mb-2 block !text-fg-3">
+        {label} {required && <span className="text-accent">*</span>}
       </label>
       <input
         type={type}
@@ -271,7 +271,7 @@ function Field({
         value={value}
         autoComplete={autoComplete}
         onChange={(e) => onChange(e.target.value)}
-        className="h-12 w-full border border-hairline bg-transparent px-4 text-[15px] text-mist outline-none transition-colors focus:border-wine"
+        className="h-12 w-full border border-line bg-transparent px-4 text-[15px] text-fg outline-none transition-colors focus:border-accent"
       />
     </div>
   );

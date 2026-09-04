@@ -20,7 +20,7 @@ export default function Contact() {
 
       <section className="shell grid gap-14 pb-24 md:pb-36 lg:grid-cols-12 lg:gap-16">
         <Reveal className="lg:col-span-7 lg:order-2">
-          <div className="border border-hairline bg-ink-2 p-7 md:p-10">
+          <div className="border border-line bg-ground-2 p-7 md:p-10">
             <CaseIntake />
           </div>
         </Reveal>
@@ -31,39 +31,39 @@ export default function Contact() {
               <p className="eyebrow mb-4">Call, 24 hours</p>
               <a
                 href={`tel:${site.phoneRaw}`}
-                className="display link-draw block w-fit text-[clamp(1.875rem,4vw,2.75rem)] text-wine-2"
+                className="display link-draw block w-fit text-[clamp(1.875rem,4vw,2.75rem)] text-accent"
               >
                 {site.phone}
               </a>
-              <p className="mt-3 text-[13px] text-steel">{site.hours}</p>
+              <p className="mt-3 text-[13px] text-fg-3">{site.hours}</p>
             </div>
 
-            <div className="border-t border-hairline pt-8">
+            <div className="border-t border-line pt-8">
               <p className="eyebrow mb-4">Text</p>
-              <a href={`sms:${site.smsRaw}`} className="link-draw text-[16px] text-mist/85">
+              <a href={`sms:${site.smsRaw}`} className="link-draw text-[16px] text-fg/85">
                 {site.phone}
               </a>
             </div>
 
-            <div className="border-t border-hairline pt-8">
+            <div className="border-t border-line pt-8">
               <p className="eyebrow mb-4">Email</p>
-              <a href={`mailto:${site.email}`} className="link-draw text-[16px] text-mist/85">
+              <a href={`mailto:${site.email}`} className="link-draw text-[16px] text-fg/85">
                 {site.email}
               </a>
             </div>
 
-            <div className="border-t border-hairline pt-8">
+            <div className="border-t border-line pt-8">
               <p className="eyebrow mb-5">Offices</p>
               <ul className="space-y-6">
                 {markets.map((m) => (
                   <li key={m.slug}>
-                    <p className="text-[15px] text-mist/90">
+                    <p className="text-[15px] text-fg/90">
                       {m.city}, {m.state}
-                      {m.isHQ && <span className="ml-2 text-[11px] uppercase tracking-[0.14em] text-wine-2">Head office</span>}
+                      {m.isHQ && <span className="ml-2 text-[11px] uppercase tracking-[0.14em] text-accent">Head office</span>}
                     </p>
                     {m.address ? (
                       <>
-                        <address className="mt-1 not-italic text-[13px] leading-relaxed text-steel">
+                        <address className="mt-1 not-italic text-[13px] leading-relaxed text-fg-3">
                           {m.address.street}
                           <br />
                           {m.address.city}, {m.address.region} {m.address.postal}
@@ -74,20 +74,20 @@ export default function Contact() {
                           )}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="link-draw mt-2 inline-block text-[12px] text-wine-2"
+                          className="link-draw mt-2 inline-block text-[12px] text-accent"
                         >
                           Directions
                         </a>
                       </>
                     ) : (
-                      <p className="mt-1 text-[13px] leading-relaxed text-steel">
+                      <p className="mt-1 text-[13px] leading-relaxed text-fg-3">
                         By phone, video or in-person by arrangement.
                       </p>
                     )}
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 text-[13px] text-steel-2">
+              <p className="mt-6 text-[13px] text-fg-3">
                 Also accepting matters in {site.alsoServing.join(", ")}.
               </p>
             </div>

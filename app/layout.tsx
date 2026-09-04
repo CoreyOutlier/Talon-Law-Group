@@ -30,7 +30,7 @@ const cabin = Cabin({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#070707",
+  themeColor: "#F4F1EB",
   width: "device-width",
   initialScale: 1,
 };
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} — Pittsburgh Personal Injury Trial Lawyers`,
     description: site.description,
-    images: ["/media/brand/og.jpg"],
+    images: ["/media/photos/couch-wide-smile.jpg"],
   },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
@@ -101,7 +101,7 @@ const jsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${jost.variable} ${cabin.variable}`}>
-      <body className="grain">
+      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
