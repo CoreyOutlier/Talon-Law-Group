@@ -1,15 +1,11 @@
 name: Screenshots
 
-# Visual QA helper: renders a deployment at desktop and phone widths and pushes
-# the captures to the qa-screenshots branch (never to the site branches).
+# Visual QA helper: builds the branch, serves it, renders key pages at desktop
+# and phone widths, and pushes the captures to the qa-screenshots branch
+# (never to the site branches).
 
 on:
   workflow_dispatch:
-    inputs:
-      url:
-        description: Deployment URL (a Vercel share link is fine)
-        required: true
-        type: string
 
 permissions:
   contents: write
@@ -23,6 +19,11 @@ jobs:
         with:
           node-version: 22
 
+      - name: Build the site
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
       - name: Install Playwright
         run: |
           mkdir -p /tmp/pw && cd /tmp/pw
@@ -30,23 +31,21 @@ jobs:
           npm i playwright@1.50.1 >/dev/null 2>&1
           npx playwright install --with-deps chromium >/dev/null 2>&1
 
-      - name: Capture
-        env:
-          URL: ${{ inputs.url }}
+      - name: Serve and capture
         run: |
-          echo "::add-mask::$URL"
+          (npm run start -- -p 3000 > /tmp/server.log 2>&1 &)
+          for i in $(seq 1 60); do curl -sf http://localhost:3000/ >/dev/null && break; sleep 1; done
+          curl -sI http://localhost:3000/ | head -1
           mkdir -p /tmp/out
           cat > /tmp/pw/shoot.js <<'EOF'
           const { chromium } = require('playwright');
           (async () => {
-            const base = process.env.URL;
-            const pages = [['home', '/'], ['pittsburgh', '/offices/pittsburgh'], ['results', '/results'], ['car-accidents', '/practice-areas/car-accidents']];
+            const origin = 'http://localhost:3000';
+            const pages = [['home', '/'], ['pittsburgh', '/offices/pittsburgh'], ['los-angeles', '/offices/los-angeles'], ['results', '/results'], ['car-accidents', '/practice-areas/car-accidents'], ['contact', '/contact']];
             const b = await chromium.launch();
             for (const [vw, w, h] of [['desktop', 1440, 900], ['mobile', 390, 844]]) {
               const ctx = await b.newContext({ viewport: { width: w, height: h }, reducedMotion: 'reduce', deviceScaleFactor: 1 });
               const page = await ctx.newPage();
-              await page.goto(base, { waitUntil: 'networkidle', timeout: 90000 });
-              const origin = new URL(page.url()).origin;
               for (const [name, path] of pages) {
                 await page.goto(origin + path, { waitUntil: 'networkidle', timeout: 90000 });
                 await page.waitForTimeout(3500);
@@ -56,6 +55,17 @@ jobs:
                 await page.waitForTimeout(900);
                 await page.screenshot({ path: `/tmp/out/${name}-${vw}.jpg`, fullPage: true, type: 'jpeg', quality: 72 });
                 console.log('captured', name, vw, H);
+              }
+              // Mid-scroll frames of the pinned film sequence and the breaks on the home page.
+              if (vw === 'desktop') {
+                await page.goto(origin + '/', { waitUntil: 'networkidle', timeout: 90000 });
+                await page.waitForTimeout(2000);
+                const H = await page.evaluate(() => document.documentElement.scrollHeight);
+                for (const f of [0.18, 0.24, 0.30, 0.46, 0.62, 0.80]) {
+                  await page.evaluate(v => window.scrollTo(0, v), Math.round(H * f));
+                  await page.waitForTimeout(700);
+                  await page.screenshot({ path: `/tmp/out/home-scroll-${Math.round(f * 100)}.jpg`, type: 'jpeg', quality: 72 });
+                }
               }
               await ctx.close();
             }
