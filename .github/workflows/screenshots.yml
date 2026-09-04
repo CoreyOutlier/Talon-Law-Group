@@ -24,8 +24,9 @@ jobs:
           npm install --no-audit --no-fund
           npm run build
 
-      - name: Install Playwright
+      - name: Install Playwright and ImageMagick
         run: |
+          sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq imagemagick >/dev/null
           mkdir -p /tmp/pw && cd /tmp/pw
           npm init -y >/dev/null
           npm i playwright@1.50.1 >/dev/null 2>&1
