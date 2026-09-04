@@ -1,0 +1,53 @@
+name: Fetch environmental imagery
+
+# One-off helper: pulls the generated environmental photographs (city skylines,
+# courthouses, textures) from the CDN they were rendered to, resizes them for the
+# web, and commits them to public/media/env on the branch the workflow runs on.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch and resize
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq imagemagick >/dev/null
+          mkdir -p public/media/env /tmp/src
+          B=https://d8j0ntlcm91z4.cloudfront.net/user_34JAjvuEHdMIydK1lhX7L6vU132
+          fetch() {
+            curl -fsSL --retry 3 "$B/$2" -o "/tmp/src/$1.png"
+            convert "/tmp/src/$1.png" -auto-orient -resize '2000x2000>' -quality 80 -sampling-factor 4:2:0 -strip "public/media/env/$1.jpg"
+          }
+          fetch pgh-courthouse   hf_20260904_215434_9fd5ca35-65b5-4a4c-b579-9f90f9f87c72.png
+          fetch pgh-courthouse-2 hf_20260904_215309_659e284c-c87b-4d25-a7a9-73b52acba2f4.png
+          fetch pgh-skyline      hf_20260904_215434_516f3c65-5947-4918-95d7-e30154539642.png
+          fetch ny-foley         hf_20260904_215435_7792d36b-ba7e-40b9-896d-23e0024f86d3.png
+          fetch la-civic         hf_20260904_220433_d51d4da6-dbe1-4835-9e2d-686d87591026.png
+          fetch corridor         hf_20260904_215434_e9335e9a-9a64-49cc-ab97-73622725968f.png
+          fetch pgh-rain         hf_20260904_215434_7ad4d8f6-db6f-4726-9ca8-50243a74eaa7.png
+          fetch desk             hf_20260904_215637_7354eea4-faab-4f40-9188-3f6853cd2f39.png
+          fetch loft             hf_20260904_215637_c5d7e35c-9f49-4ec1-9e1f-376e0a9fe5a4.png
+          identify -format '%f %wx%h %b\n' public/media/env/*.jpg
+          # contact sheet so the set can be reviewed at a glance
+          montage public/media/env/*.jpg -tile 3x3 -geometry 400x400+6+6 -background '#0B0B0C' -quality 70 public/media/env/_contact-sheet.jpg
+
+      - name: Remove legacy video assets
+        run: |
+          if [ -d public/media/video ]; then git rm -rq public/media/video; fi
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A public/media/env
+          git commit -m "Add environmental imagery (skylines, courthouses, textures)" || echo "nothing to commit"
+          git push
