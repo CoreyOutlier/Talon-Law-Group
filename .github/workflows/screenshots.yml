@@ -1,8 +1,8 @@
 name: Screenshots
 
-# Visual QA helper: builds the branch, serves it, renders key pages at desktop
-# and phone widths, and pushes the captures to the qa-screenshots branch
-# (never to the site branches).
+# Visual QA helper: builds the branch, serves it, walks key pages a screen at a
+# time at desktop and phone widths, tiles the frames into contact sheets and
+# pushes them to the qa-screenshots branch (never to the site branches).
 
 on:
   workflow_dispatch:
@@ -36,36 +36,29 @@ jobs:
           (npm run start -- -p 3000 > /tmp/server.log 2>&1 &)
           for i in $(seq 1 60); do curl -sf http://localhost:3000/ >/dev/null && break; sleep 1; done
           curl -sI http://localhost:3000/ | head -1
-          mkdir -p /tmp/out
+          mkdir -p /tmp/out/frames /tmp/out/sheets
           cat > /tmp/pw/shoot.js <<'EOF'
           const { chromium } = require('playwright');
           (async () => {
             const origin = 'http://localhost:3000';
-            const pages = [['home', '/'], ['pittsburgh', '/offices/pittsburgh'], ['los-angeles', '/offices/los-angeles'], ['results', '/results'], ['car-accidents', '/practice-areas/car-accidents'], ['contact', '/contact']];
+            const desktopPages = [['home', '/'], ['pittsburgh', '/offices/pittsburgh'], ['los-angeles', '/offices/los-angeles'], ['results', '/results'], ['car-accidents', '/practice-areas/car-accidents'], ['contact', '/contact'], ['about', '/about']];
+            const mobilePages = [['home', '/'], ['pittsburgh', '/offices/pittsburgh']];
             const b = await chromium.launch();
-            for (const [vw, w, h] of [['desktop', 1440, 900], ['mobile', 390, 844]]) {
+            for (const [vw, w, h, pages, step] of [['desktop', 1440, 900, desktopPages, 0.92], ['mobile', 390, 844, mobilePages, 1.0]]) {
               const ctx = await b.newContext({ viewport: { width: w, height: h }, reducedMotion: 'reduce', deviceScaleFactor: 1 });
               const page = await ctx.newPage();
               for (const [name, path] of pages) {
                 await page.goto(origin + path, { waitUntil: 'networkidle', timeout: 90000 });
-                await page.waitForTimeout(3500);
+                await page.waitForTimeout(3000);
                 const H = await page.evaluate(() => document.documentElement.scrollHeight);
-                for (let y = 0; y < H; y += Math.round(h * 0.7)) { await page.evaluate(v => window.scrollTo(0, v), y); await page.waitForTimeout(120); }
-                await page.evaluate(() => window.scrollTo(0, 0));
-                await page.waitForTimeout(900);
-                await page.screenshot({ path: `/tmp/out/${name}-${vw}.jpg`, fullPage: true, type: 'jpeg', quality: 72 });
-                console.log('captured', name, vw, H);
-              }
-              // Mid-scroll frames of the pinned film sequence and the breaks on the home page.
-              if (vw === 'desktop') {
-                await page.goto(origin + '/', { waitUntil: 'networkidle', timeout: 90000 });
-                await page.waitForTimeout(2000);
-                const H = await page.evaluate(() => document.documentElement.scrollHeight);
-                for (const f of [0.18, 0.24, 0.30, 0.46, 0.62, 0.80]) {
-                  await page.evaluate(v => window.scrollTo(0, v), Math.round(H * f));
-                  await page.waitForTimeout(700);
-                  await page.screenshot({ path: `/tmp/out/home-scroll-${Math.round(f * 100)}.jpg`, type: 'jpeg', quality: 72 });
+                let i = 0;
+                for (let y = 0; y < H; y += Math.round(h * step)) {
+                  await page.evaluate(v => window.scrollTo(0, v), y);
+                  await page.waitForTimeout(1100);
+                  await page.screenshot({ path: `/tmp/out/frames/${name}-${vw}-f${String(i).padStart(2, '0')}.jpg`, type: 'jpeg', quality: 70 });
+                  i++;
                 }
+                console.log('captured', name, vw, H, i, 'frames');
               }
               await ctx.close();
             }
@@ -73,7 +66,14 @@ jobs:
           })().catch(e => { console.error(e); process.exit(1); });
           EOF
           cd /tmp/pw && node shoot.js
-          ls -l /tmp/out
+          cd /tmp/out/frames
+          for p in home pittsburgh los-angeles results car-accidents contact about; do
+            ls $p-desktop-f*.jpg >/dev/null 2>&1 && montage $p-desktop-f*.jpg -tile 2x3 -geometry 720x450+4+4 -background '#1a1a1a' /tmp/out/sheets/$p-desktop-%d.jpg
+          done
+          for p in home pittsburgh; do
+            ls $p-mobile-f*.jpg >/dev/null 2>&1 && montage $p-mobile-f*.jpg -tile 6x2 -geometry 260x563+4+4 -background '#1a1a1a' /tmp/out/sheets/$p-mobile-%d.jpg
+          done
+          ls -l /tmp/out/sheets
 
       - name: Publish to qa-screenshots branch
         run: |
@@ -81,7 +81,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout --orphan qa-screenshots
           git rm -rfq . >/dev/null 2>&1 || true
-          mkdir -p shots && cp /tmp/out/*.jpg shots/
-          git add shots
+          mkdir -p sheets && cp /tmp/out/sheets/*.jpg sheets/
+          git add sheets
           git commit -m "Screenshots $(date -u +%Y-%m-%dT%H:%MZ)"
           git push -f origin qa-screenshots
