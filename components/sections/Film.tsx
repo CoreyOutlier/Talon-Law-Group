@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { photos } from "@/lib/site";
+import { film } from "@/lib/env";
 import { useScrollProgress, ramp } from "@/lib/scrollfx";
 
 /* Pinned three-frame sequence. Native scroll drives it; nothing is hijacked. */
@@ -39,7 +39,7 @@ export function Film() {
           <div key={i} ref={(el) => { frames.current[i] = el; }} className="absolute inset-0" style={{ opacity: i === 0 ? 1 : 0 }}>
             <div ref={(el) => { beds.current[i] = el; }} className="absolute inset-0 will-change-transform">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={photos.film[i]} alt="" className="h-full w-full object-cover" loading={i === 0 ? "eager" : "lazy"} decoding="async" />
+              <img src={film[i]} alt="" className="h-full w-full object-cover" loading={i === 0 ? "eager" : "lazy"} decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-transparent" />
               <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-ink/60 to-transparent" />
             </div>

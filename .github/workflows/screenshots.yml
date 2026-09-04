@@ -1,0 +1,88 @@
+name: Screenshots
+
+# Visual QA helper: builds the branch, serves it, walks key pages a screen at a
+# time at desktop and phone widths, tiles the frames into contact sheets and
+# pushes them to the qa-screenshots branch (never to the site branches).
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  shoot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build the site
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
+      - name: Install Playwright and ImageMagick
+        run: |
+          sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq imagemagick >/dev/null
+          mkdir -p /tmp/pw && cd /tmp/pw
+          npm init -y >/dev/null
+          npm i playwright@1.50.1 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+
+      - name: Serve and capture
+        run: |
+          (npm run start -- -p 3000 > /tmp/server.log 2>&1 &)
+          for i in $(seq 1 60); do curl -sf http://localhost:3000/ >/dev/null && break; sleep 1; done
+          curl -sI http://localhost:3000/ | head -1
+          mkdir -p /tmp/out/frames /tmp/out/sheets
+          cat > /tmp/pw/shoot.js <<'EOF'
+          const { chromium } = require('playwright');
+          (async () => {
+            const origin = 'http://localhost:3000';
+            const desktopPages = [['home', '/'], ['pittsburgh', '/offices/pittsburgh'], ['los-angeles', '/offices/los-angeles'], ['results', '/results'], ['car-accidents', '/practice-areas/car-accidents'], ['contact', '/contact'], ['about', '/about']];
+            const mobilePages = [['home', '/'], ['pittsburgh', '/offices/pittsburgh']];
+            const b = await chromium.launch();
+            for (const [vw, w, h, pages, step] of [['desktop', 1440, 900, desktopPages, 0.92], ['mobile', 390, 844, mobilePages, 1.0]]) {
+              const ctx = await b.newContext({ viewport: { width: w, height: h }, reducedMotion: 'reduce', deviceScaleFactor: 1 });
+              const page = await ctx.newPage();
+              for (const [name, path] of pages) {
+                await page.goto(origin + path, { waitUntil: 'networkidle', timeout: 90000 });
+                await page.waitForTimeout(3000);
+                const H = await page.evaluate(() => document.documentElement.scrollHeight);
+                let i = 0;
+                for (let y = 0; y < H; y += Math.round(h * step)) {
+                  await page.evaluate(v => window.scrollTo(0, v), y);
+                  await page.waitForTimeout(1100);
+                  await page.screenshot({ path: `/tmp/out/frames/${name}-${vw}-f${String(i).padStart(2, '0')}.jpg`, type: 'jpeg', quality: 70 });
+                  i++;
+                }
+                console.log('captured', name, vw, H, i, 'frames');
+              }
+              await ctx.close();
+            }
+            await b.close();
+          })().catch(e => { console.error(e); process.exit(1); });
+          EOF
+          cd /tmp/pw && node shoot.js
+          cd /tmp/out/frames
+          for p in home pittsburgh los-angeles results car-accidents contact about; do
+            ls $p-desktop-f*.jpg >/dev/null 2>&1 && montage $p-desktop-f*.jpg -tile 2x3 -geometry 720x450+4+4 -background '#1a1a1a' /tmp/out/sheets/$p-desktop-%d.jpg
+          done
+          for p in home pittsburgh; do
+            ls $p-mobile-f*.jpg >/dev/null 2>&1 && montage $p-mobile-f*.jpg -tile 6x2 -geometry 260x563+4+4 -background '#1a1a1a' /tmp/out/sheets/$p-mobile-%d.jpg
+          done
+          ls -l /tmp/out/sheets
+
+      - name: Publish to qa-screenshots branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan qa-screenshots
+          git rm -rfq . >/dev/null 2>&1 || true
+          mkdir -p sheets && cp /tmp/out/sheets/*.jpg sheets/
+          git add sheets
+          git commit -m "Screenshots $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -f origin qa-screenshots

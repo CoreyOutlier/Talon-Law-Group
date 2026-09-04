@@ -8,6 +8,12 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 /* ---------------------------------------------------------------------------
  * Reveal — the workhorse. Fades + lifts content into view once.
  * Never re-triggers on scroll-up (re-animating is cheap-looking).
+ *
+ * The initial state must be identical on the server and the client: the
+ * server has no idea whether the visitor prefers reduced motion, so branching
+ * `initial` on useReducedMotion() leaves the server-rendered opacity:0 in the
+ * DOM with nothing on the client owning it. Reduced motion only shortens the
+ * transition; a CSS rule keyed on data-reveal guarantees visibility besides.
  * ------------------------------------------------------------------------- */
 export function Reveal({
   children,
@@ -30,10 +36,11 @@ export function Reveal({
   return (
     <MotionTag
       ref={ref}
+      data-reveal=""
       className={className}
-      initial={reduced ? false : { opacity: 0, y }}
+      initial={{ opacity: 0, y }}
       animate={inView ? { opacity: 1, y: 0 } : undefined}
-      transition={{ duration: 0.9, delay, ease: EASE }}
+      transition={reduced ? { duration: 0 } : { duration: 0.9, delay, ease: EASE }}
     >
       {children}
     </MotionTag>
@@ -63,11 +70,11 @@ export function LineReveal({
 
   const container: Variants = {
     hidden: {},
-    show: { transition: { staggerChildren: stagger, delayChildren: delay } },
+    show: { transition: reduced ? { staggerChildren: 0, delayChildren: 0 } : { staggerChildren: stagger, delayChildren: delay } },
   };
   const line: Variants = {
     hidden: { y: "110%" },
-    show: { y: "0%", transition: { duration: 1.05, ease: EASE } },
+    show: { y: "0%", transition: reduced ? { duration: 0 } : { duration: 1.05, ease: EASE } },
   };
 
   return (
@@ -75,13 +82,13 @@ export function LineReveal({
       <Tag className={className}>
         <motion.span
           variants={container}
-          initial={reduced ? "show" : "hidden"}
+          initial="hidden"
           animate={inView ? "show" : undefined}
           style={{ display: "block" }}
         >
           {lines.map((l, i) => (
             <span key={i} className="line-mask">
-              <motion.span variants={line}>{l}</motion.span>
+              <motion.span data-reveal="" variants={line}>{l}</motion.span>
             </span>
           ))}
         </motion.span>

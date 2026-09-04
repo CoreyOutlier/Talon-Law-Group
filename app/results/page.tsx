@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { publishedResults, resultsDisclaimer } from "@/lib/site";
+import { env } from "@/lib/env";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Motion";
 import { CTA } from "@/components/sections/CTA";
@@ -17,7 +18,7 @@ export default function Results() {
         eyebrow="The record"
         lines={["Results we", "can document."]}
         lede="We publish figures we can stand behind. Every recovery below is a real matter with a real file. Prior results never guarantee a future outcome — but they do tell you what a firm is willing to put its name on."
-        photo="/media/photos/brick-standing-2.jpg"
+        photo={env.corridor}
       />
 
       <section className="shell pb-20 md:pb-28">

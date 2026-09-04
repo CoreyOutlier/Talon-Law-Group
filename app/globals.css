@@ -186,6 +186,8 @@
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
   .wipe, .wipe-x { clip-path: none !important; }
   .stmt-item { opacity: 1 !important; transform: none !important; }
+  /* Reveal / LineReveal: content is simply present. Never trust the animation runtime with visibility here. */
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
   .cursor-lens, .cursor-dot { display: none !important; }
   .hide-native-cursor, .hide-native-cursor * { cursor: auto !important; }
 }
