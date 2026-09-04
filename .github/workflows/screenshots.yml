@@ -1,0 +1,77 @@
+name: Screenshots
+
+# Visual QA helper: renders a deployment at desktop and phone widths and pushes
+# the captures to the qa-screenshots branch (never to the site branches).
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: Deployment URL (a Vercel share link is fine)
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  shoot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright
+        run: |
+          mkdir -p /tmp/pw && cd /tmp/pw
+          npm init -y >/dev/null
+          npm i playwright@1.50.1 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+
+      - name: Capture
+        env:
+          URL: ${{ inputs.url }}
+        run: |
+          echo "::add-mask::$URL"
+          mkdir -p /tmp/out
+          cat > /tmp/pw/shoot.js <<'EOF'
+          const { chromium } = require('playwright');
+          (async () => {
+            const base = process.env.URL;
+            const pages = [['home', '/'], ['pittsburgh', '/offices/pittsburgh'], ['results', '/results'], ['car-accidents', '/practice-areas/car-accidents']];
+            const b = await chromium.launch();
+            for (const [vw, w, h] of [['desktop', 1440, 900], ['mobile', 390, 844]]) {
+              const ctx = await b.newContext({ viewport: { width: w, height: h }, reducedMotion: 'reduce', deviceScaleFactor: 1 });
+              const page = await ctx.newPage();
+              await page.goto(base, { waitUntil: 'networkidle', timeout: 90000 });
+              const origin = new URL(page.url()).origin;
+              for (const [name, path] of pages) {
+                await page.goto(origin + path, { waitUntil: 'networkidle', timeout: 90000 });
+                await page.waitForTimeout(3500);
+                const H = await page.evaluate(() => document.documentElement.scrollHeight);
+                for (let y = 0; y < H; y += Math.round(h * 0.7)) { await page.evaluate(v => window.scrollTo(0, v), y); await page.waitForTimeout(120); }
+                await page.evaluate(() => window.scrollTo(0, 0));
+                await page.waitForTimeout(900);
+                await page.screenshot({ path: `/tmp/out/${name}-${vw}.jpg`, fullPage: true, type: 'jpeg', quality: 72 });
+                console.log('captured', name, vw, H);
+              }
+              await ctx.close();
+            }
+            await b.close();
+          })().catch(e => { console.error(e); process.exit(1); });
+          EOF
+          cd /tmp/pw && node shoot.js
+          ls -l /tmp/out
+
+      - name: Publish to qa-screenshots branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan qa-screenshots
+          git rm -rfq . >/dev/null 2>&1 || true
+          mkdir -p shots && cp /tmp/out/*.jpg shots/
+          git add shots
+          git commit -m "Screenshots $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -f origin qa-screenshots
