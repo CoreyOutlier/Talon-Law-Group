@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { site } from "@/lib/site";
 import { useScrollProgress } from "@/lib/scrollfx";
-import { Magnetic } from "@/components/Motion";
+import { Live, Magnetic } from "@/components/Motion";
 
 /* Full-bleed cinematic hero. One photograph edge to edge, a slow drift, the
    headline rising out of its mask, and three ways to reach the firm before
@@ -72,7 +72,7 @@ export function Hero() {
 
         <span className="hero-rule mt-10 hidden h-px w-full origin-left bg-paper/25 sm:block" />
         <div className="hero-meta mt-5 hidden flex-wrap items-center justify-between gap-4 font-display text-[10px] uppercase tracking-[0.26em] text-paper/55 sm:flex">
-          <p>No fee unless we win · Answered 24/7 · Free consultation</p>
+          <p className="flex items-center gap-3"><Live onDark /> Answered now · No fee unless we win · Free consultation</p>
           <p>{site.cities.join(" · ")}</p>
         </div>
       </div>

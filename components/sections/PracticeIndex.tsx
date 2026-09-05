@@ -39,12 +39,12 @@ export function PracticeIndex() {
             {practiceAreas.map((p, i) => (
               <li key={p.slug} className="border-b border-line">
                 <Link href={`/practice-areas/${p.slug}`} onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)}
-                  className="group flex items-center justify-between gap-6 py-6 md:py-7">
+                  className="group row-draw relative flex items-center justify-between gap-6 py-6 md:py-7">
                   <span className="flex items-baseline gap-5 md:gap-8">
-                    <span className="figure text-[12px] text-fg-3">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="figure text-[12px] text-fg-3 transition-colors duration-500 group-hover:text-accent">{String(i + 1).padStart(2, "0")}</span>
                     <span className="display block text-[clamp(1.125rem,2.2vw,1.75rem)] leading-tight text-fg transition-colors duration-500 group-hover:text-accent">{p.name}</span>
                   </span>
-                  <span className="shrink-0 text-fg-3 transition-all duration-500 group-hover:translate-x-1 group-hover:text-accent" aria-hidden>→</span>
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-transparent text-fg-3 transition-all duration-500 group-hover:border-accent group-hover:text-accent" aria-hidden>→</span>
                 </Link>
                 <p className="-mt-2 mb-6 max-w-[46ch] pl-11 text-[13px] leading-relaxed text-fg-3 lg:hidden">{p.intro}</p>
               </li>

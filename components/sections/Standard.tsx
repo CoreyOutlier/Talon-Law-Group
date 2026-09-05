@@ -41,7 +41,7 @@ export function Standard() {
         </div>
         <div className="lg:col-span-4 lg:col-start-9">
           <Reveal delay={0.15}>
-            <Figure src={env.loft} alt="" ratio="4 / 5" wipe="x" />
+            <Figure src={env.loft} alt="" ratio="4 / 5" wipe="x" parallax={6} />
             <p className="mt-5 max-w-[34ch] text-[12px] leading-relaxed text-fg-3">The room where the file gets built. Quiet on purpose.</p>
           </Reveal>
         </div>
