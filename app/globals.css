@@ -131,16 +131,18 @@
    CINEMA LAYER — transform/opacity only, composited on the GPU
    ========================================================================== */
 @media (hover: hover) and (pointer: fine) {
+  /* Drawn in white and blended by difference, so the lens is dark over the
+     paper chapters and light over the ink ones (and over photographs) with
+     no JavaScript deciding which is which. */
   .cursor-lens {
     position: fixed; top: 0; left: 0; z-index: 90; width: 34px; height: 34px; margin: -17px 0 0 -17px;
-    border: 1px solid var(--color-wine); border-radius: 999px; pointer-events: none; mix-blend-mode: multiply;
+    border: 1.5px solid #fff; border-radius: 999px; pointer-events: none; mix-blend-mode: difference;
     transition: width .5s var(--ease-out-expo), height .5s var(--ease-out-expo), margin .5s var(--ease-out-expo), opacity .3s, background-color .4s;
     will-change: transform;
   }
-  .dark ~ .cursor-lens, .cursor-lens.is-dark { mix-blend-mode: difference; border-color: #fff; }
-  .cursor-lens[data-state="hot"] { width: 84px; height: 84px; margin: -42px 0 0 -42px; background: rgba(99,3,48,.10); }
+  .cursor-lens[data-state="hot"] { width: 84px; height: 84px; margin: -42px 0 0 -42px; background: rgba(255,255,255,.14); }
   .cursor-lens[data-state="hidden"] { opacity: 0; }
-  .cursor-dot { position: fixed; top: 0; left: 0; z-index: 91; width: 4px; height: 4px; margin: -2px 0 0 -2px; background: var(--color-wine); border-radius: 999px; pointer-events: none; will-change: transform; }
+  .cursor-dot { position: fixed; top: 0; left: 0; z-index: 91; width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; background: #fff; mix-blend-mode: difference; border-radius: 999px; pointer-events: none; will-change: transform; }
   .hide-native-cursor, .hide-native-cursor * { cursor: none !important; }
 }
 
