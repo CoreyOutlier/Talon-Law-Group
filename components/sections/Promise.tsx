@@ -1,123 +1,98 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { promises } from "@/lib/site";
-import { env } from "@/lib/env";
-import { LineReveal, Reveal } from "@/components/Motion";
+import { site } from "@/lib/site";
+import { Figure } from "@/components/Figure";
+import { LineReveal, Live, Reveal } from "@/components/Motion";
 
-/* Why people call us. Three reasons as a live accordion: the open reason
-   shows its copy, a hairline times the hold, and the photograph beside it
-   changes to match. It advances on its own while in view, pauses under the
-   cursor, and any reason can be opened directly. */
+/* Why people call us. Not three reasons in a list: five moments in a case,
+   and who handles each one here against how it usually goes. As each row
+   arrives, the usual answer is struck through and ours is written in. The
+   photograph beside it is the whole point: he answers his own phone. */
 
-const HOLD = 5600;
 const EASE = "cubic-bezier(.16,1,.3,1)";
-const PLATES = [
-  { src: "/media/photos/coffee-espresso.jpg", pos: "50% 30%", caption: "He answers his own phone. That is not a slogan; it is the operating model." },
-  { src: env.desk, pos: "50% 50%", caption: "No retainer, no hourly bill. We are paid from the recovery, or not at all." },
-  { src: env.corridor, pos: "50% 40%", caption: "Every file is built for the room most lawyers avoid." },
+
+const ROWS = [
+  { when: "You call", usual: "An intake screener", here: "Shaheen picks up" },
+  { when: "The insurer calls", usual: "A case manager, 200 files", here: "The lawyer who tries it" },
+  { when: "Trial prep begins", usual: "Only if it does not settle", here: "The first week" },
+  { when: "You pay", usual: "A retainer or an hourly bill", here: "Nothing unless we win" },
+  { when: "The courtroom", usual: "Whoever it gets referred to", here: "The lawyer you hired" },
 ];
 
 export function Promise() {
-  const section = useRef<HTMLElement>(null);
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [inView, setInView] = useState(false);
-  const [reduced, setReduced] = useState(false);
+  const list = useRef<HTMLOListElement>(null);
+  const [seen, setSeen] = useState(false);
 
   useEffect(() => {
-    setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-    const el = section.current;
+    const el = list.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.3 });
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setSeen(true); io.disconnect(); } }, { threshold: 0.2 });
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (reduced || paused || !inView) return;
-    const t = window.setTimeout(() => setActive((a) => (a + 1) % promises.length), HOLD);
-    return () => window.clearTimeout(t);
-  }, [active, paused, inView, reduced]);
-
   return (
-    <section
-      ref={section}
-      className="shell py-24 md:py-36"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      <div className="grid gap-14 lg:grid-cols-12 lg:gap-12">
-        <div className="lg:col-span-6">
+    <section className="shell py-24 md:py-36">
+      <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
+        {/* the photograph, pinned beside the ledger on desktop, after it on phones */}
+        <div className="order-last lg:order-first lg:col-span-5">
+          <div className="lg:sticky lg:top-28">
+            <Reveal>
+              <div className="relative">
+                <Figure src="/media/photos/coffee-espresso.jpg" alt="Shaheen Wallace on the phone" ratio="4 / 5" wipe="x" parallax={5} imgClassName="object-[50%_30%]" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 via-ink/50 to-transparent p-6 pt-28 md:p-7">
+                  <p className="flex items-center gap-3 font-display text-[10px] uppercase tracking-[0.24em] text-paper/75"><Live onDark /> Answered now</p>
+                  <p className="h2-soft mt-3 max-w-[24ch] text-[clamp(1.25rem,2vw,1.625rem)] text-paper text-pretty">He answers his own phone. That is not a slogan; it is the operating model.</p>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+
+        {/* the ledger */}
+        <div className="lg:col-span-7">
           <Reveal><p className="eyebrow mb-7">Why people call us</p></Reveal>
           <LineReveal as="h2" className="display max-w-[16ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={["Most firms sell", "you volume."]} />
           <LineReveal as="p" delay={0.15} className="display max-w-[16ch] text-[clamp(2rem,4.6vw,3.75rem)] text-accent" lines={["We sell you attention."]} />
 
           <Reveal delay={0.2}>
-            <ol className="mt-14 border-t border-line">
-              {promises.map((p, i) => {
-                const on = i === active;
-                return (
-                  <li key={p.k} className="relative border-b border-line">
-                    <button
-                      type="button"
-                      onClick={() => setActive(i)}
-                      aria-expanded={on}
-                      className="group flex w-full items-start gap-6 py-7 text-left md:gap-10"
-                    >
-                      <span className={`figure shrink-0 pt-1.5 text-[13px] transition-colors duration-500 ${on ? "text-accent" : "text-fg-3"}`}>{p.k}</span>
-                      <span className="min-w-0 flex-1">
-                        <span className={`display block text-[clamp(1.25rem,2.1vw,1.75rem)] leading-tight transition-colors duration-500 ${on ? "text-fg" : "text-fg-3 group-hover:text-fg"}`}>
-                          {p.title}
-                        </span>
-                        <span className="grid transition-[grid-template-rows] duration-700" style={{ gridTemplateRows: on ? "1fr" : "0fr", transitionTimingFunction: EASE }}>
-                          <span className="overflow-hidden">
-                            <span className={`block max-w-[54ch] pt-4 text-[15px] leading-relaxed text-fg-2 text-pretty transition-opacity duration-700 ${on ? "opacity-100" : "opacity-0"}`}>
-                              {p.body}
-                            </span>
-                          </span>
-                        </span>
-                      </span>
-                      <span aria-hidden className={`mt-3 h-px w-8 shrink-0 origin-right bg-accent transition-transform duration-700 ${on ? "scale-x-100" : "scale-x-0"}`} style={{ transitionTimingFunction: EASE }} />
-                    </button>
-                    {on && !reduced && (
-                      <span
-                        key={`p-${active}`}
-                        aria-hidden
-                        className="progress-run absolute inset-x-0 bottom-[-1px] block h-px bg-accent"
-                        style={{ animationDuration: `${HOLD}ms`, animationPlayState: paused || !inView ? "paused" : "running" }}
-                      />
-                    )}
-                  </li>
-                );
-              })}
-            </ol>
+            <div className="mt-14 hidden grid-cols-[9rem_1fr_1fr] gap-x-8 border-b border-line pb-4 font-display text-[10px] uppercase tracking-[0.22em] text-fg-3 md:grid">
+              <span>The moment</span><span>Elsewhere</span><span className="text-accent">Here</span>
+            </div>
           </Reveal>
-        </div>
 
-        <div className="lg:col-span-5 lg:col-start-8">
-          <Reveal delay={0.1}>
-            <div className="lg:sticky lg:top-32">
-              <div className="relative overflow-hidden bg-ground-2" style={{ aspectRatio: "4 / 5" }}>
-                {PLATES.map((pl, i) => (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    key={pl.src}
-                    src={pl.src}
-                    alt=""
-                    className="absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-[1400ms]"
-                    style={{ objectPosition: pl.pos, opacity: i === active ? 1 : 0, transform: i === active ? "scale(1)" : "scale(1.06)", transitionTimingFunction: EASE }}
-                    loading={i === 0 ? "eager" : "lazy"}
-                    decoding="async"
-                  />
-                ))}
-                <span className="absolute left-5 top-5 font-display text-[10px] uppercase tracking-[0.2em] text-paper/80 mix-blend-difference">
-                  {String(active + 1).padStart(2, "0")} / {String(PLATES.length).padStart(2, "0")}
-                </span>
-              </div>
-              <p key={`c-${active}`} className="mt-5 max-w-[36ch] text-[13px] leading-relaxed text-fg-3" style={{ animation: "heroFade .9s ease-out both" }}>
-                {PLATES[active].caption}
-              </p>
+          <ol ref={list} className="mt-10 border-t border-line md:mt-0 md:border-t-0">
+            {ROWS.map((r, i) => {
+              const d = i * 200;
+              return (
+                <li
+                  key={r.when}
+                  className="grid gap-y-2 border-b border-line py-6 md:grid-cols-[9rem_1fr_1fr] md:items-start md:gap-x-8 md:py-7"
+                  style={{ opacity: seen ? 1 : 0, transform: seen ? "none" : "translateY(14px)", transition: `opacity .9s ${EASE} ${d}ms, transform .9s ${EASE} ${d}ms` }}
+                >
+                  <p className="font-display text-[10px] uppercase tracking-[0.2em] text-fg-3 md:pt-1.5">{r.when}</p>
+                  <p className="relative w-fit text-[15px] leading-snug text-fg-3 md:pt-0.5">
+                    {r.usual}
+                    {/* the usual answer, struck through as the row lands */}
+                    <span aria-hidden className="absolute left-0 top-1/2 h-px w-full origin-left bg-fg-3" style={{ transform: seen ? "scaleX(1)" : "scaleX(0)", transition: `transform .7s ${EASE} ${d + 520}ms` }} />
+                  </p>
+                  <p
+                    className="display text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-tight text-fg"
+                    style={{ opacity: seen ? 1 : 0, transform: seen ? "none" : "translateY(8px)", transition: `opacity .8s ${EASE} ${d + 780}ms, transform .8s ${EASE} ${d + 780}ms` }}
+                  >
+                    {r.here}
+                  </p>
+                </li>
+              );
+            })}
+          </ol>
+
+          <Reveal delay={0.15}>
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <Link href="/contact" className="btn btn-wine">Start with a call</Link>
+              <a href={`tel:${site.phoneRaw}`} className="btn btn-ghost">{site.phone}</a>
             </div>
           </Reveal>
         </div>

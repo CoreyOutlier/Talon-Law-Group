@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { publishedTestimonials } from "@/lib/site";
-import { Reveal } from "@/components/Motion";
+import { LineReveal, Reveal } from "@/components/Motion";
 import { useScrollProgress } from "@/lib/scrollfx";
 
 /* In their words. One review at a time, set large on a dark ground, each
@@ -113,8 +113,11 @@ export function Voices() {
 
       <div className="shell relative py-24 md:py-36">
         <div className="flex flex-wrap items-end justify-between gap-6 xl:pr-[22rem]">
-          <Reveal><p className="eyebrow">In their words</p></Reveal>
-          <Reveal delay={0.1}><p className="font-display text-[11px] uppercase tracking-[0.2em] text-fg-3">Verified client reviews · via Avvo</p></Reveal>
+          <div>
+            <Reveal><p className="eyebrow mb-5">In their words</p></Reveal>
+            <LineReveal as="h2" className="display text-[clamp(1.75rem,3.4vw,2.75rem)]" lines={["Verified client reviews."]} />
+          </div>
+          <Reveal delay={0.1}><p className="font-display text-[11px] uppercase tracking-[0.2em] text-fg-3">Published on Avvo</p></Reveal>
         </div>
 
         {/* every quote occupies the same grid cell; before hydration the layer is as tall as the

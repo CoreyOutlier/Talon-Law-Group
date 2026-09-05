@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { publishedResults, resultsDisclaimer } from "@/lib/site";
+import { LineReveal, Reveal } from "@/components/Motion";
 
 /* The record.
 
@@ -51,68 +52,92 @@ function useCountUp(el: React.RefObject<HTMLSpanElement | null>, amount: string,
 }
 
 /* ---------------------------------------------------------------- home --- */
+const amountOf = (a: string) => Number(a.replace(/[^0-9]/g, ""));
+
 export function Proof() {
   if (publishedResults.length === 0) return null;
+  const amounts = publishedResults.map((r) => amountOf(r.amount));
+  const total = amounts.reduce((s, n) => s + n, 0);
+  const max = Math.max(...amounts);
   return (
-    <section className="dark relative border-y border-line">
+    <section className="dark relative overflow-hidden border-y border-line">
       <div className="shell py-24 md:py-32">
-        <div className="mb-12 flex flex-wrap items-end justify-between gap-8 md:mb-16">
-          <div>
-            <p className="eyebrow mb-6">The record</p>
-            <h2 className="display max-w-[18ch] text-[clamp(1.75rem,3.6vw,3rem)]">
-              Numbers we can <span className="text-accent">document.</span>
-            </h2>
+        <div className="mb-14 grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-12">
+          <div className="lg:col-span-7">
+            <Reveal><p className="eyebrow mb-6">The record</p></Reveal>
+            <LineReveal as="h2" className="display max-w-[17ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={["Numbers we can", <span key="a" className="text-accent">document.</span>]} />
           </div>
-          <p className="max-w-[34ch] text-[14px] leading-relaxed text-fg-3">
-            Real matters, real files. Ask any firm which of its numbers it actually tried.
-          </p>
+          <Total total={total} count={publishedResults.length} />
         </div>
-        <Ledger />
+        <Ledger max={max} />
         <div className="mt-12 flex flex-wrap items-center justify-between gap-6 border-t border-line pt-8">
-          <Link href="/results" className="btn btn-ghost">All case results</Link>
-          <p className="max-w-[62ch] text-[11px] leading-relaxed text-fg-3">{resultsDisclaimer}</p>
+          <Reveal><Link href="/results" className="btn btn-ghost">All case results</Link></Reveal>
+          <Reveal delay={0.1}><p className="max-w-[62ch] text-[11px] leading-relaxed text-fg-3">{resultsDisclaimer}</p></Reveal>
         </div>
       </div>
     </section>
   );
 }
 
-function Ledger() {
-  const { ref, seen } = useSeen<HTMLOListElement>(0.3);
+/* the three recoveries, added up */
+function Total({ total, count }: { total: number; count: number }) {
+  const { ref, seen } = useSeen<HTMLDivElement>(0.5);
+  const num = useRef<HTMLSpanElement>(null);
+  useCountUp(num, "$" + total.toLocaleString("en-US"), seen, 200, 2200);
+  const ease = "cubic-bezier(.16,1,.3,1)";
+  return (
+    <div ref={ref} className="border-t border-line pt-6 lg:col-span-5 lg:border-t-0 lg:pt-0 lg:text-right">
+      <span
+        ref={num}
+        className="figure block text-[clamp(2.25rem,4.2vw,3.75rem)] leading-none tabular-nums text-fg"
+        style={{ opacity: seen ? 1 : 0, transform: seen ? "none" : "translateY(10px)", transition: `opacity .9s ${ease}, transform .9s ${ease}` }}
+      >
+        $0
+      </span>
+      <p className="mt-3 font-display text-[10px] uppercase tracking-[0.22em] text-fg-3" style={{ opacity: seen ? 1 : 0, transition: "opacity 1s .4s" }}>
+        Combined · the {count === 3 ? "three" : count} matters below · gross recoveries
+      </p>
+    </div>
+  );
+}
+
+function Ledger({ max }: { max: number }) {
+  const { ref, seen } = useSeen<HTMLOListElement>(0.25);
   return (
     <ol ref={ref} className="border-t border-line">
       {publishedResults.map((r, i) => (
-        <Row key={i} result={r} index={i} seen={seen} delay={i * 260} />
+        <Row key={i} result={r} index={i} seen={seen} delay={i * 280} share={amountOf(r.amount) / max} />
       ))}
     </ol>
   );
 }
 
-function Row({ result, index, seen, delay }: { result: (typeof publishedResults)[number]; index: number; seen: boolean; delay: number }) {
+function Row({ result, index, seen, delay, share }: { result: (typeof publishedResults)[number]; index: number; seen: boolean; delay: number; share: number }) {
   const num = useRef<HTMLSpanElement>(null);
   useCountUp(num, result.amount, seen, delay);
   const ease = "cubic-bezier(.16,1,.3,1)";
   return (
-    <li className="group relative grid gap-4 border-b border-line py-8 md:grid-cols-12 md:items-center md:gap-8 md:py-9">
-      <p className="figure text-[13px] text-fg-3 md:col-span-1" style={{ opacity: seen ? 1 : 0, transition: "opacity .8s", transitionDelay: `${delay}ms` }}>
+    <li className="group relative grid gap-5 border-b border-line py-9 md:grid-cols-12 md:items-end md:gap-8 md:py-11">
+      <p className="figure text-[13px] text-fg-3 md:col-span-1 md:pb-2" style={{ opacity: seen ? 1 : 0, transition: "opacity .8s", transitionDelay: `${delay}ms` }}>
         {String(index + 1).padStart(2, "0")}
       </p>
-      <span
-        ref={num}
-        className="figure block text-[clamp(3rem,7.4vw,7rem)] leading-[0.9] tabular-nums text-accent md:col-span-6"
-        style={{ opacity: seen ? 1 : 0, transform: seen ? "none" : "translateY(16px)", transition: `opacity .9s ${ease}, transform .9s ${ease}`, transitionDelay: `${delay}ms` }}
-      >
-        $0
-      </span>
-      <div className="md:col-span-5" style={{ opacity: seen ? 1 : 0, transform: seen ? "none" : "translateY(10px)", transition: `opacity 1s ${ease}, transform 1s ${ease}`, transitionDelay: `${delay + 320}ms` }}>
+      <div className="md:col-span-6">
+        <span
+          ref={num}
+          className="figure block text-[clamp(3.25rem,7.8vw,7.5rem)] leading-[0.9] tabular-nums text-fg transition-colors duration-500 group-hover:text-accent-2"
+          style={{ opacity: seen ? 1 : 0, transform: seen ? "none" : "translateY(16px)", transition: `opacity .9s ${ease} ${delay}ms, transform .9s ${ease} ${delay}ms, color .5s` }}
+        >
+          $0
+        </span>
+        {/* the recovery's share of the largest one, drawn once the figure has landed */}
+        <span aria-hidden className="mt-6 block h-px w-full bg-line">
+          <span className="block h-full origin-left bg-accent" style={{ transform: seen ? `scaleX(${share})` : "scaleX(0)", transition: `transform 1.6s ${ease} ${delay + 900}ms` }} />
+        </span>
+      </div>
+      <div className="md:col-span-5 md:pb-2" style={{ opacity: seen ? 1 : 0, transform: seen ? "none" : "translateY(10px)", transition: `opacity 1s ${ease}, transform 1s ${ease}`, transitionDelay: `${delay + 320}ms` }}>
         <p className="eyebrow mb-3">{result.type}</p>
         <p className="max-w-[40ch] text-[14px] leading-relaxed text-fg-2">{result.detail}</p>
       </div>
-      <span
-        aria-hidden
-        className={`absolute inset-x-0 bottom-[-1px] h-px origin-left bg-accent transition-transform duration-[1600ms] ${seen ? "scale-x-100" : "scale-x-0"}`}
-        style={{ transitionTimingFunction: ease, transitionDelay: `${delay + 200}ms` }}
-      />
     </li>
   );
 }
