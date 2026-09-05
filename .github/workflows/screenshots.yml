@@ -3,6 +3,8 @@ name: Screenshots
 # Visual QA helper: builds the branch, serves it, walks key pages a screen at a
 # time at desktop and phone widths, tiles the frames into contact sheets and
 # pushes them to the qa-screenshots branch (never to the site branches).
+# Desktop runs with motion enabled; the phone pass emulates Reduce Motion so
+# both code paths are exercised.
 
 on:
   workflow_dispatch:
@@ -45,17 +47,17 @@ jobs:
             const desktopPages = [['home', '/'], ['pittsburgh', '/offices/pittsburgh'], ['los-angeles', '/offices/los-angeles'], ['results', '/results'], ['car-accidents', '/practice-areas/car-accidents'], ['contact', '/contact'], ['about', '/about']];
             const mobilePages = [['home', '/'], ['pittsburgh', '/offices/pittsburgh']];
             const b = await chromium.launch();
-            for (const [vw, w, h, pages, step] of [['desktop', 1440, 900, desktopPages, 0.92], ['mobile', 390, 844, mobilePages, 1.0]]) {
-              const ctx = await b.newContext({ viewport: { width: w, height: h }, reducedMotion: 'reduce', deviceScaleFactor: 1 });
+            for (const [vw, w, h, pages, step, rm] of [['desktop', 1440, 900, desktopPages, 0.92, 'no-preference'], ['mobile', 390, 844, mobilePages, 1.0, 'reduce']]) {
+              const ctx = await b.newContext({ viewport: { width: w, height: h }, reducedMotion: rm, deviceScaleFactor: 1 });
               const page = await ctx.newPage();
               for (const [name, path] of pages) {
                 await page.goto(origin + path, { waitUntil: 'networkidle', timeout: 90000 });
-                await page.waitForTimeout(3000);
+                await page.waitForTimeout(4500);
                 const H = await page.evaluate(() => document.documentElement.scrollHeight);
                 let i = 0;
                 for (let y = 0; y < H; y += Math.round(h * step)) {
                   await page.evaluate(v => window.scrollTo(0, v), y);
-                  await page.waitForTimeout(1100);
+                  await page.waitForTimeout(1400);
                   await page.screenshot({ path: `/tmp/out/frames/${name}-${vw}-f${String(i).padStart(2, '0')}.jpg`, type: 'jpeg', quality: 70 });
                   i++;
                 }

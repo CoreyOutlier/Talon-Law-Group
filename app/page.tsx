@@ -9,7 +9,7 @@ import { PracticeIndex } from "@/components/sections/PracticeIndex";
 import { Break } from "@/components/sections/Break";
 import { Proof } from "@/components/sections/Proof";
 import { AttorneyPanel } from "@/components/sections/AttorneyPanel";
-import { Gallery } from "@/components/sections/Gallery";
+import { Standard } from "@/components/sections/Standard";
 import { Process } from "@/components/sections/Process";
 import { Voices } from "@/components/sections/Voices";
 import { Markets } from "@/components/sections/Markets";
@@ -34,7 +34,7 @@ export default function Home() {
         note="Insurers pay for what they believe a jury would award. The only way to make them believe it is to be ready to find out." />
       <Proof />
       <AttorneyPanel />
-      <Gallery />
+      <Standard />
       <Process />
       <Voices />
       <Break src={env.pghSkyline} height="70vh" eyebrow="Home court"
