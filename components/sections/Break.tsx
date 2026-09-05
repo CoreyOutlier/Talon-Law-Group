@@ -26,7 +26,7 @@ export function Break({ src, eyebrow, lines, note, height = "78vh", position = "
       <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-ink/10" />
       <div className="shell relative flex h-full flex-col justify-end pb-14 md:pb-20">
         {eyebrow && <Reveal><p className="eyebrow mb-6">{eyebrow}</p></Reveal>}
-        <LineReveal as="p" className="display display-xl max-w-[16ch] text-[clamp(2rem,5.5vw,5rem)] text-paper" lines={lines} />
+        <LineReveal as="p" className="display display-xl max-w-[22ch] text-[clamp(2rem,5vw,4.5rem)] text-paper" lines={lines} />
         {note && <Reveal delay={0.2}><p className="mt-6 max-w-[46ch] text-[15px] leading-relaxed text-paper/70">{note}</p></Reveal>}
       </div>
     </section>
