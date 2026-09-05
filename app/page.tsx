@@ -14,7 +14,6 @@ import { Process } from "@/components/sections/Process";
 import { Voices } from "@/components/sections/Voices";
 import { Markets } from "@/components/sections/Markets";
 import { CTA } from "@/components/sections/CTA";
-import { photos } from "@/lib/site";
 import { env } from "@/lib/env";
 
 /* Paced like an editorial: photograph, breath, sequence, then the business. */
@@ -24,8 +23,7 @@ export default function Home() {
       <Hero />
       <Ticker />
       <Statement eyebrow="Talon Law Group" words={["Quiet", "work.", "Loud", "results."]} accentFrom={2}
-        footnote="A trial practice built around one lawyer who answers his own phone, prepares every file as though it is going to a jury, and does not get paid unless you do."
-        strip={photos.strip} />
+        footnote="A trial practice built around one lawyer who answers his own phone, prepares every file as though it is going to a jury, and does not get paid unless you do." />
       <Film />
       <PromiseSection />
       <PracticeIndex />
