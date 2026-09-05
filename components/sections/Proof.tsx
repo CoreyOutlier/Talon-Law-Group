@@ -10,9 +10,9 @@ import { publishedResults, resultsDisclaimer } from "@/lib/site";
 
 const TONES = ["#0B0B0C", "#101013", "#151519"];
 
+/* Home page chapter: a one-line header, the stack, then the link out. */
 export function Proof() {
-  const n = publishedResults.length;
-  if (n === 0) return null;
+  if (publishedResults.length === 0) return null;
 
   return (
     <section className="dark relative">
@@ -27,20 +27,50 @@ export function Proof() {
           Every figure below is a real matter with a real file. If a firm shows you a wall of numbers with no case behind them, ask which ones they tried.
         </p>
       </div>
-
-      <ol className="relative">
-        {publishedResults.map((r, i) => (
-          <Plate key={i} result={r} index={i} total={n} />
-        ))}
-      </ol>
-
-      <div className="relative z-10 border-t border-line bg-ground">
-        <div className="shell flex flex-wrap items-center justify-between gap-6 py-10">
-          <Link href="/results" className="btn btn-ghost">All case results</Link>
-          <p className="max-w-[62ch] text-[11px] leading-relaxed text-fg-3">{resultsDisclaimer}</p>
-        </div>
-      </div>
+      <Stack />
+      <Footer link />
     </section>
+  );
+}
+
+/* Results page: the stack alone, under the page header. */
+export function RecordStack() {
+  if (publishedResults.length === 0) {
+    return (
+      <section className="shell pb-20">
+        <p className="border-y border-line py-16 text-[15px] text-fg-3">
+          Results are being compiled. Call us and we will discuss comparable matters directly.
+        </p>
+      </section>
+    );
+  }
+  return (
+    <section className="dark relative">
+      <Stack />
+      <Footer />
+    </section>
+  );
+}
+
+function Stack() {
+  const n = publishedResults.length;
+  return (
+    <ol className="relative">
+      {publishedResults.map((r, i) => (
+        <Plate key={i} result={r} index={i} total={n} />
+      ))}
+    </ol>
+  );
+}
+
+function Footer({ link = false }: { link?: boolean }) {
+  return (
+    <div className="relative z-10 border-t border-line bg-ground">
+      <div className={`shell flex flex-wrap items-center gap-6 py-10 ${link ? "justify-between" : "justify-start"}`}>
+        {link && <Link href="/results" className="btn btn-ghost">All case results</Link>}
+        <p className="max-w-[62ch] text-[11px] leading-relaxed text-fg-3">{resultsDisclaimer}</p>
+      </div>
+    </div>
   );
 }
 
