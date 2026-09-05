@@ -65,6 +65,24 @@ jobs:
           grep -rn -E '\$ ?[0-9][0-9,.]*' /tmp/text | sed 's#/tmp/text/##' | sort -u | head -400
           echo "== DIGEST: lines mentioning verdict / settlement / recover / award =="
           grep -rn -i -E 'verdict|settlement|recover|award|million' /tmp/text | sed 's#/tmp/text/##' | sort -u | head -400
+          echo "== RAW HTML: platform hints =="
+          grep -rhoi -E 'wix\.com|squarespace|webflow|godaddy|wordpress|shopify|weebly|duda|hubspot|jimdo|strikingly|site123|zyro|nextjs|__NEXT_DATA__|react' /tmp/site | tr 'A-Z' 'a-z' | sort | uniq -c | sort -rn | head -20
+          echo "== RAW HTML: dollar figures and thousands-separated numbers =="
+          grep -rhoi -E '.{0,80}(\$ ?[0-9][0-9,.]*|[0-9]{1,3},[0-9]{3}(,[0-9]{3})?|[0-9.]+ ?(million|k\b)).{0,80}' /tmp/site | sort -u | head -200
+          echo "== RAW HTML: anything mentioning results / verdicts / settlements (attributes, alt text, image names, JSON) =="
+          grep -rhoi -E '.{0,120}(case[- _]?result|verdict|settlement|recover(ed|y)|won|award).{0,120}' /tmp/site | sort -u | head -200
+          echo "== RAW HTML: image sources and alt text =="
+          grep -rhoi -E '<img[^>]+>' /tmp/site | grep -oi -E '(src|alt)="[^"]*"' | sort -u | head -200
+          echo "== RAW HTML: external data / iframe / script sources =="
+          grep -rhoi -E '(src|href)="https?://[^"]+"' /tmp/site | sed 's#^[a-z]*=##' | sort -u | grep -vi -E 'fonts|\.css|\.woff|\.png|\.jpg|\.jpeg|\.svg|\.gif|\.webp' | head -120
+          echo "== FULL TEXT: home =="
+          cat /tmp/text/live/www.wallaceinjury.com__index.html.txt || true
+          echo "== FULL TEXT: attorney =="
+          cat /tmp/text/live/www.wallaceinjury.com__shaheen-wallace-esq.html.txt || true
+          echo "== FULL TEXT: testimonials =="
+          cat /tmp/text/live/www.wallaceinjury.com__testimonials.html.txt || true
+          echo "== FULL TEXT: about =="
+          cat /tmp/text/live/www.wallaceinjury.com__about-us.html.txt || true
 
       - name: Publish to old-site branch
         run: |
@@ -72,11 +90,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout --orphan old-site
           git rm -rfq . >/dev/null 2>&1 || true
-          mkdir -p text html
+          # text only: the raw HTML carries embedded keys that trip push protection
+          mkdir -p text
           cp -r /tmp/text/* text/ 2>/dev/null || true
-          cp -r /tmp/site html/live 2>/dev/null || true
-          cp -r /tmp/wayback html/wayback 2>/dev/null || true
           cp /tmp/cdx.txt text/cdx.txt 2>/dev/null || true
-          git add -A text html
+          git add -A text
           git commit -m "Old site scrape $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing to commit"
           git push -f origin old-site
