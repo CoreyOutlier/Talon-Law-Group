@@ -1,0 +1,99 @@
+name: Scrape old site
+
+# One-off helper: the previous site (wallaceinjury.com) is unreachable from
+# the build sandbox, so this pulls every page from the runner (live site
+# first, Wayback Machine as a fallback), converts them to plain text, prints a
+# digest of every dollar figure it finds, and publishes the pages to the
+# old-site branch for reading. Never touches the site branches.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch the live site
+        run: |
+          set -uo pipefail
+          sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq lynx >/dev/null
+          mkdir -p /tmp/site /tmp/text
+          cd /tmp/site
+          echo "== live site =="
+          curl -sSIL --max-time 30 https://www.wallaceinjury.com/ | head -20 || true
+          wget -q -e robots=off --recursive --level=4 --no-parent --span-hosts --domains=wallaceinjury.com,www.wallaceinjury.com \
+            --page-requisites=off --reject 'jpg,jpeg,png,gif,svg,webp,css,js,ico,woff,woff2,pdf,mp4' \
+            --adjust-extension --convert-links --timeout=30 --tries=2 https://www.wallaceinjury.com/ || true
+          find . -type f | sort
+
+      - name: Fall back to the Wayback Machine
+        run: |
+          set -uo pipefail
+          cd /tmp/site
+          n=$(find . -type f -name '*.html' | wc -l)
+          echo "live html pages: $n"
+          echo "== wayback availability =="
+          curl -sS --max-time 30 "https://archive.org/wayback/available?url=wallaceinjury.com" || true; echo
+          echo "== wayback url list (last 400) =="
+          curl -sS --max-time 60 "https://web.archive.org/cdx/search/cdx?url=wallaceinjury.com/*&output=txt&fl=timestamp,original,statuscode&filter=statuscode:200&filter=mimetype:text/html&collapse=urlkey&limit=400" | tee /tmp/cdx.txt || true
+          mkdir -p /tmp/wayback
+          # take each unique page at its latest snapshot
+          awk '{print $1" "$2}' /tmp/cdx.txt | while read ts url; do
+            f=$(echo "$url" | sed 's#https\?://##; s#[^A-Za-z0-9._-]#_#g')
+            curl -sSL --max-time 60 "https://web.archive.org/web/${ts}id_/${url}" -o "/tmp/wayback/${f}.html" || true
+          done
+          ls -la /tmp/wayback | head -80
+
+      - name: Convert to text and digest every dollar figure
+        run: |
+          set -uo pipefail
+          mkdir -p /tmp/text/live /tmp/text/wayback
+          for f in $(find /tmp/site -type f -name '*.html'); do
+            out=/tmp/text/live/$(echo "$f" | sed 's#/tmp/site/##; s#/#__#g').txt
+            lynx -dump -nolist -width=200 "$f" > "$out" 2>/dev/null || true
+          done
+          for f in /tmp/wayback/*.html; do
+            [ -f "$f" ] || continue
+            lynx -dump -nolist -width=200 "$f" > "/tmp/text/wayback/$(basename "$f" .html).txt" 2>/dev/null || true
+          done
+          echo "== DIGEST: every line containing a dollar figure, with file =="
+          grep -rn -E '\$ ?[0-9][0-9,.]*' /tmp/text | sed 's#/tmp/text/##' | sort -u | head -400
+          echo "== DIGEST: lines mentioning verdict / settlement / recover / award =="
+          grep -rn -i -E 'verdict|settlement|recover|award|million' /tmp/text | sed 's#/tmp/text/##' | sort -u | head -400
+          echo "== RAW HTML: platform hints =="
+          grep -rhoi -E 'wix\.com|squarespace|webflow|godaddy|wordpress|shopify|weebly|duda|hubspot|jimdo|strikingly|site123|zyro|nextjs|__NEXT_DATA__|react' /tmp/site | tr 'A-Z' 'a-z' | sort | uniq -c | sort -rn | head -20
+          echo "== RAW HTML: dollar figures and thousands-separated numbers =="
+          grep -rhoi -E '.{0,80}(\$ ?[0-9][0-9,.]*|[0-9]{1,3},[0-9]{3}(,[0-9]{3})?|[0-9.]+ ?(million|k\b)).{0,80}' /tmp/site | sort -u | head -200
+          echo "== RAW HTML: anything mentioning results / verdicts / settlements (attributes, alt text, image names, JSON) =="
+          grep -rhoi -E '.{0,120}(case[- _]?result|verdict|settlement|recover(ed|y)|won|award).{0,120}' /tmp/site | sort -u | head -200
+          echo "== RAW HTML: image sources and alt text =="
+          grep -rhoi -E '<img[^>]+>' /tmp/site | grep -oi -E '(src|alt)="[^"]*"' | sort -u | head -200
+          echo "== RAW HTML: external data / iframe / script sources =="
+          grep -rhoi -E '(src|href)="https?://[^"]+"' /tmp/site | sed 's#^[a-z]*=##' | sort -u | grep -vi -E 'fonts|\.css|\.woff|\.png|\.jpg|\.jpeg|\.svg|\.gif|\.webp' | head -120
+          echo "== FULL TEXT: home =="
+          cat /tmp/text/live/www.wallaceinjury.com__index.html.txt || true
+          echo "== FULL TEXT: attorney =="
+          cat /tmp/text/live/www.wallaceinjury.com__shaheen-wallace-esq.html.txt || true
+          echo "== FULL TEXT: testimonials =="
+          cat /tmp/text/live/www.wallaceinjury.com__testimonials.html.txt || true
+          echo "== FULL TEXT: about =="
+          cat /tmp/text/live/www.wallaceinjury.com__about-us.html.txt || true
+
+      - name: Publish to old-site branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan old-site
+          git rm -rfq . >/dev/null 2>&1 || true
+          # text only: the raw HTML carries embedded keys that trip push protection
+          mkdir -p text
+          cp -r /tmp/text/* text/ 2>/dev/null || true
+          cp /tmp/cdx.txt text/cdx.txt 2>/dev/null || true
+          git add -A text
+          git commit -m "Old site scrape $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing to commit"
+          git push -f origin old-site

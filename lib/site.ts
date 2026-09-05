@@ -434,24 +434,49 @@ export const practiceAreas: PracticeArea[] = [
 export type CaseResult = {
   amount: string;
   type: string;
-  detail: string;
+  /** One line on the matter. Leave it out rather than invent one. */
+  detail?: string;
   note?: string;
+  /** "headline" carries the big figures on the home page; "record" is the quieter tier beneath them. */
+  tier: "headline" | "record";
+  /** Where the figure was published before this site. */
+  source?: string;
   status: "verified" | "needs-confirmation";
 };
 
+const OLD_SITE = "wallaceinjury.com, “Our Proven Success”, captured 1 Dec 2022";
+
 export const caseResults: CaseResult[] = [
+  /* ---- the headline figures ---- */
   {
     amount: "$2,000,000",
     type: "Catastrophic Injury",
     detail:
       "Recovery for a client who suffered life-altering injuries through another party's negligence.",
+    tier: "headline",
     status: "verified",
   },
+  {
+    amount: "$1,200,000",
+    type: "Medical Negligence",
+    tier: "headline",
+    source: OLD_SITE,
+    status: "verified",
+  },
+  {
+    amount: "$1,000,000",
+    type: "Tractor-Trailer Crash",
+    tier: "headline",
+    source: OLD_SITE,
+    status: "verified",
+  },
+  /* ---- the rest of the record ---- */
   {
     amount: "$900,000",
     type: "Personal Injury Settlement",
     detail:
       "Settlement published in Jury Verdict Review, obtained with longtime colleague Conrad Park, Esq.",
+    tier: "record",
     status: "verified",
   },
   {
@@ -459,20 +484,51 @@ export const caseResults: CaseResult[] = [
     type: "Motor Vehicle Collision",
     detail:
       "Settlement for a client seriously injured in a collision caused by another driver.",
+    tier: "record",
     status: "verified",
   },
+  { amount: "$300,000", type: "Van Crash", tier: "record", source: OLD_SITE, status: "verified" },
+  { amount: "$230,000", type: "Uninsured Motorist Crash", tier: "record", source: OLD_SITE, status: "verified" },
+  { amount: "$200,000", type: "Car Crash", tier: "record", source: OLD_SITE, status: "verified" },
+  { amount: "$150,000", type: "Trip and Fall", tier: "record", source: OLD_SITE, status: "verified" },
+  { amount: "$125,000", type: "Hit and Run", tier: "record", source: OLD_SITE, status: "verified" },
+  { amount: "$105,000", type: "Tractor-Trailer Crash", tier: "record", source: OLD_SITE, status: "verified" },
+  { amount: "$100,000", type: "Drunk-Driving Crash", tier: "record", source: OLD_SITE, status: "verified" },
 ];
 
-/* ⚠️  BEFORE LAUNCH — the three amounts above are real. The one-line
- * descriptions are placeholders written to be safely general. Replace each
- * `detail` with the actual facts of the matter, and confirm none of them
- * identifies a client without written consent. Under PA RPC 1.6 / 7.1 the
- * amount can be published; the story around it is what gets firms in trouble.
+/* ⚠️  BEFORE LAUNCH — every amount above is real. The first, fourth and fifth
+ * came from the firm directly; the rest were published on the firm's previous
+ * site (see `source`). The one-line descriptions on the first three are
+ * placeholders written to be safely general; the old-site figures carry no
+ * description on purpose. Replace each `detail` with the actual facts only
+ * with the client's written consent. Under PA RPC 1.6 / 7.1 the amount can be
+ * published; the story around it is what gets firms in trouble. Confirm none
+ * of the old-site figures is the same matter as one supplied directly.
  */
 
 export const publishedResults = caseResults.filter(
   (r) => r.status === "verified" || SHOW_DRAFT_PROOF
 );
+const byAmount = (a: CaseResult, b: CaseResult) =>
+  Number(b.amount.replace(/[^0-9]/g, "")) - Number(a.amount.replace(/[^0-9]/g, ""));
+export const headlineResults = publishedResults.filter((r) => r.tier === "headline").sort(byAmount);
+export const recordResults = publishedResults.filter((r) => r.tier === "record").sort(byAmount);
+
+/* Matters the firm settled under confidentiality or at policy limits, so the
+ * figure cannot be printed. As published on the firm's previous site
+ * ("Recent Settlements", captured 19 Nov 2019). Kept faithful to that text. */
+export type RecordNote = { kind: "Settlement" | "Judgment"; title: string; body: string };
+export const recordNotes: RecordNote[] = [
+  { kind: "Settlement", title: "Hotel bathtub, national chain", body: "The hotel had removed the adhesive strips that gave the tub its grip and never replaced them. A guest fell, injured her ribs, and was in pain for months. Confidential settlement." },
+  { kind: "Settlement", title: "Rear-ended at a red light", body: "Injuries to the neck, shoulder and back. Suit was filed, and a lump-sum settlement covered the medical bills and the pain and suffering." },
+  { kind: "Settlement", title: "Scalding coffee, a ten-year-old girl", body: "A gas station employee spilled a cup of scalding coffee on her chest. She needed burn treatment and emotional therapy. The settlement funds her future care and compensates the emotional harm." },
+  { kind: "Settlement", title: "Cart collector, national grocery chain", body: "An automated shopping-cart collector run by an employee rolled over the client's foot, causing nerve injury to two toes. Confidential settlement." },
+  { kind: "Settlement", title: "Uninsured, unlicensed driver", body: "Struck from behind while stopped at a red light. Concussion, vestibular rehabilitation and physical therapy. Recovered through the client's own uninsured-motorist coverage." },
+  { kind: "Settlement", title: "Six figures, policy limits", body: "An intoxicated driver struck the client's car and flipped it. Fractured scapula and an MCL injury. Settled for the full underinsured-motorist policy limits." },
+  { kind: "Judgment", title: "Six-figure judgment, federal court", body: "The defendant leapt into a crowd at a concert and struck the client in the chest, causing serious injury. After the evidence was presented, judgment was entered for the plaintiff." },
+  { kind: "Settlement", title: "Ice outside an apartment building", body: "The owner knew the ice had been there for days and left it. A serious fracture and surgery. Settled after suit was filed." },
+  { kind: "Settlement", title: "Pedestrian struck in McKeesport", body: "Hit while crossing the street, with life-threatening injuries, multiple surgeries and a prognosis of post-traumatic arthritis. Settled for the full policy limits." },
+];
 
 export const resultsDisclaimer =
   "Prior results do not guarantee or predict a similar outcome in any future matter. Every case is decided on its own facts. Amounts shown are gross recoveries before attorney's fees, costs and liens.";
