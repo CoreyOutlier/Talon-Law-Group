@@ -169,6 +169,15 @@
 .hero-rule { animation: heroRule 1.6s 1.5s var(--ease-out-expo) both; }
 .hero-photo { animation: wipeXIn 1.6s .15s var(--ease-out-expo) both; }
 
+/* scroll cue: a hairline that draws down, then lets go */
+@keyframes cue {
+  0%   { transform: scaleY(0); transform-origin: top }
+  45%  { transform: scaleY(1); transform-origin: top }
+  55%  { transform: scaleY(1); transform-origin: bottom }
+  100% { transform: scaleY(0); transform-origin: bottom }
+}
+.scroll-cue { animation: cue 2.4s var(--ease-in-out-quint) infinite; }
+
 /* intro title card */
 @keyframes introMark { from { opacity: 0; transform: scale(.94) } to { opacity: 1; transform: scale(1) } }
 @keyframes introRule { from { transform: scaleX(0) } to { transform: scaleX(1) } }

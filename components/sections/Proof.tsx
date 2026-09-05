@@ -4,36 +4,120 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { publishedResults, resultsDisclaimer } from "@/lib/site";
 
-/* The record. Three recoveries, one at a time, each taking the whole stage.
-   The plates are sticky, so every result slides over the last as the page
-   scrolls, and the figure counts up from zero the moment its plate settles. */
+/* The record.
+
+   Home page: a compact ledger. Three rows, each an index, a figure that
+   counts up from zero in sequence, the case type and one line. One screen.
+
+   Results page: the full-height plates. Each recovery takes the whole stage
+   and slides over the last as the page scrolls. */
 
 const TONES = ["#0B0B0C", "#101013", "#151519"];
 
-/* Home page chapter: a one-line header, the stack, then the link out. */
+function useSeen<T extends HTMLElement>(threshold = 0.4) {
+  const ref = useRef<T>(null);
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setSeen(true); io.disconnect(); } },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+  return { ref, seen };
+}
+
+function useCountUp(el: React.RefObject<HTMLSpanElement | null>, amount: string, go: boolean, delay = 0, dur = 1900) {
+  useEffect(() => {
+    if (!go || !el.current) return;
+    const target = Number(amount.replace(/[^0-9]/g, ""));
+    if (!target || window.matchMedia("(prefers-reduced-motion: reduce)").matches) { el.current.textContent = amount; return; }
+    let raf = 0;
+    const t = window.setTimeout(() => {
+      const start = performance.now();
+      const tick = (now: number) => {
+        const p = Math.min((now - start) / dur, 1);
+        const e = 1 - Math.pow(1 - p, 5);
+        if (el.current) el.current.textContent = "$" + Math.round(target * e).toLocaleString("en-US");
+        if (p < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    }, delay);
+    return () => { window.clearTimeout(t); cancelAnimationFrame(raf); };
+  }, [el, amount, go, delay, dur]);
+}
+
+/* ---------------------------------------------------------------- home --- */
 export function Proof() {
   if (publishedResults.length === 0) return null;
-
   return (
-    <section className="dark relative">
-      <div className="shell flex flex-wrap items-end justify-between gap-8 pb-12 pt-24 md:pt-32">
-        <div>
-          <p className="eyebrow mb-6">The record</p>
-          <h2 className="display max-w-[20ch] text-[clamp(1.75rem,3.6vw,3rem)]">
-            Numbers we can <span className="text-accent">document.</span>
-          </h2>
+    <section className="dark relative border-y border-line">
+      <div className="shell py-24 md:py-32">
+        <div className="mb-12 flex flex-wrap items-end justify-between gap-8 md:mb-16">
+          <div>
+            <p className="eyebrow mb-6">The record</p>
+            <h2 className="display max-w-[18ch] text-[clamp(1.75rem,3.6vw,3rem)]">
+              Numbers we can <span className="text-accent">document.</span>
+            </h2>
+          </div>
+          <p className="max-w-[34ch] text-[14px] leading-relaxed text-fg-3">
+            Real matters, real files. Ask any firm which of its numbers it actually tried.
+          </p>
         </div>
-        <p className="max-w-[36ch] text-[14px] leading-relaxed text-fg-3">
-          Every figure below is a real matter with a real file. If a firm shows you a wall of numbers with no case behind them, ask which ones they tried.
-        </p>
+        <Ledger />
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-6 border-t border-line pt-8">
+          <Link href="/results" className="btn btn-ghost">All case results</Link>
+          <p className="max-w-[62ch] text-[11px] leading-relaxed text-fg-3">{resultsDisclaimer}</p>
+        </div>
       </div>
-      <Stack />
-      <Footer link />
     </section>
   );
 }
 
-/* Results page: the stack alone, under the page header. */
+function Ledger() {
+  const { ref, seen } = useSeen<HTMLOListElement>(0.3);
+  return (
+    <ol ref={ref} className="border-t border-line">
+      {publishedResults.map((r, i) => (
+        <Row key={i} result={r} index={i} seen={seen} delay={i * 260} />
+      ))}
+    </ol>
+  );
+}
+
+function Row({ result, index, seen, delay }: { result: (typeof publishedResults)[number]; index: number; seen: boolean; delay: number }) {
+  const num = useRef<HTMLSpanElement>(null);
+  useCountUp(num, result.amount, seen, delay);
+  const ease = "cubic-bezier(.16,1,.3,1)";
+  return (
+    <li className="group relative grid gap-4 border-b border-line py-8 md:grid-cols-12 md:items-center md:gap-8 md:py-9">
+      <p className="figure text-[13px] text-fg-3 md:col-span-1" style={{ opacity: seen ? 1 : 0, transition: "opacity .8s", transitionDelay: `${delay}ms` }}>
+        {String(index + 1).padStart(2, "0")}
+      </p>
+      <span
+        ref={num}
+        className="figure block text-[clamp(3rem,7.4vw,7rem)] leading-[0.9] tabular-nums text-accent md:col-span-6"
+        style={{ opacity: seen ? 1 : 0, transform: seen ? "none" : "translateY(16px)", transition: `opacity .9s ${ease}, transform .9s ${ease}`, transitionDelay: `${delay}ms` }}
+      >
+        $0
+      </span>
+      <div className="md:col-span-5" style={{ opacity: seen ? 1 : 0, transform: seen ? "none" : "translateY(10px)", transition: `opacity 1s ${ease}, transform 1s ${ease}`, transitionDelay: `${delay + 320}ms` }}>
+        <p className="eyebrow mb-3">{result.type}</p>
+        <p className="max-w-[40ch] text-[14px] leading-relaxed text-fg-2">{result.detail}</p>
+      </div>
+      <span
+        aria-hidden
+        className={`absolute inset-x-0 bottom-[-1px] h-px origin-left bg-accent transition-transform duration-[1600ms] ${seen ? "scale-x-100" : "scale-x-0"}`}
+        style={{ transitionTimingFunction: ease, transitionDelay: `${delay + 200}ms` }}
+      />
+    </li>
+  );
+}
+
+/* ------------------------------------------------------------- results --- */
 export function RecordStack() {
   if (publishedResults.length === 0) {
     return (
@@ -44,67 +128,27 @@ export function RecordStack() {
       </section>
     );
   }
+  const n = publishedResults.length;
   return (
     <section className="dark relative">
-      <Stack />
-      <Footer />
+      <ol className="relative">
+        {publishedResults.map((r, i) => (
+          <Plate key={i} result={r} index={i} total={n} />
+        ))}
+      </ol>
+      <div className="relative z-10 border-t border-line bg-ground">
+        <div className="shell py-10">
+          <p className="max-w-[62ch] text-[11px] leading-relaxed text-fg-3">{resultsDisclaimer}</p>
+        </div>
+      </div>
     </section>
   );
 }
 
-function Stack() {
-  const n = publishedResults.length;
-  return (
-    <ol className="relative">
-      {publishedResults.map((r, i) => (
-        <Plate key={i} result={r} index={i} total={n} />
-      ))}
-    </ol>
-  );
-}
-
-function Footer({ link = false }: { link?: boolean }) {
-  return (
-    <div className="relative z-10 border-t border-line bg-ground">
-      <div className={`shell flex flex-wrap items-center gap-6 py-10 ${link ? "justify-between" : "justify-start"}`}>
-        {link && <Link href="/results" className="btn btn-ghost">All case results</Link>}
-        <p className="max-w-[62ch] text-[11px] leading-relaxed text-fg-3">{resultsDisclaimer}</p>
-      </div>
-    </div>
-  );
-}
-
 function Plate({ result, index, total }: { result: (typeof publishedResults)[number]; index: number; total: number }) {
-  const ref = useRef<HTMLLIElement>(null);
+  const { ref, seen } = useSeen<HTMLLIElement>(0.45);
   const num = useRef<HTMLSpanElement>(null);
-  const [seen, setSeen] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setSeen(true); io.disconnect(); } },
-      { threshold: 0.45 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!seen || !num.current) return;
-    const target = Number(result.amount.replace(/[^0-9]/g, ""));
-    if (!target) { num.current.textContent = result.amount; return; }
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { num.current.textContent = result.amount; return; }
-    const start = performance.now(), dur = 2000;
-    const tick = (now: number) => {
-      const p = Math.min((now - start) / dur, 1);
-      const e = 1 - Math.pow(1 - p, 5);
-      if (num.current) num.current.textContent = "$" + Math.round(target * e).toLocaleString("en-US");
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }, [seen, result.amount]);
-
+  useCountUp(num, result.amount, seen, 0, 2000);
   const label = `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
 
   return (

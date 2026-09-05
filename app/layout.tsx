@@ -4,6 +4,7 @@ import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { ActionBar } from "@/components/ActionBar";
+import { CTADock } from "@/components/CTADock";
 import { Intro } from "@/components/Intro";
 import { Cursor } from "@/components/Cursor";
 import { site, attorney, markets, practiceAreas } from "@/lib/site";
@@ -118,6 +119,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <Footer />
         <ActionBar />
+        <CTADock />
         <div className="h-16 lg:hidden" aria-hidden />
       </body>
     </html>
