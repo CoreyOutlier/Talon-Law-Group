@@ -83,7 +83,7 @@ function Plate({ result, index, total }: { result: (typeof publishedResults)[num
       className="sticky top-0 border-t border-line"
       style={{ background: TONES[index % TONES.length], zIndex: index + 1 }}
     >
-      <div className="shell grid min-h-[100svh] content-center gap-10 pb-20 pt-32 lg:grid-cols-12 lg:items-end lg:gap-12">
+      <div className="shell grid min-h-[100svh] content-start gap-10 pb-24 pt-36 md:pt-44 lg:grid-cols-12 lg:items-end lg:gap-12">
         <div className="lg:col-span-8">
           <p className="eyebrow mb-8 flex items-center gap-4">
             <span className="figure text-fg-3">{label}</span>
