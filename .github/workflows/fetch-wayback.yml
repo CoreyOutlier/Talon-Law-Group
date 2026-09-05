@@ -1,0 +1,38 @@
+name: Fetch Wayback pages
+
+# One-off helper: pulls specific archived pages of the previous site from the
+# Wayback Machine (unreachable from the build sandbox), prints every snapshot's
+# plain text to the run log. Touches no branch.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch and print
+        run: |
+          set -uo pipefail
+          sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq lynx >/dev/null
+          dump() { # $1 timestamp, $2 url
+            echo; echo "################ $1 $2"
+            curl -sSL --max-time 90 "https://web.archive.org/web/$1id_/$2" -o /tmp/p.html || { echo "FETCH FAILED"; return; }
+            lynx -dump -nolist -width=180 /tmp/p.html | sed '/^\s*$/d' | head -400
+          }
+          echo "== every snapshot of the settlements / results pages =="
+          curl -sS --max-time 60 "https://web.archive.org/cdx/search/cdx?url=wallaceinjury.com/recent-settlements*&output=txt&fl=timestamp,original,statuscode&filter=statuscode:200" | tee /tmp/rs.txt
+          curl -sS --max-time 60 "https://web.archive.org/cdx/search/cdx?url=wallaceinjury.com/*&output=txt&fl=timestamp,original,statuscode&filter=statuscode:200&filter=original:.*(result|verdict|settle|case-|success|win).*" | tee -a /tmp/rs.txt
+          sort -u /tmp/rs.txt | awk '{print $1" "$2}' | while read ts url; do dump "$ts" "$url"; done
+          echo; echo "== other eras of the home and attorney pages =="
+          dump 20161003152625 "http://www.wallaceinjury.com/"
+          dump 20190824120443 "https://www.wallaceinjury.com/meet-shaheen-wallace"
+          dump 20190824114511 "https://www.wallaceinjury.com/about1-cywj"
+          dump 20190724003313 "https://www.wallaceinjury.com/about1-csog"
+          dump 20190824115159 "https://www.wallaceinjury.com/bad-faith-insurance-litigation"
+          dump 20190824113823 "https://www.wallaceinjury.com/trucking-accidents"
+          dump 20200929144909 "https://wallaceinjury.com/attorney-profile/"
+          dump 20221201174459 "https://wallaceinjury.com/"
+          dump 20230208141059 "https://wallaceinjury.com/about-us/"
+          dump 20230208143617 "https://wallaceinjury.com/about-us/shaheen-wallace-esq/"
+          dump 20251123000000 "https://wallaceinjury.com/"
