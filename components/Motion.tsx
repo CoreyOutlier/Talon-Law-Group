@@ -151,6 +151,14 @@ function CountUp({ to, run, duration }: { to: number; run: boolean; duration: nu
 }
 
 /* ---------------------------------------------------------------------------
+ * Live — a breathing dot beside anything that says the line is answered.
+ * Pure CSS; the pulse ring is dropped under reduced motion.
+ * ------------------------------------------------------------------------- */
+export function Live({ className = "", onDark = false }: { className?: string; onDark?: boolean }) {
+  return <span className={`live-dot ${onDark ? "on-dark" : ""} ${className}`} aria-hidden />;
+}
+
+/* ---------------------------------------------------------------------------
  * Magnetic — desktop-only pull toward the cursor. Restrained: 8px max.
  * ------------------------------------------------------------------------- */
 export function Magnetic({ children, strength = 0.22 }: { children: ReactNode; strength?: number }) {

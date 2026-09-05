@@ -1,14 +1,23 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useScrollProgress } from "@/lib/scrollfx";
 
-/* Image slot with a mask-wipe entrance and a designed fallback. */
-export function Figure({ src, alt, className = "", imgClassName = "", ratio = "4 / 5", priority = false, note, wipe = "y" }: {
+/* Image slot with a mask-wipe entrance, an optional scroll parallax on the
+   photograph inside the frame, and a designed fallback. */
+export function Figure({ src, alt, className = "", imgClassName = "", ratio = "4 / 5", priority = false, note, wipe = "y", parallax = 0 }: {
   src: string; alt: string; className?: string; imgClassName?: string; ratio?: string; priority?: boolean; note?: string; wipe?: "y" | "x" | "none";
+  /** Percent of travel the photograph makes inside its frame while it crosses the screen. 0 disables. */
+  parallax?: number;
 }) {
   const [failed, setFailed] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
+  const none = useRef<HTMLDivElement>(null);
+
+  useScrollProgress(parallax ? wrapRef : none, (p) => {
+    if (imgRef.current) imgRef.current.style.transform = `translate3d(0, ${(p - 0.5) * 2 * parallax}%, 0) scale(${1 + parallax / 50})`;
+  });
 
   useEffect(() => { const el = imgRef.current; if (el && el.complete && el.naturalWidth === 0) setFailed(true); }, []);
   useEffect(() => {
@@ -25,7 +34,7 @@ export function Figure({ src, alt, className = "", imgClassName = "", ratio = "4
       {!failed ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img ref={imgRef} src={src} alt={alt} loading={priority ? "eager" : "lazy"} decoding="async"
-          onError={() => setFailed(true)} className={`h-full w-full object-cover ${imgClassName}`} />
+          onError={() => setFailed(true)} className={`h-full w-full object-cover ${parallax ? "will-change-transform" : ""} ${imgClassName}`} />
       ) : (
         <div className="absolute inset-0 grid place-items-center px-6 text-center">
           <div className="pointer-events-none absolute inset-3 border border-line" />

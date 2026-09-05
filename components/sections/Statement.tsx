@@ -11,10 +11,13 @@ export function Statement({ words, accentFrom = 999, eyebrow, footnote, strip }:
 }) {
   const section = useRef<HTMLElement>(null);
   const cols = useRef<(HTMLDivElement | null)[]>([]);
+  const line = useRef<HTMLParagraphElement>(null);
   const [shown, setShown] = useState(false);
   const RATES = [-10, 7, -16];
 
   useScrollProgress(section, (p) => {
+    // the statement slides a few percent across the screen as it passes; the page breathing
+    if (line.current) line.current.style.transform = `translate3d(${(0.5 - p) * 5}%, 0, 0)`;
     RATES.forEach((r, i) => { const el = cols.current[i]; if (el) el.style.transform = `translate3d(0, ${(p - 0.5) * 2 * r}%, 0)`; });
   });
   useEffect(() => {
@@ -26,7 +29,7 @@ export function Statement({ words, accentFrom = 999, eyebrow, footnote, strip }:
   return (
     <section ref={section} className="shell py-[16vh]">
       {eyebrow && <p className={`eyebrow mb-10 stmt-item ${shown ? "is-in" : ""}`}>{eyebrow}</p>}
-      <p className="h2-soft max-w-[22ch] text-[clamp(2rem,5.6vw,4.75rem)]">
+      <p ref={line} className="h2-soft max-w-[22ch] text-[clamp(2rem,5.6vw,4.75rem)] will-change-transform">
         {words.map((w, i) => (
           <span key={i} className={`stmt-item inline-block ${shown ? "is-in" : ""} ${i >= accentFrom ? "text-accent" : ""}`}
             style={{ transitionDelay: `${100 + i * 90}ms`, marginRight: "0.24em" }}>{w}</span>

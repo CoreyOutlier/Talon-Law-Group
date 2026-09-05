@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { site } from "@/lib/site";
+import { Live } from "@/components/Motion";
 
 /* Desktop counterpart to the phone action bar: once the first screen is
    gone, the two ways to reach the firm float bottom-right. */
@@ -25,7 +26,7 @@ export function CTADock() {
       }`}
       style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
     >
-      <a href={`tel:${site.phoneRaw}`} className="btn btn-ghost !h-11 !px-5">{site.phone}</a>
+      <a href={`tel:${site.phoneRaw}`} className="btn btn-ghost !h-11 !px-5"><Live />{site.phone}</a>
       <Link href="/contact" className="btn btn-wine !h-11 !px-6">Start your case</Link>
     </div>
   );

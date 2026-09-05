@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { nav, site } from "@/lib/site";
 import { Wordmark } from "./Wordmark";
+import { Live } from "@/components/Motion";
 
 /* Fixed nav. Transparent with paper type over the home hero, paper ground
    with ink type everywhere else and once the page scrolls. A hairline at the
@@ -59,8 +60,8 @@ export function Nav() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <a href={`tel:${site.phoneRaw}`} className={`hidden font-display text-[12px] font-medium tracking-[0.12em] transition-colors md:block ${dark ? "text-paper/80 hover:text-paper" : "text-ink/70 hover:text-wine"}`}>
-              {site.phone}
+            <a href={`tel:${site.phoneRaw}`} className={`hidden items-center gap-2.5 font-display text-[12px] font-medium tracking-[0.12em] transition-colors md:inline-flex ${dark ? "text-paper/80 hover:text-paper" : "text-ink/70 hover:text-wine"}`}>
+              <Live onDark={dark} />{site.phone}
             </a>
             <Link href="/contact" className="btn btn-wine hidden !h-11 !px-6 sm:inline-flex">Start your case</Link>
             <button onClick={() => setOpen((v) => !v)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}

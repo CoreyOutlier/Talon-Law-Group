@@ -7,7 +7,7 @@ export function AttorneyPanel() {
   return (
     <section className="shell grid gap-14 py-24 md:py-36 lg:grid-cols-12 lg:gap-16">
       <Reveal className="lg:col-span-5">
-        <Figure src={attorney.portrait} alt={`${attorney.name}, ${attorney.suffix}`} ratio="3 / 4" wipe="x" />
+        <Figure src={attorney.portrait} alt={`${attorney.name}, ${attorney.suffix}`} ratio="3 / 4" wipe="x" parallax={6} />
       </Reveal>
       <div className="lg:col-span-6 lg:col-start-7 lg:pt-8">
         <Reveal><p className="eyebrow mb-7">The attorney</p></Reveal>
