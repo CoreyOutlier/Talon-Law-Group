@@ -589,7 +589,7 @@ export const attorney = {
   name: "Shaheen Z. Wallace",
   suffix: "Esq.",
   role: "Founder & Trial Attorney",
-  portrait: "/media/photos/couch-standing.jpg",
+  portrait: "/media/photos/couch-chin.jpg",
   lede:
     "A New Yorker who built his trial practice in Pittsburgh and now takes cases in Los Angeles as well — a decade spent against the largest insurance carriers in the country, on behalf of people they hoped would go away.",
   bio: [
@@ -665,7 +665,7 @@ export const disclaimer =
 /* -------------------------------------------------------------------------- */
 export const photos = {
   hero: "/media/photos/courthouse-steps.jpg",
-  portrait: "/media/photos/couch-standing.jpg",
+  portrait: "/media/photos/couch-chin.jpg",
   phone: "/media/photos/coffee-espresso.jpg",
   film: ["/media/photos/couch-wide-serious.jpg", "/media/photos/brick-chair-wide.jpg", "/media/photos/brick-window.jpg"],
   strip: ["/media/photos/bench-laugh.jpg", "/media/photos/coffee-table.jpg", "/media/photos/brick-smile.jpg"],
