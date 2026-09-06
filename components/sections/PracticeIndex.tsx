@@ -14,7 +14,7 @@ export function PracticeIndex() {
         <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
           <div>
             <Reveal><p className="eyebrow mb-6">What we handle</p></Reveal>
-            <LineReveal as="h2" className="display max-w-[20ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={["Serious injury.", "Nothing smaller."]} />
+            <LineReveal as="h2" className="display max-w-[20ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={["Injury law.", "All of it."]} />
           </div>
           <Reveal delay={0.2}><Link href="/practice-areas" className="btn btn-ghost">All practice areas</Link></Reveal>
         </div>

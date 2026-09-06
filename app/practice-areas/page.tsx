@@ -16,7 +16,7 @@ export default function PracticeAreasIndex() {
     <>
       <PageHeader
         eyebrow="What we handle"
-        lines={["Serious injury.", "Nothing smaller."]}
+        lines={["Injury law.", "All of it."]}
         lede="We take a limited number of cases so each one gets tried-file preparation. If your matter is not one we should handle, we will tell you and point you to someone who should."
       />
 
