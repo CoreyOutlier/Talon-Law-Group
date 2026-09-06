@@ -31,7 +31,8 @@ export default function About() {
                 src={attorney.portrait}
                 alt={`${attorney.name}, ${attorney.suffix}`}
                 ratio="4 / 5"
-                              />
+                imgClassName="object-[80%_50%]"
+              />
               <div className="mt-8 border-t border-line pt-6">
                 <p className="eyebrow mb-4">Admissions</p>
                 <ul className="space-y-3 text-[13px] leading-snug text-fg/75">
