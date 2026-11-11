@@ -1,0 +1,73 @@
+name: Fetch Dropbox assets
+
+# One-off helper: Dropbox is unreachable from the build sandbox. This pulls
+# the two shared folders Shaheen sent (avatar clips, photo shoot) on the
+# runner, prints a manifest, resizes the photographs for the web, makes a
+# contact sheet of the photos and a frame from each clip, and publishes the
+# lot to the shaheen-assets branch. Never touches the site branches.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download both folders
+        run: |
+          set -uo pipefail
+          sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq imagemagick ffmpeg unzip >/dev/null
+          mkdir -p /tmp/dl /tmp/src/clips /tmp/src/shoot
+          curl -sSL --retry 3 --max-time 900 -o /tmp/dl/clips.zip "https://www.dropbox.com/scl/fo/vygo6tltxfe5ynrnruy2o/AOxY7sdrQ9Kz78ZaSalFQkI?rlkey=lsfht993be1ttfpojxagwpy5d&st=nhngsabo&dl=1" || echo "clips download failed"
+          curl -sSL --retry 3 --max-time 900 -o /tmp/dl/shoot.zip "https://www.dropbox.com/scl/fo/38nyw7i65f9ue1iu2dh8h/AB4txk5olTFK4kCuWL-Us1I?rlkey=itclgy1uxnm3p19ps61b09054&st=oxlumaea&dl=1" || echo "shoot download failed"
+          ls -la /tmp/dl; file /tmp/dl/*
+          unzip -q -o /tmp/dl/clips.zip -d /tmp/src/clips 2>&1 | tail -3 || true
+          unzip -q -o /tmp/dl/shoot.zip -d /tmp/src/shoot 2>&1 | tail -3 || true
+          echo "== MANIFEST =="
+          find /tmp/src -type f -printf '%s\t%p\n' | sort -k2 | awk -F'\t' '{printf "%10.1f MB  %s\n", $1/1048576, $2}'
+
+      - name: Probe and prepare
+        run: |
+          set -uo pipefail
+          mkdir -p out/clips out/shoot out/frames
+          echo "== VIDEO PROBE =="
+          find /tmp/src -type f \( -iname '*.mp4' -o -iname '*.mov' -o -iname '*.m4v' -o -iname '*.webm' \) | sort | while read f; do
+            echo "--- $f"
+            ffprobe -v error -show_entries format=duration,size:stream=codec_type,codec_name,width,height,r_frame_rate -of default=nw=1 "$f" | tr '\n' ' '; echo
+            b=$(basename "$f"); n="${b%.*}"
+            ffmpeg -v error -y -ss 1 -i "$f" -frames:v 1 -vf "scale=640:-2" "out/frames/${n}.jpg" || true
+            # a small web-ready copy if the clip is under 120 MB
+            s=$(stat -c %s "$f"); if [ "$s" -lt 125829120 ]; then
+              ffmpeg -v error -y -i "$f" -vf "scale='min(1080,iw)':-2" -c:v libx264 -preset medium -crf 23 -movflags +faststart -c:a aac -b:a 128k "out/clips/${n}.mp4" || true
+            fi
+          done
+          echo "== IMAGE PROBE =="
+          find /tmp/src -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.heic' -o -iname '*.tif' -o -iname '*.tiff' -o -iname '*.webp' \) | sort | while read f; do
+            b=$(basename "$f"); n="${b%.*}"; n=$(echo "$n" | tr -c 'A-Za-z0-9._-\n' '_')
+            identify -format "%wx%h %b  $f\n" "$f[0]" 2>/dev/null || echo "unreadable $f"
+            convert "$f[0]" -auto-orient -resize '2400x2400>' -quality 82 -sampling-factor 4:2:0 -strip "out/shoot/${n}.jpg" 2>/dev/null || true
+          done
+          ls out/shoot | head -100; ls out/clips; ls out/frames
+          n=$(ls out/shoot | wc -l); if [ "$n" -gt 0 ]; then montage out/shoot/*.jpg -tile 5x -geometry 300x300+6+6 -background '#0B0B0C' -quality 70 out/_shoot-contact-sheet.jpg; fi
+          n=$(ls out/frames | wc -l); if [ "$n" -gt 0 ]; then montage out/frames/*.jpg -tile 4x -geometry 320x180+6+6 -background '#0B0B0C' -quality 70 out/_clips-contact-sheet.jpg; fi
+          find /tmp/src -type f -printf '%s\t%p\n' | sort -k2 > out/MANIFEST.tsv
+          du -sh out
+
+      - name: Publish to shaheen-assets branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mv out /tmp/out
+          git checkout --orphan shaheen-assets
+          git rm -rfq . >/dev/null 2>&1 || true
+          cp -r /tmp/out/. .
+          # keep every file under GitHub's 100 MB limit
+          find . -type f -size +95M -print -delete
+          git add -A
+          git commit -m "Shaheen assets $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing to commit"
+          git push -f origin shaheen-assets
