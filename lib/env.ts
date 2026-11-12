@@ -13,8 +13,10 @@ export const env = {
   pghSkyline: "/media/env/pgh-skyline.jpg",
   /** New York County Supreme Court, Foley Square. */
   nyFoley: "/media/env/ny-foley.jpg",
-  /** Downtown Los Angeles civic center at golden hour. */
+  /** Downtown Los Angeles civic center at golden hour. Unused: the firm is not admitted in California. */
   laCivic: "/media/env/la-civic.jpg",
+  /** Atlanta: neoclassical courthouse facade against the downtown skyline at blue hour. */
+  atlCourthouse: "/media/env/atl-courthouse.jpg",
   /** Empty courthouse corridor, marble and oak. Portrait. */
   corridor: "/media/env/corridor.jpg",
   /** Rain-wet downtown Pittsburgh street at dusk. */
@@ -29,7 +31,7 @@ export const env = {
 export const cityPhoto: Record<string, string> = {
   pittsburgh: env.pghSkyline,
   "new-york": env.nyFoley,
-  "los-angeles": env.laCivic,
+  atlanta: env.atlCourthouse,
 };
 
 /** The three frames of the pinned film sequence on the home page. */

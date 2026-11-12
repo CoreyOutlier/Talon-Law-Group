@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { admissions, attorney, markets, site } from "@/lib/site";
+import { admissions, attorney, brand, markets, site } from "@/lib/site";
 import { Figure } from "@/components/Figure";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Motion";
@@ -46,7 +46,6 @@ export default function About() {
                 <p className="eyebrow mb-3 mt-7">Practising in</p>
                 <ul className="space-y-1 text-[14px] text-fg/75">
                   {markets.map((m) => <li key={m.slug}>{m.city}, {m.state}</li>)}
-                  {site.alsoServing.map((j) => <li key={j} className="text-fg-3">{j}</li>)}
                 </ul>
               </div>
             </div>
@@ -84,14 +83,33 @@ export default function About() {
 
           <Reveal delay={0.35}>
             <blockquote className="mt-14 border-l-2 border-accent pl-7">
-              <p className="h2-soft text-[clamp(1.5rem,2.8vw,2.125rem)] text-fg">
-                Insurance companies price a case by the lawyer holding it. That is the
-                entire business. My job is to make that calculation expensive.
-              </p>
+              <p className="h2-soft text-[clamp(1.375rem,2.4vw,1.875rem)] text-fg">{attorney.quote}</p>
               <footer className="mt-5 text-[12px] uppercase tracking-[0.18em] text-fg-3">
                 {attorney.name}, {attorney.suffix}
               </footer>
             </blockquote>
+          </Reveal>
+
+          <Reveal delay={0.4}>
+            <div className="mt-14 border-t border-line pt-10">
+              <p className="eyebrow mb-8">Off the clock</p>
+              <ul className="divide-y divide-line border-y border-line">
+                {attorney.human.map((h) => (
+                  <li key={h.title} className="grid gap-3 py-6 md:grid-cols-12 md:gap-8">
+                    <p className="display text-[1.0625rem] leading-tight md:col-span-3">{h.title}</p>
+                    <p className="text-[15px] leading-relaxed text-fg/70 md:col-span-9">{h.body}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.45}>
+            <div className="mt-14 border-t border-line pt-10">
+              <p className="eyebrow mb-5">The firm's motto</p>
+              <p className="display text-[clamp(1.5rem,3vw,2.5rem)]">{brand.motto.latin}</p>
+              <p className="h2-soft mt-3 text-[clamp(1.125rem,1.8vw,1.375rem)] text-fg/70">{brand.motto.english}</p>
+            </div>
           </Reveal>
         </div>
       </section>

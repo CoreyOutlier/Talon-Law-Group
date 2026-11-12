@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRef } from "react";
-import { site } from "@/lib/site";
+import { brand, site } from "@/lib/site";
 import { useScrollProgress } from "@/lib/scrollfx";
 import { Live, Magnetic } from "@/components/Motion";
 
@@ -14,7 +14,7 @@ import { Live, Magnetic } from "@/components/Motion";
    at any width. The nav sits transparent over this frame. */
 
 const HERO_PHOTO = "/media/photos/couch-wide-serious.jpg";
-const LINES = ["Some people", "fight back", "for a living."];
+const LINES = ["Bad companies", "fear good", "lawyers."];
 
 export function Hero() {
   const section = useRef<HTMLElement>(null);
@@ -66,7 +66,7 @@ export function Hero() {
           </h1>
 
           <p className="hero-meta mt-7 max-w-[42ch] text-[1.0625rem] leading-relaxed text-paper/75 text-pretty md:text-[1.1875rem]">
-            The insurance company assigned your crash to a professional the day it happened. You should have one too.
+            {brand.oneMessage} The insurer put a professional on your case the day it happened. Now you have one.
           </p>
           <div className="hero-meta mt-8 flex flex-wrap items-center gap-3" style={{ animationDelay: "1.45s" }}>
             <Magnetic><Link href="/contact" className="btn btn-wine">Start your case</Link></Magnetic>

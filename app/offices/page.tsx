@@ -6,9 +6,9 @@ import { Reveal } from "@/components/Motion";
 import { CTA } from "@/components/sections/CTA";
 
 export const metadata: Metadata = {
-  title: "Offices — Pittsburgh, New York, Los Angeles",
+  title: "Offices — Pittsburgh, New York, Atlanta",
   description:
-    "Talon Law Group represents seriously injured people in Pittsburgh, New York and Los Angeles, and accepts matters in Georgia.",
+    "Talon Law Group represents seriously injured people in Pennsylvania, New York and Georgia, with offices in Pittsburgh and Garden City, New York.",
 };
 
 export default function Offices() {
@@ -16,8 +16,8 @@ export default function Offices() {
     <>
       <PageHeader
         eyebrow="Where we work"
-        lines={["Three cities.", "One standard."]}
-        lede="Injury law is local law. The deadline that ends your case in Los Angeles does not exist in Pennsylvania, and the notice that saves it in New York has no counterpart anywhere else. Each office page sets out the rules that actually decide cases in that jurisdiction."
+        lines={["Three states.", "One standard."]}
+        lede="Injury law is local law. The notice that saves a case in New York has no counterpart in Pennsylvania, and the six-month clock on a claim against a Georgia city does not exist anywhere else. Each page sets out the rules that actually decide cases in that jurisdiction, and the firm says only where its lawyer is admitted."
       />
 
       <section className="shell pb-20 md:pb-28">
@@ -79,11 +79,11 @@ export default function Offices() {
             </div>
 
             <div className="lg:col-span-6 lg:col-start-7">
-              <p className="eyebrow mb-6">Also accepting matters in</p>
+              <p className="eyebrow mb-6">Admitted in</p>
               <ul className="space-y-2 text-[15px] text-fg/80">
-                {site.alsoServing.map((j) => <li key={j}>{j}</li>)}
+                {site.states.map((j) => <li key={j}>{j}</li>)}
               </ul>
-
+              <p className="mt-6 max-w-[44ch] text-[13px] leading-relaxed text-fg-3">The firm says only where its lawyer is licensed. A case outside these states is referred to counsel admitted there, with Shaheen alongside where the rules allow.</p>
             </div>
           </div>
         </Reveal>

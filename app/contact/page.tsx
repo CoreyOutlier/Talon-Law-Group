@@ -89,7 +89,7 @@ export default function Contact() {
                 ))}
               </ul>
               <p className="mt-6 text-[13px] text-fg-3">
-                Also accepting matters in {site.alsoServing.join(", ")}.
+                Admitted in {site.states.join(", ")}.
               </p>
             </div>
           </div>

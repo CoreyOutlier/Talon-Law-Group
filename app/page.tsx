@@ -12,6 +12,7 @@ import { Proof } from "@/components/sections/Proof";
 import { AttorneyPanel } from "@/components/sections/AttorneyPanel";
 import { Standard } from "@/components/sections/Standard";
 import { Process } from "@/components/sections/Process";
+import { Answers } from "@/components/sections/Answers";
 import { Markets } from "@/components/sections/Markets";
 import { CTA } from "@/components/sections/CTA";
 import { env } from "@/lib/env";
@@ -28,15 +29,16 @@ export default function Home() {
       <PromiseSection />
       <Voices />
       <PracticeIndex />
-      <Break src={env.corridor} position="50% 40%" eyebrow="Where cases are decided"
-        lines={["Prepared for the room", "most lawyers avoid."]}
+      <Break src={env.corridor} position="50% 40%" eyebrow="Amat victoria curam"
+        lines={["Victory loves", "preparation."]}
         note="Insurers pay for what they believe a jury would award. The only way to make them believe it is to be ready to find out." />
       <Proof />
       <AttorneyPanel />
       <Standard />
       <Process />
+      <Answers limit={3} />
       <Break src={env.pghSkyline} height="70vh" eyebrow="Home court"
-        lines={["Built in Pittsburgh.", "Tried wherever it takes."]} />
+        lines={["Built in Pittsburgh.", "Admitted in three states."]} />
       <Markets />
       <CTA />
     </>
