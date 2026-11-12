@@ -23,6 +23,18 @@ export default function About() {
 
       <Ticker />
 
+      <section className="dark border-b border-line">
+        <div className="shell grid gap-10 py-16 md:py-20 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-3">
+            <Reveal><p className="eyebrow">The mission</p></Reveal>
+          </div>
+          <div className="lg:col-span-9">
+            <Reveal delay={0.1}><p className="h2-soft max-w-[40ch] text-[clamp(1.5rem,2.8vw,2.5rem)] text-fg text-pretty">{brand.mission}</p></Reveal>
+            <Reveal delay={0.2}><p className="mt-6 max-w-[48ch] text-[15px] leading-relaxed text-fg-2">{brand.oneMessage} {brand.name.short} The firm is named for the job.</p></Reveal>
+          </div>
+        </div>
+      </section>
+
       <section className="shell grid gap-14 py-20 md:py-28 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
           <Reveal>

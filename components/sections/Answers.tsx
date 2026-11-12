@@ -42,11 +42,11 @@ export function Answers({ limit, dark = true, heading = ["Questions,", "answered
           </Reveal>
         </div>
 
-        <ul className="grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3">
           {clips.map((c, i) => {
             const on = playing === c.slug;
             return (
-              <Reveal as="li" key={c.slug} delay={0.05 * i} className="group relative bg-ground">
+              <Reveal as="li" key={c.slug} delay={0.05 * i} className="group relative border-b border-r border-line bg-ground">
                 <button
                   type="button"
                   onClick={() => setPlaying(on ? null : c.slug)}

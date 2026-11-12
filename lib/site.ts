@@ -617,24 +617,100 @@ export const resultsDisclaimer =
 
 export type Testimonial = {
   quote: string;
+  /** First name and last initial. Full names were published on the firm's previous site; shortened here. */
   author: string;
   matter: string;
   source: string;
+  /** A short cut of the quote for the rotating chapter on the home page. Present = shown there. */
+  excerpt?: string;
+  /** Carries the long-form band at the top of the reviews page. One only. */
+  featured?: boolean;
   status: "verified" | "needs-confirmation";
 };
 
+/* The ten Google reviews below were published, with full names, on the
+ * firm's previous site (wallaceinjury.com/testimonials, captured Nov 2026).
+ * Names are shortened here. Confirm the Google listing still carries them
+ * before launch; a review the client has since removed should come down. */
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "His communication, persistence and dedication to me as a client was outstanding.",
-    author: "Verified client review",
-    matter: "Personal injury",
-    source: "Avvo",
+      "In 2016 I was riding my bike to work just like any other day when a van decided to hit me and drive off. My injuries were unbelievably severe. Thanks to the wonderful doctors at UPMC, I am here today. But this review is about the lawyer I chose.\n\nI approached the biggest law firms in Pittsburgh, the ones you hear on the radio and see the ads for. You know their slogans. They turned me away and said my case was \"too difficult.\" They didn't want to help in any way. I was just dismissed, told there was nothing anyone could do.\n\nShaheen Wallace changed my life from the day I met him. Immediately upon learning about the details of my accident and the circumstances surrounding it, Shaheen went to work. His communication, persistence and dedication to me as a client was outstanding. I knew he was working on other cases, but the whole time it felt like I was his only client.\n\nI believed that Shaheen would find justice for me from the moment we decided to work together. If it was not for Shaheen's knowledge of law and his compassion for his clients, this never could have gotten done. I would recommend Shaheen to anyone that truly wants the best lawyer in the Burgh to be on their team.",
+    excerpt: "The biggest firms in Pittsburgh turned me away and said my case was too difficult. Shaheen Wallace changed my life from the day I met him.",
+    author: "Corbin W.",
+    matter: "Hit-and-run, cyclist",
+    source: "Google",
+    featured: true,
     status: "verified",
   },
   {
-    quote:
-      "I would highly recommend Shaheen for those seeking help with both personal injury and business law.",
+    quote: "I was hit by a car and sustained a few injuries and had no idea what to do. That night I reached out to Shaheen and he called me within a few minutes. After talking to him, I immediately knew that I was in good hands. From the accident to the settlement, he made everything quick and effortless. And he's also just a good dude. 10 stars out of 5.",
+    excerpt: "That night I reached out to Shaheen and he called me within a few minutes. From the accident to the settlement, he made everything quick and effortless.",
+    author: "Kyle B.",
+    matter: "Pedestrian struck",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "I was hit by a drunk driver and Shaheen definitely got the best buck for my bang. The texting service is so convenient, no need to schedule a time to talk to him or Megan for quick questions. They really made it easy for me to move on after my accident because I knew that they were taking care of things the best way possible. Couldn't have asked for a better attorney.",
+    excerpt: "No need to schedule a time to talk to him for quick questions. They really made it easy for me to move on after my accident.",
+    author: "Adrienne H.",
+    matter: "Drunk-driving crash",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "Shaheen and his team were absolutely incredible while helping me with my case after I had gotten into a car accident six months pregnant. They stopped at nothing to make sure we were fairly compensated for the emotional and physical damage left behind in the accident. They were very consistent with communication and overall updating us so we knew what was happening every step of the way. I really cannot thank them enough for helping out me and my family.",
+    excerpt: "A car accident six months pregnant. They stopped at nothing to make sure we were fairly compensated, and we knew what was happening every step of the way.",
+    author: "Yazi S.",
+    matter: "Car crash",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "I was referred to Attorney Wallace by another attorney and I'm extremely satisfied with my results. Upon contacting him, he immediately got to work by inquiring about the details of my incident. If you're looking for an attorney who genuinely cares about their clients and not solely monetary gain, Attorney Wallace is definitely the person for you. He and Megan were very thorough, detail-oriented, professional, patient and caring. They treated me like family with the utmost respect from initiation to closure of my case.",
+    author: "A. G.",
+    matter: "Referred by another attorney",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "I was hit by a car while riding my bicycle in Oakland and was unsure about hiring a lawyer. I received a call from the insurance company a few days later and knew that I was not capable of representing myself. I called Shaheen that day and I was astonished by his ambition to get to work right away and do what needed to be done. He was highly professional, assertive and prompt with replying to my messages when I had questions.",
+    author: "Al L.",
+    matter: "Cyclist struck",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "Attorney Shaheen is professional and includes medical expert testimony and visuals when presenting your case. His expertise ensures that his clients will get the maximum compensation for their personal injury claim. I am beyond satisfied with the results of my case. His work has helped a lot with me regaining my life back and covering all medical bills.",
+    author: "Kimberly R.",
+    matter: "Personal injury",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "Shaheen has been nothing but great. He went above and beyond to help me with this case. I am so thankful and grateful for the recommendation of a friend. He is also personable and willing to explain whatever you need to make sure you completely understand each step.",
+    author: "Juanita H.",
+    matter: "Personal injury",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "Shaheen is an excellent attorney. He is compassionate, honest, responsive, knowledgeable and easy to communicate with. I admire his ambition and passion for his job and his clients. Top quality attorney and a great person.",
+    author: "Megan J.",
+    matter: "Personal injury",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "Shaheen is a very professional and for-the-person attorney. He handled a very lengthy case during a very trying time in the pandemic and the results were successful. He is committed to his clients, informative, and always willing to go the extra mile. Very thankful for his diligence and his legal expertise.",
+    author: "C. M.",
+    matter: "Personal injury",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "I would highly recommend Shaheen for those seeking help with both personal injury and business law.",
     author: "Verified client review",
     matter: "Personal injury",
     source: "Avvo",
@@ -652,6 +728,8 @@ export const testimonials: Testimonial[] = [
 export const publishedTestimonials = testimonials.filter(
   (t) => t.status === "verified" || SHOW_DRAFT_PROOF
 );
+/** The short ones that rotate on the home page. */
+export const homeTestimonials = publishedTestimonials.filter((t) => t.excerpt);
 
 /* -------------------------------------------------------------------------- */
 /* ATTORNEY                                                                    */

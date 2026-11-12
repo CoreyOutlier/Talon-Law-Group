@@ -33,7 +33,7 @@ export function Footer() {
           </div>
           <div className="lg:col-span-2">
             <p className="eyebrow mb-6">Firm</p>
-            <ul className="space-y-3">{nav.map((n) => (
+            <ul className="space-y-3">{[...nav, { label: "For referring attorneys", href: "/referrals" }].map((n) => (
               <li key={n.href}><Link href={n.href} className="link-draw text-[14px] text-fg/70 hover:text-fg">{n.label}</Link></li>))}
             </ul>
           </div>

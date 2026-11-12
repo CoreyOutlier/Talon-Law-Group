@@ -36,7 +36,7 @@ export default function Home() {
       <AttorneyPanel />
       <Standard />
       <Process />
-      <Answers limit={3} />
+      <Answers limit={3} dark={false} />
       <Break src={env.pghSkyline} height="70vh" eyebrow="Home court"
         lines={["Built in Pittsburgh.", "Admitted in three states."]} />
       <Markets />
