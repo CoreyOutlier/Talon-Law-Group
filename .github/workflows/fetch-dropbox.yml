@@ -38,16 +38,16 @@ jobs:
           # the Atlanta courthouse frame rendered for the Georgia market page
           curl -fsSL --retry 3 -o /tmp/atl.png "https://d8j0ntlcm91z4.cloudfront.net/user_34JAjvuEHdMIydK1lhX7L6vU132/hf_20261111_235906_56591426-87c8-47c7-aa76-e63771ca79ad.png" && convert /tmp/atl.png -auto-orient -resize '2000x2000>' -quality 80 -sampling-factor 4:2:0 -strip out/env/atl-courthouse.jpg || echo "atlanta fetch failed"
           echo "== VIDEO PROBE =="
-          find /tmp/src -type f \( -iname '*.mp4' -o -iname '*.mov' -o -iname '*.m4v' -o -iname '*.webm' \) | sort | while read f; do
+          while read -r f <&3; do
             echo "--- $f"
-            ffprobe -nostdin -v error -show_entries format=duration,size:stream=codec_type,codec_name,width,height,r_frame_rate -of default=nw=1 "$f" | tr '\n' ' '; echo
+            ffprobe -v error -show_entries format=duration,size:stream=codec_type,codec_name,width,height,r_frame_rate -of default=nw=1 "$f" | tr '\n' ' '; echo
             b=$(basename "$f"); n="${b%.*}"
             ffmpeg -nostdin -v error -y -ss 1 -i "$f" -frames:v 1 -vf "scale=640:-2" "out/frames/${n}.jpg" || true
             # a small web-ready copy if the clip is under 120 MB
             s=$(stat -c %s "$f"); if [ "$s" -lt 125829120 ]; then
               ffmpeg -nostdin -v error -y -i "$f" -vf "scale='min(1080,iw)':-2" -c:v libx264 -preset medium -crf 23 -movflags +faststart -c:a aac -b:a 128k "out/clips/${n}.mp4" || true
             fi
-          done
+          done 3< <(find /tmp/src -type f \( -iname '*.mp4' -o -iname '*.mov' -o -iname '*.m4v' -o -iname '*.webm' \) | sort)
           echo "== IMAGE PROBE =="
           find /tmp/src -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.heic' -o -iname '*.tif' -o -iname '*.tiff' -o -iname '*.webp' \) | sort | while read f; do
             b=$(basename "$f"); n="${b%.*}"; n=$(echo "$n" | tr -c 'A-Za-z0-9._-\n' '_')
