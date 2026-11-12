@@ -75,7 +75,25 @@ export const brand = {
   /** Phrases he never wants on the site. Checked in review; keep them out. */
   banned: ["fight for you", "we'll fight", "we will fight", "on your side"],
   /** How clients, opposing counsel and peers should describe the firm. */
-  words: { clients: ["Kind", "Knowledgeable", "Professional"], opposing: ["Serious", "Unrelenting", "Honest"], peers: ["Dependable", "Trustworthy", "Fair"] },
+  words: { clients: ["Kind", "Knowledgeable", "Professional"], opposing: ["Serious", "Unrelenting", "Honest"], peers: ["Dependable", "Trustworthy", "Fair"], never: ["Unreliable", "Cowardly", "Lazy"] },
+  /** What "Talon" means to him. He highlighted all six. */
+  associations: ["Grip: once we take hold, we do not let go", "Precision: exact, targeted, no wasted motion", "Strength and force", "Protection: a bird of prey guards what is its own", "Vision: seeing the whole field from above", "Speed and decisiveness"],
+  /** The words he highlighted from the starter list. */
+  vocabulary: ["Relentless", "Strike", "Hungry", "Battle-tested", "Built different"],
+  /** Tone targets, 1 to 5, left pole to right pole, with where he says the firm sits today.
+   *  Read: he wants the firm MORE traditional and MORE premium than it is now, and a
+   *  notch less confrontational. Headlines should be bold in substance, restrained in volume. */
+  tone: [
+    { left: "Polished and formal", right: "Direct and plainspoken", want: 4, today: 5 },
+    { left: "Warm and comforting", right: "Bold and confrontational", want: 4, today: 5 },
+    { left: "Traditional and established", right: "Modern and disruptive", want: 2, today: 4 },
+    { left: "Quiet confidence", right: "Loud and unapologetic", want: 3, today: 3 },
+    { left: "Serious at all times", right: "Personality and humor", want: 4, today: 3 },
+    { left: "Exclusive and premium", right: "Accessible and approachable", want: 2, today: 4 },
+    { left: "Technical and expert", right: "Simple and relatable", want: 3, today: 4 },
+  ],
+  /** Brands he named: Mont Blanc, Aston Martin, Rolex, Wilson. Athlete: Federer. */
+  references: ["Mont Blanc: refined, but not too much", "Aston Martin: the same", "Rolex: you can depend on it forever", "Wilson: classic tennis history, elegance with performance", "Roger Federer: brutal on the court, and made it look effortless"],
   /** What the practice is actually built on, by state. */
   focus: {
     pennsylvania: "Tractor-trailer and commercial-vehicle crashes.",
