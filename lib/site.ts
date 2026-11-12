@@ -714,8 +714,35 @@ export const process_ = [
 /* screen readers; keep it faithful to what the clip says.                     */
 /* -------------------------------------------------------------------------- */
 
-export type FaqClip = { slug: string; question: string; summary: string; src: string; poster: string; duration: string };
-export const faqClips: FaqClip[] = [];
+export type FaqClip = { slug: string; question: string; summary: string; src: string; poster: string; duration: string; /** the source file's basename in Shaheen's Dropbox folder */ file: string };
+const clip = (slug: string, file: string, question: string, duration: string, summary: string): FaqClip => ({
+  slug, file, question, duration, summary, src: `/media/faq/${slug}.mp4`, poster: `/media/faq/${slug}.jpg`,
+});
+/* ⚠️  The `summary` lines are written answers for search engines and screen
+ * readers. They were drafted from the clip titles, not transcribed. Watch
+ * each clip and correct any summary that says more or less than Shaheen does. */
+export const faqClips: FaqClip[] = [
+  clip("what-to-do-after-a-truck-crash", "What_to_Do_After_a_Truck_Crash", "What should I do after a truck crash?", "0:26",
+    "Get medical care first, even if you feel fine. Photograph the scene, the truck and its markings. Get the police report number. Do not give a recorded statement to the trucking company's insurer. Call a lawyer before you call them back."),
+  clip("do-you-need-a-lawyer-after-a-truck-crash", "Do_You_Need_a_Lawyer_After_a_Truck_Crash", "Do I need a lawyer after a truck crash?", "0:25",
+    "A trucking company has a team working the crash within hours. The evidence that proves what happened belongs to them and can be lost quickly. A lawyer levels that, and you pay nothing unless there is a recovery."),
+  clip("dont-talk-to-the-trucking-adjuster", "Dont_Talk_to_the_Trucking_Adjuster", "Should I talk to the trucking company's adjuster?", "0:55",
+    "No. The adjuster works for the carrier, and the recorded statement they ask for is used to limit what they pay. Refer them to your lawyer. You are not required to speak to them."),
+  clip("dont-sign-that-trucking-insurance-offer", "Dont_Sign_That_Trucking_Insurance_Offer", "The trucking insurer made an offer. Should I sign?", "0:24",
+    "Not before you know the full extent of your injuries and what the case is worth. An early offer is priced to close the file cheaply, and signing a release ends the claim for good."),
+  clip("dont-let-truck-crash-evidence-disappear", "Dont_Let_Truck_Crash_Evidence_Disappear", "What evidence disappears after a truck crash?", "0:56",
+    "The truck's electronic data, driver logs, dash camera footage, maintenance records and the driver's phone records. Carriers are allowed to destroy some of it on a schedule unless a preservation letter goes out first. That letter is the first thing we send."),
+  clip("who-is-responsible-for-your-truck-crash", "Who_is_responsible_for_your_truck_crash", "Who is responsible for a truck crash?", "0:59",
+    "Often more than the driver: the motor carrier, the company that owns the trailer, the shipper or broker that loaded or dispatched it, and the maintenance contractor. Each may carry its own insurance, and naming every one of them is where the recovery is decided."),
+  clip("what-causes-most-truck-crashes", "What_Causes_Most_Truck_Crashes", "What causes most truck crashes?", "0:27",
+    "Fatigue and hours-of-service violations, distraction, speed, poor maintenance, improper loading and inexperienced drivers pushed by delivery schedules. Most of it is provable from the carrier's own records."),
+  clip("what-is-your-truck-crash-case-worth", "What_Is_Your_Truck_Crash_Case_Worth", "What is my truck crash case worth?", "0:27",
+    "It depends on the injuries, the medical bills and future care, lost wages and earning capacity, and what the carrier's insurance will bear. No honest lawyer gives a number on the first call. A file built for trial is worth more than one built to settle."),
+  clip("can-you-sue-if-you-shared-fault", "Can_You_Sue_If_You_Shared_Fault", "Can I still sue if I was partly at fault?", "0:23",
+    "In Pennsylvania and Georgia you can recover as long as you are not more at fault than the other side, reduced by your share. In New York you can recover even if you were mostly at fault. Do not assume a shared-fault case is a dead case."),
+  clip("wrongful-death-claims-after-truck-crashes", "Wrongful_death_claims_after_truck_crashe", "Can my family bring a claim after a fatal truck crash?", "0:24",
+    "Yes. A wrongful death claim compensates the family for the loss, and a survival claim belongs to the estate for what the person went through. Who may bring it, and the deadline, depend on the state. Call before the deadline becomes the problem."),
+];
 
 /* -------------------------------------------------------------------------- */
 /* NAVIGATION                                                                  */
