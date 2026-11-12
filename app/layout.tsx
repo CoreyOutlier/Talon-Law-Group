@@ -77,7 +77,7 @@ const jsonLd = {
   geo: { "@type": "GeoCoordinates", latitude: site.geo.lat, longitude: site.geo.lng },
   areaServed: [
     ...markets.map((m) => ({ "@type": "City", name: `${m.city}, ${m.state}` })),
-    ...site.alsoServing.map((n) => ({ "@type": "State", name: n })),
+    ...site.states.map((n) => ({ "@type": "State", name: n })),
   ],
   founder: {
     "@type": "Attorney",

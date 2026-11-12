@@ -13,10 +13,16 @@ export function Footer() {
             <div className="mt-9 flex flex-col gap-2 text-[15px]">
               <a href={`tel:${site.phoneRaw}`} className="link-draw w-fit text-accent">{site.phone}</a>
               <a href={`mailto:${site.email}`} className="link-draw w-fit text-fg/70">{site.email}</a>
+              <p className="text-[13px] text-fg-3">Fax {site.fax}</p>
             </div>
-            <address className="mt-6 not-italic text-[14px] leading-relaxed text-fg-3">
-              {site.address.street}<br />{site.address.city}, {site.address.region} {site.address.postal}
-            </address>
+            <div className="mt-6 grid gap-5 sm:grid-cols-2">
+              {markets.filter((m) => m.address).map((m) => (
+                <address key={m.slug} className="not-italic text-[14px] leading-relaxed text-fg-3">
+                  <span className="mb-1 block font-display text-[10px] uppercase tracking-[0.2em] text-fg-3">{m.stateFull} office</span>
+                  {m.address!.street}<br />{m.address!.city}, {m.address!.region} {m.address!.postal}
+                </address>
+              ))}
+            </div>
             <p className="mt-4 text-[13px] text-fg-3">{site.hours}</p>
           </div>
           <div className="lg:col-span-3">
@@ -27,7 +33,7 @@ export function Footer() {
           </div>
           <div className="lg:col-span-2">
             <p className="eyebrow mb-6">Firm</p>
-            <ul className="space-y-3">{nav.map((n) => (
+            <ul className="space-y-3">{[...nav, { label: "For referring attorneys", href: "/referrals" }].map((n) => (
               <li key={n.href}><Link href={n.href} className="link-draw text-[14px] text-fg/70 hover:text-fg">{n.label}</Link></li>))}
             </ul>
           </div>
@@ -35,7 +41,6 @@ export function Footer() {
             <p className="eyebrow mb-6">Offices</p>
             <ul className="space-y-3">{markets.map((m) => (
               <li key={m.slug}><Link href={`/offices/${m.slug}`} className="link-draw text-[14px] text-fg/70 hover:text-fg">{m.city}, {m.state}</Link></li>))}
-              {site.alsoServing.map((j) => <li key={j} className="text-[14px] text-fg-3">{j}</li>)}
             </ul>
           </div>
         </div>

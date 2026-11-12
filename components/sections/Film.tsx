@@ -8,7 +8,7 @@ import { useScrollProgress, ramp } from "@/lib/scrollfx";
 const LINES = [
   { kicker: "00:60", line: "An hour after the crash,", accent: "they had a team on it." },
   { kicker: "One call", line: "You get one call", accent: "to even that up." },
-  { kicker: "Talon", line: "Then it stops being", accent: "a fair fight." },
+  { kicker: "Talon", line: "Insurance companies aren't your friend.", accent: "And I'm not theirs." },
 ];
 
 export function Film() {

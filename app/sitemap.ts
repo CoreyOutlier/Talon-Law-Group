@@ -3,7 +3,7 @@ import { markets, practiceAreas, site } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const staticRoutes = ["", "/about", "/practice-areas", "/offices", "/results", "/reviews", "/contact"];
+  const staticRoutes = ["", "/about", "/practice-areas", "/offices", "/results", "/reviews", "/faq", "/referrals", "/contact"];
 
   return [
     ...staticRoutes.map((r) => ({

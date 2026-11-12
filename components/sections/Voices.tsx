@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { publishedTestimonials } from "@/lib/site";
+import { homeTestimonials } from "@/lib/site";
 import { LineReveal, Reveal } from "@/components/Motion";
 import { useScrollProgress } from "@/lib/scrollfx";
 
@@ -18,7 +18,7 @@ const CRAWL_REPEAT = 4;
 const pad = (n: number) => String(n).padStart(2, "0");
 
 export function Voices() {
-  const items = publishedTestimonials;
+  const items = homeTestimonials;
   const n = items.length;
   const section = useRef<HTMLElement>(null);
   const lamp = useRef<HTMLDivElement>(null);
@@ -103,7 +103,7 @@ export function Voices() {
           {Array.from({ length: CRAWL_REPEAT }).flatMap((_, r) =>
             items.map((q, k) => (
               <p key={`${r}-${k}`} className="h2-soft mb-12 text-[15px] leading-relaxed text-fg/15">
-                “{q.quote}”
+                “{q.excerpt ?? q.quote}”
                 <span className="mt-2 block font-display text-[10px] uppercase tracking-[0.2em]">{q.matter} · {q.source}</span>
               </p>
             ))
@@ -117,7 +117,7 @@ export function Voices() {
             <Reveal><p className="eyebrow mb-5">In their words</p></Reveal>
             <LineReveal as="h2" className="display text-[clamp(1.75rem,3.4vw,2.75rem)]" lines={["Verified client reviews."]} />
           </div>
-          <Reveal delay={0.1}><p className="font-display text-[11px] uppercase tracking-[0.2em] text-fg-3">Published on Avvo</p></Reveal>
+          <Reveal delay={0.1}><p className="font-display text-[11px] uppercase tracking-[0.2em] text-fg-3">Published on Google and Avvo</p></Reveal>
         </div>
 
         {/* every quote occupies the same grid cell; before hydration the layer is as tall as the
@@ -125,7 +125,7 @@ export function Voices() {
         <div className="relative mt-14 grid overflow-hidden md:mt-20" aria-live="polite" style={{ height: h ?? undefined, transition: "height .9s cubic-bezier(.16,1,.3,1)" }}>
           {items.map((q, k) => {
             const on = k === i;
-            const words = q.quote.split(" ");
+            const words = (q.excerpt ?? q.quote).split(" ");
             const tail = 160 + words.length * 42;
             return (
               <blockquote

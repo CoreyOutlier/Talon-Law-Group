@@ -8,7 +8,7 @@ export function Markets() {
     <section className="shell py-24 md:py-32">
       <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
         <div><Reveal><p className="eyebrow mb-6">Where we work</p></Reveal>
-          <LineReveal as="h2" className="display max-w-[20ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={["Three cities.", "One standard."]} /></div>
+          <LineReveal as="h2" className="display max-w-[20ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={["Three states.", "One standard."]} /></div>
         <Reveal delay={0.2}><Link href="/offices" className="btn btn-ghost">All offices</Link></Reveal>
       </div>
       <div className="grid gap-px border border-line bg-line md:grid-cols-3">
@@ -36,7 +36,7 @@ export function Markets() {
           </Reveal>
         ))}
       </div>
-      <Reveal delay={0.2}><p className="mt-8 text-[12px] leading-relaxed text-fg-3">Also accepting matters in {site.alsoServing.join(", ")}.</p></Reveal>
+      <Reveal delay={0.2}><p className="mt-8 text-[12px] leading-relaxed text-fg-3">Admitted in {site.states.join(", ")}. We say only where we are licensed.</p></Reveal>
     </section>
   );
 }

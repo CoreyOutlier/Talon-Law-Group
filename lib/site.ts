@@ -14,28 +14,32 @@ export const SHOW_DRAFT_PROOF = process.env.NEXT_PUBLIC_SHOW_DRAFT_PROOF === "1"
 export const site = {
   name: "Talon Law Group",
   legalName: "Talon Law Group (formerly The Law Office of Shaheen Wallace, Esq., LLC)",
-  domain: "https://www.wallaceinjury.com",
-  tagline: "Injury law with a closer's instinct.",
+  domain: "https://www.wallaceinjury.com", // TODO: confirm whether launch is on talonlawgroup.com (Shaheen's mail is there)
+  tagline: "Victory loves preparation.",
   description:
-    "Talon Law Group is a trial practice representing seriously injured people in Pittsburgh, New York and Los Angeles. Founded by Shaheen Wallace, Esq.",
+    "Talon Law Group is a trial practice representing seriously injured people in Pennsylvania, New York and Georgia. Trucking crashes, nursing home and hospital negligence, catastrophic injury. Founded by Shaheen Wallace, Esq.",
   phone: "(844) 474-2448",
   phoneRaw: "+18444742448",
   smsRaw: "+18444742448",
-  email: "info@wallaceinjury.com", // TODO: confirm the address Shaheen wants public
+  fax: "(888) 659-2741",
+  email: "szw@talonlawgroup.com", // from Shaheen's signature; confirm he wants his direct address public
+  /** Pennsylvania office. Per Shaheen's signature, Nov 2026. */
   address: {
-    street: "5850 Ellsworth Avenue, Suite 230",
+    street: "6521 Steubenville Pike, #1125",
     city: "Pittsburgh",
     region: "PA",
-    postal: "15232",
+    postal: "15205",
     country: "US",
   },
-  geo: { lat: 40.4527, lng: -79.9245 }, // Shadyside, Pittsburgh — verify before launch
+  geo: { lat: 40.4486, lng: -80.1123 }, // Steubenville Pike, Robinson Township — verify before launch
   hours: "Answered 24/7. A lawyer calls back — not a call center.",
   founded: "2015",
   /** Cities we hold ourselves out in. Full detail lives in `markets` below. */
-  cities: ["Pittsburgh", "New York", "Los Angeles"],
-  /** Additional states where matters are accepted. */
-  alsoServing: ["Georgia"],
+  cities: ["Pittsburgh", "New York", "Atlanta"],
+  /** States of admission, in the order Shaheen ranks them. */
+  states: ["Pennsylvania", "New York", "Georgia"],
+  /** Additional states where matters are accepted. None: we say only where we are admitted. */
+  alsoServing: [] as string[],
   social: {
     facebook: "https://www.facebook.com/shaheenesq/",
     linkedin: "https://www.linkedin.com/in/shaheen-wallace-esq-bb60b06/",
@@ -44,23 +48,80 @@ export const site = {
 } as const;
 
 /* -------------------------------------------------------------------------- */
+/* BRAND — from the Brand & Messaging Worksheet Shaheen completed, Nov 2026.    */
+/* His words, lightly trimmed. Nothing here is invented.                       */
+/* -------------------------------------------------------------------------- */
+
+export const brand = {
+  /** "If you could only get one message across in the entire brand." */
+  oneMessage: "Big companies don't get to hurt you and get away with it.",
+  mission:
+    "Talon Law Group exists to speak for those who need a voice but don't have one, by taking cases to verdict, so that a jury can tell them they have been heard.",
+  vision: "To be the firm that law firms call when they need eight-figure verdicts on behalf of their clients.",
+  motto: { latin: "Amat victoria curam.", english: "Victory loves preparation." },
+  /** Shaheen is Arabic for the peregrine falcon, the Shah's royal white falcon. */
+  name: {
+    short: "Shaheen means falcon.",
+    story:
+      "Shaheen is Arabic for the peregrine falcon, the royal white falcon the Shahs flew to hunt. When a falcon hunts, its weapon is its talons. As counsel, that is the job: the client lets him go hunt for them.",
+  },
+  /** Lines he actually says. */
+  lines: [
+    "If they want a problem, I can give them a problem.",
+    "Insurance companies aren't your friend, and I'm not theirs.",
+    "I'm not, nor have I ever been, scared of trial.",
+    "Bad companies fear good lawyers. That's what I am.",
+  ],
+  /** Phrases he never wants on the site. Checked in review; keep them out. */
+  banned: ["fight for you", "we'll fight", "we will fight", "on your side"],
+  /** How clients, opposing counsel and peers should describe the firm. */
+  words: { clients: ["Kind", "Knowledgeable", "Professional"], opposing: ["Serious", "Unrelenting", "Honest"], peers: ["Dependable", "Trustworthy", "Fair"], never: ["Unreliable", "Cowardly", "Lazy"] },
+  /** What "Talon" means to him. He highlighted all six. */
+  associations: ["Grip: once we take hold, we do not let go", "Precision: exact, targeted, no wasted motion", "Strength and force", "Protection: a bird of prey guards what is its own", "Vision: seeing the whole field from above", "Speed and decisiveness"],
+  /** The words he highlighted from the starter list. */
+  vocabulary: ["Relentless", "Strike", "Hungry", "Battle-tested", "Built different"],
+  /** Tone targets, 1 to 5, left pole to right pole, with where he says the firm sits today.
+   *  Read: he wants the firm MORE traditional and MORE premium than it is now, and a
+   *  notch less confrontational. Headlines should be bold in substance, restrained in volume. */
+  tone: [
+    { left: "Polished and formal", right: "Direct and plainspoken", want: 4, today: 5 },
+    { left: "Warm and comforting", right: "Bold and confrontational", want: 4, today: 5 },
+    { left: "Traditional and established", right: "Modern and disruptive", want: 2, today: 4 },
+    { left: "Quiet confidence", right: "Loud and unapologetic", want: 3, today: 3 },
+    { left: "Serious at all times", right: "Personality and humor", want: 4, today: 3 },
+    { left: "Exclusive and premium", right: "Accessible and approachable", want: 2, today: 4 },
+    { left: "Technical and expert", right: "Simple and relatable", want: 3, today: 4 },
+  ],
+  /** Brands he named: Mont Blanc, Aston Martin, Rolex, Wilson. Athlete: Federer. */
+  references: ["Mont Blanc: refined, but not too much", "Aston Martin: the same", "Rolex: you can depend on it forever", "Wilson: classic tennis history, elegance with performance", "Roger Federer: brutal on the court, and made it look effortless"],
+  /** What the practice is actually built on, by state. */
+  focus: {
+    pennsylvania: "Tractor-trailer and commercial-vehicle crashes.",
+    newYork: "Nursing home neglect, pressure ulcers and hospital negligence.",
+    georgia: "Trucking crashes and wrongful death.",
+  },
+} as const;
+
+/* -------------------------------------------------------------------------- */
 /* BAR ADMISSIONS                                                              */
 /*                                                                             */
-/* The firm practices in Pittsburgh, New York and Los Angeles. The site says   */
+/* The firm practices in Pennsylvania, New York and Georgia. The site says     */
 /* that plainly and does not make a per-state licensure claim on every page —  */
 /* the verifiable admissions live here and render on the About and Offices     */
 /* pages, which is how a multi-market firm should present it.                  */
 /*                                                                             */
-/* ⚠️  Add Shaheen's NY and CA admissions below once confirmed, so the record   */
-/* on the site matches the record at the bar.                                  */
+/* State admissions per Shaheen's signature (Nov 2026): Pennsylvania, New      */
+/* York, Georgia. He is NOT admitted in California and asked that the firm     */
+/* not be presented there until he is. Do not add it back without him.         */
 /* -------------------------------------------------------------------------- */
 
 export const admissions = [
   { court: "Commonwealth of Pennsylvania", meta: "State bar admission", status: "verified" },
+  { court: "State of New York", meta: "State bar admission", status: "verified" },
+  { court: "State of Georgia", meta: "State bar admission", status: "verified" },
   { court: "U.S. District Court, Eastern District of Pennsylvania", meta: "Federal", status: "verified" },
   { court: "U.S. District Court, Middle District of Pennsylvania", meta: "Federal", status: "verified" },
   { court: "U.S. District Court, Middle District of Georgia", meta: "Federal", status: "verified" },
-  // TODO: add New York and California state admissions here if Shaheen holds them.
 ] as const;
 
 /* -------------------------------------------------------------------------- */
@@ -94,17 +155,18 @@ export const markets: Market[] = [
     stateFull: "Pennsylvania",
     isHQ: true,
     address: {
-      street: "5850 Ellsworth Avenue, Suite 230",
+      street: "6521 Steubenville Pike, #1125",
       city: "Pittsburgh",
       region: "PA",
-      postal: "15232",
+      postal: "15205",
     },
-    geo: { lat: 40.4527, lng: -79.9245 },
+    geo: { lat: 40.4486, lng: -80.1123 },
     kicker: "Home court",
     lede:
-      "The practice was built here. Allegheny County juries, the carriers who write policies in this market, and the defense bar that shows up across the table — all of it is familiar ground.",
+      "The practice was built here, and much of it is built on one kind of case: a tractor-trailer and a family that depended on one paycheck. Allegheny County juries, the carriers who write policies in this market, and the defense bar across the table are all familiar ground.",
     body: [
       "Pittsburgh is where Talon Law Group has tried and resolved cases since 2015. That matters more than it sounds. Case value in this county is set by what local juries have actually done, by which defense firm the carrier assigns, and by which judge draws the case. A lawyer who works this courthouse knows those variables before the complaint is filed.",
+      "Trucking is the centre of the Pennsylvania practice. A loaded tractor-trailer weighs up to eighty thousand pounds; the carrier behind it has a rapid-response team on the scene within hours and a claims department built to settle cheap. The people it hurts are usually working people, often not on the clock, with no workers' compensation to fall back on and a mortgage that does not pause. Those cases are built for trial from the first week, on the Turnpike, I-78, I-79 and I-80 alike.",
       "Pennsylvania also carries two rules that quietly decide more cases than liability ever does. The first is the limited-tort election on your own auto policy — a single checkbox that can bar recovery for pain and suffering entirely, with exceptions most people never learn exist. The second is stacking: household and resident-relative coverage that is frequently worth more than the at-fault driver's policy and is routinely left on the table.",
       "We read the declarations pages before we read the police report. That order is deliberate.",
     ],
@@ -128,62 +190,72 @@ export const markets: Market[] = [
     state: "NY",
     stateFull: "New York",
     isHQ: false,
+    address: {
+      street: "1225 Franklin Avenue, Suite 500",
+      city: "Garden City",
+      region: "NY",
+      postal: "11530",
+    },
+    geo: { lat: 40.7268, lng: -73.6343 },
     kicker: "Where he is from",
     lede:
-      "Shaheen came up in New York. The city's injury law is its own machine — no-fault, the serious-injury threshold, and a 90-day clock on anything involving the City — and none of it forgives a slow start.",
+      "Shaheen came up in New York, and the New York practice is built around one kind of client: a family that trusted a nursing home or a hospital with someone they love, and was not told the truth when it went wrong.",
     body: [
-      "New York does not work like anywhere else. Every crash begins inside the no-fault system, which pays medical bills and lost wages regardless of blame, but only if the application reaches the insurer within thirty days. Miss that window and the benefits that were supposed to carry you through treatment simply do not arrive.",
-      "Getting past no-fault into a real claim for pain and suffering requires clearing the serious-injury threshold under Insurance Law § 5102(d). Defense counsel litigates that threshold aggressively and early, usually on summary judgment, and cases die there when the medical documentation was not built for it from the first visit. We build for it from the first visit.",
-      "Anything involving the City, the MTA, the Transit Authority, NYCHA or a public hospital carries a ninety-day notice of claim requirement. That is not a filing deadline — it is a notice deadline months ahead of the lawsuit, and it is the single most common way a strong New York case is lost before it starts.",
-      "Construction injuries occupy their own category. Labor Law §§ 240 and 241 impose near-absolute liability on owners and general contractors for gravity-related and code-violation injuries. It is the most powerful plaintiff's statute in the country and it applies far more often than injured workers realize.",
+      "New York is home, and it is where the firm's nursing home and hospital negligence work is concentrated. A pressure ulcer that reaches the bone, a fall that was never reported, weight loss nobody charted, bruises nobody can explain, calls that are never returned: these are not accidents. They are the predictable result of understaffing, and the records that prove it exist whether or not the facility wants them found. Public Health Law § 2801-d gives residents of New York nursing homes a private right of action that most families have never heard of, with attorney's fees and punitive damages available when the deprivation was willful.",
+      "The person who calls is usually a daughter who holds the health care proxy, works full time, and has already been stonewalled by an administrator. She does not need a lecture on the law. She needs the records pulled, the facility put on notice, and a lawyer who will take the case to a Brooklyn or Manhattan jury if that is what it takes. That is the New York practice.",
+      "Crash cases here run through their own machine. Every collision begins inside the no-fault system, which pays medical bills and lost wages regardless of blame, but only if the application reaches the insurer within thirty days. Getting past no-fault into a real claim for pain and suffering means clearing the serious-injury threshold under Insurance Law § 5102(d), which defense counsel litigates early and hard. We build the medical file for that threshold from the first visit.",
+      "Anything involving the City, the MTA, NYCHA or a public hospital carries a ninety-day notice of claim requirement. That is not a filing deadline. It is a notice deadline months ahead of the lawsuit, and it is the single most common way a strong New York case is lost before it starts.",
     ],
     rules: [
+      { label: "Public Health Law § 2801-d", detail: "Nursing home residents have a private right of action for any deprivation of a right or benefit, with attorney's fees, and punitive damages where the deprivation was willful or reckless." },
       { label: "30 days for no-fault", detail: "The no-fault application must reach the insurer within 30 days of the crash. This is the deadline people miss while still in hospital." },
       { label: "90-day notice of claim", detail: "Claims against the City, MTA, NYCHA, Transit or a public hospital require a notice of claim within 90 days — long before any lawsuit." },
       { label: "Serious injury threshold", detail: "Insurance Law § 5102(d) must be cleared before you can recover for pain and suffering. It is won or lost on medical documentation." },
       { label: "Pure comparative fault", detail: "New York reduces your award by your share of fault but never bars recovery — even at 90% at fault, you recover 10%." },
-      { label: "Labor Law §§ 240 / 241", detail: "Owners and general contractors face near-absolute liability for height-related and code-violation construction injuries." },
-      { label: "Three-year filing deadline", detail: "Most negligence claims: three years. Medical malpractice and wrongful death run shorter." },
+      { label: "Filing deadlines", detail: "Most negligence claims: three years. Medical malpractice: two and a half years. Wrongful death: two years. Nursing home claims under § 2801-d: three years." },
     ],
     courts: [
-      "Supreme Court, New York County",
       "Supreme Court, Kings County (Brooklyn)",
+      "Supreme Court, New York County",
       "Supreme Court, Bronx County",
       "Supreme Court, Queens County",
+      "Supreme Court, Nassau and Suffolk Counties",
       "U.S. District Courts, Southern and Eastern Districts of New York",
     ],
-    areas: ["Manhattan", "Brooklyn", "Queens", "the Bronx", "Staten Island", "Westchester", "Nassau", "Suffolk"],
+    areas: ["Brooklyn", "Manhattan", "Queens", "the Bronx", "Staten Island", "Garden City", "Nassau", "Suffolk", "Westchester"],
   },
   {
-    photo: "/media/photos/bench-laugh.jpg",
-    slug: "los-angeles",
-    city: "Los Angeles",
-    state: "CA",
-    stateFull: "California",
+    photo: "/media/photos/brick-chair-pen.jpg",
+    slug: "atlanta",
+    city: "Atlanta",
+    state: "GA",
+    stateFull: "Georgia",
     isHQ: false,
-    kicker: "West Coast",
+    kicker: "Fully barred",
     lede:
-      "Los Angeles County runs the largest trial court system in the United States. It rewards preparation and punishes anyone who treats a catastrophic case like a claim file.",
+      "Shaheen took the Georgia bar for one reason: a wrongful death case he refused to try on a visitor's pass. He is admitted in the state and in the Middle District, and he comes down to try cases, not to refer them out.",
     body: [
-      "California is a pure comparative fault state, which means fault is apportioned rather than used as a gate. Being partly to blame reduces a recovery; it almost never ends one. That single difference makes cases viable here that would be dead elsewhere, and it is why the defense invests so heavily in shifting percentages.",
-      "Two California rules cut the other way and cost unrepresented people enormous sums. Proposition 213 bars an uninsured driver from recovering non-economic damages at all, no matter who caused the collision. And in medical negligence cases, MICRA caps non-economic damages at a figure fixed by statute and rising annually under AB 35 — which makes the economic side of the case, the life-care plan and the earning-capacity analysis, where the real work has to go.",
-      "Claims against a public entity — the City of Los Angeles, the County, Metro, a school district, Caltrans — require a government claim within six months. Not two years. Six months. It is the deadline that ends the most meritorious California cases.",
-      "The freeway network generates the volume: the 405, the 10, the 101, the 110. Rideshare adds another layer, where a driver on an active trip triggers a commercial policy up to one million dollars that many people never learn was available to them.",
+      "Georgia entered the practice through a single case. A family lost someone, the case was headed for a Georgia courtroom, and Shaheen did not want to appear pro hac vice, on a temporary permission that can be revoked, in a trial that might run for weeks. He sat the bar so that if the case had to be tried, he could be in the room for as long as it took. He still is.",
+      "The work here is trucking and wrongful death. Atlanta sits at the junction of I-75, I-85, I-20 and the I-285 perimeter, one of the heaviest freight corridors in the country, and the carriers that run it bring the same rapid-response teams and the same settle-cheap playbook they bring to Pennsylvania. The cases are built the same way: for a jury, from the first week.",
+      "Georgia law has its own traps. A claim against a city must be noticed in writing within six months; against a county or the state, within twelve. Fault is apportioned and a plaintiff who is found fifty percent or more to blame recovers nothing. And since 2025 the state's tort reform has changed what a jury may be told about the value of pain and suffering and about medical bills, which puts even more of the case onto preparation.",
+      "Georgia is not the firm's largest market and the site does not pretend otherwise. It is the one where the firm can say, plainly, that if a case belongs in front of a Georgia jury, the lawyer you hired is admitted to stand there.",
     ],
     rules: [
-      { label: "Six-month government claim", detail: "Claims against the City, County, Metro, Caltrans or a school district require a formal claim within six months of the incident." },
-      { label: "Two-year filing deadline", detail: "Most California personal injury claims: two years. Medical malpractice: one year from discovery, three years outside." },
-      { label: "Pure comparative fault", detail: "Your recovery is reduced by your share of fault, but partial fault never bars a claim outright." },
-      { label: "Proposition 213", detail: "An uninsured driver cannot recover non-economic damages even when the other driver was entirely at fault. Insurance status matters enormously here." },
-      { label: "MICRA cap", detail: "Non-economic damages in medical negligence cases are capped by statute and rise annually under AB 35. Economic damages are not capped." },
-      { label: "Rideshare coverage", detail: "A driver on an active Uber or Lyft trip carries commercial coverage up to $1,000,000 — frequently the largest policy in the case." },
+      { label: "Two-year filing deadline", detail: "Most Georgia personal injury and wrongful death claims must be filed within two years of the injury or death (O.C.G.A. § 9-3-33)." },
+      { label: "Ante litem notice", detail: "Claims against a city require written notice within six months; against a county or the state, within twelve months. Miss it and the claim is barred." },
+      { label: "Modified comparative negligence", detail: "You recover only if you are less than 50% at fault, and the award is reduced by your share (O.C.G.A. § 51-12-33)." },
+      { label: "Apportionment", detail: "Fault can be assigned to non-parties, including a trucking company's broker or shipper. Naming every responsible party early is where the recovery is decided." },
+      { label: "2025 tort reform", detail: "SB 68 changed how pain-and-suffering values and medical expenses may be argued to a jury. The economic record has to carry more of the case." },
+      { label: "Direct action against the insurer", detail: "Georgia lets an injured person sue a motor carrier's insurer directly alongside the carrier (O.C.G.A. § 40-1-112)." },
     ],
     courts: [
-      "Los Angeles County Superior Court — Stanley Mosk Courthouse",
-      "Los Angeles County Superior Court — Spring Street, Van Nuys, Long Beach",
-      "U.S. District Court, Central District of California",
+      "State Court of Fulton County",
+      "State Courts of DeKalb, Gwinnett, Cobb and Clayton Counties",
+      "Superior Courts of Fulton and Bibb Counties",
+      "U.S. District Court, Middle District of Georgia",
+      "U.S. District Court, Northern District of Georgia",
     ],
-    areas: ["Downtown LA", "the Westside", "the San Fernando Valley", "South Bay", "Long Beach", "Pasadena", "Santa Monica", "Orange County", "the Inland Empire"],
+    areas: ["Downtown Atlanta", "Buckhead", "Midtown", "Decatur", "Marietta", "Sandy Springs", "College Park", "Macon", "the I-75 and I-85 corridors"],
   },
 ];
 
@@ -545,24 +617,100 @@ export const resultsDisclaimer =
 
 export type Testimonial = {
   quote: string;
+  /** First name and last initial. Full names were published on the firm's previous site; shortened here. */
   author: string;
   matter: string;
   source: string;
+  /** A short cut of the quote for the rotating chapter on the home page. Present = shown there. */
+  excerpt?: string;
+  /** Carries the long-form band at the top of the reviews page. One only. */
+  featured?: boolean;
   status: "verified" | "needs-confirmation";
 };
 
+/* The ten Google reviews below were published, with full names, on the
+ * firm's previous site (wallaceinjury.com/testimonials, captured Nov 2026).
+ * Names are shortened here. Confirm the Google listing still carries them
+ * before launch; a review the client has since removed should come down. */
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "His communication, persistence and dedication to me as a client was outstanding.",
-    author: "Verified client review",
-    matter: "Personal injury",
-    source: "Avvo",
+      "In 2016 I was riding my bike to work just like any other day when a van decided to hit me and drive off. My injuries were unbelievably severe. Thanks to the wonderful doctors at UPMC, I am here today. But this review is about the lawyer I chose.\n\nI approached the biggest law firms in Pittsburgh, the ones you hear on the radio and see the ads for. You know their slogans. They turned me away and said my case was \"too difficult.\" They didn't want to help in any way. I was just dismissed, told there was nothing anyone could do.\n\nShaheen Wallace changed my life from the day I met him. Immediately upon learning about the details of my accident and the circumstances surrounding it, Shaheen went to work. His communication, persistence and dedication to me as a client was outstanding. I knew he was working on other cases, but the whole time it felt like I was his only client.\n\nI believed that Shaheen would find justice for me from the moment we decided to work together. If it was not for Shaheen's knowledge of law and his compassion for his clients, this never could have gotten done. I would recommend Shaheen to anyone that truly wants the best lawyer in the Burgh to be on their team.",
+    excerpt: "The biggest firms in Pittsburgh turned me away and said my case was too difficult. Shaheen Wallace changed my life from the day I met him.",
+    author: "Corbin W.",
+    matter: "Hit-and-run, cyclist",
+    source: "Google",
+    featured: true,
     status: "verified",
   },
   {
-    quote:
-      "I would highly recommend Shaheen for those seeking help with both personal injury and business law.",
+    quote: "I was hit by a car and sustained a few injuries and had no idea what to do. That night I reached out to Shaheen and he called me within a few minutes. After talking to him, I immediately knew that I was in good hands. From the accident to the settlement, he made everything quick and effortless. And he's also just a good dude. 10 stars out of 5.",
+    excerpt: "That night I reached out to Shaheen and he called me within a few minutes. From the accident to the settlement, he made everything quick and effortless.",
+    author: "Kyle B.",
+    matter: "Pedestrian struck",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "I was hit by a drunk driver and Shaheen definitely got the best buck for my bang. The texting service is so convenient, no need to schedule a time to talk to him or Megan for quick questions. They really made it easy for me to move on after my accident because I knew that they were taking care of things the best way possible. Couldn't have asked for a better attorney.",
+    excerpt: "No need to schedule a time to talk to him for quick questions. They really made it easy for me to move on after my accident.",
+    author: "Adrienne H.",
+    matter: "Drunk-driving crash",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "Shaheen and his team were absolutely incredible while helping me with my case after I had gotten into a car accident six months pregnant. They stopped at nothing to make sure we were fairly compensated for the emotional and physical damage left behind in the accident. They were very consistent with communication and overall updating us so we knew what was happening every step of the way. I really cannot thank them enough for helping out me and my family.",
+    excerpt: "A car accident six months pregnant. They stopped at nothing to make sure we were fairly compensated, and we knew what was happening every step of the way.",
+    author: "Yazi S.",
+    matter: "Car crash",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "I was referred to Attorney Wallace by another attorney and I'm extremely satisfied with my results. Upon contacting him, he immediately got to work by inquiring about the details of my incident. If you're looking for an attorney who genuinely cares about their clients and not solely monetary gain, Attorney Wallace is definitely the person for you. He and Megan were very thorough, detail-oriented, professional, patient and caring. They treated me like family with the utmost respect from initiation to closure of my case.",
+    author: "A. G.",
+    matter: "Referred by another attorney",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "I was hit by a car while riding my bicycle in Oakland and was unsure about hiring a lawyer. I received a call from the insurance company a few days later and knew that I was not capable of representing myself. I called Shaheen that day and I was astonished by his ambition to get to work right away and do what needed to be done. He was highly professional, assertive and prompt with replying to my messages when I had questions.",
+    author: "Al L.",
+    matter: "Cyclist struck",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "Attorney Shaheen is professional and includes medical expert testimony and visuals when presenting your case. His expertise ensures that his clients will get the maximum compensation for their personal injury claim. I am beyond satisfied with the results of my case. His work has helped a lot with me regaining my life back and covering all medical bills.",
+    author: "Kimberly R.",
+    matter: "Personal injury",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "Shaheen has been nothing but great. He went above and beyond to help me with this case. I am so thankful and grateful for the recommendation of a friend. He is also personable and willing to explain whatever you need to make sure you completely understand each step.",
+    author: "Juanita H.",
+    matter: "Personal injury",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "Shaheen is an excellent attorney. He is compassionate, honest, responsive, knowledgeable and easy to communicate with. I admire his ambition and passion for his job and his clients. Top quality attorney and a great person.",
+    author: "Megan J.",
+    matter: "Personal injury",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "Shaheen is a very professional and for-the-person attorney. He handled a very lengthy case during a very trying time in the pandemic and the results were successful. He is committed to his clients, informative, and always willing to go the extra mile. Very thankful for his diligence and his legal expertise.",
+    author: "C. M.",
+    matter: "Personal injury",
+    source: "Google",
+    status: "verified",
+  },
+  {
+    quote: "I would highly recommend Shaheen for those seeking help with both personal injury and business law.",
     author: "Verified client review",
     matter: "Personal injury",
     source: "Avvo",
@@ -580,6 +728,8 @@ export const testimonials: Testimonial[] = [
 export const publishedTestimonials = testimonials.filter(
   (t) => t.status === "verified" || SHOW_DRAFT_PROOF
 );
+/** The short ones that rotate on the home page. */
+export const homeTestimonials = publishedTestimonials.filter((t) => t.excerpt);
 
 /* -------------------------------------------------------------------------- */
 /* ATTORNEY                                                                    */
@@ -591,20 +741,29 @@ export const attorney = {
   role: "Founder & Trial Attorney",
   portrait: "/media/photos/couch-chin.jpg",
   lede:
-    "A New Yorker who built his trial practice in Pittsburgh and now takes cases in Los Angeles as well — a decade spent against the largest insurance carriers in the country, on behalf of people they hoped would go away.",
+    "A New Yorker who built his trial practice in Pittsburgh and is admitted in Pennsylvania, New York and Georgia. A decade spent against the largest insurance carriers in the country, on behalf of people they hoped would go away.",
   bio: [
-    "Shaheen Wallace opened his own practice in 2015. Since then he has represented people seriously hurt in motor vehicle crashes, truck wrecks, medical negligence and falls — going up against some of the biggest insurance companies in the nation, and doing it as the lawyer who actually knows the client's name.",
-    "He came to law through advocacy, not through a boardroom. He studied at John Jay College of Criminal Justice in New York City, then earned his J.D. at the University of Pittsburgh School of Law, where he was a prominent member of the National Mock Trial Team and was inducted into the Order of Barristers — a national distinction reserved for the most gifted oral advocates.",
-    "He has litigated civil matters throughout Pennsylvania ranging from auto collisions and premises liability to nursing home abuse and wrongful death. Today the practice reaches across three markets — Pittsburgh, New York and Los Angeles — with matters outside his admitting jurisdictions handled alongside admitted local counsel.",
+    "Shaheen Wallace became a lawyer because of a case he watched lose. In college he sat in on a plaintiff's trial, thought the client had a righteous case, and watched her lawyer cost her the verdict. He figured he could do it better, and he has spent every year since proving it.",
+    "He opened his own practice in 2015. Since then he has represented people seriously hurt in tractor-trailer crashes, nursing home and hospital negligence, medical negligence and falls, going up against some of the biggest insurance companies in the nation as the lawyer who actually knows the client's name. He studied at John Jay College of Criminal Justice in New York City, then earned his J.D. at the University of Pittsburgh School of Law, where he was a member of the National Mock Trial Team and was inducted into the Order of Barristers, a national distinction reserved for the most gifted oral advocates.",
+    "Pennsylvania taught him how to be a lawyer. New York, where he was sworn in five years later because New York is home, taught him how to do it his way. Georgia came with a wrongful death case he refused to try on a temporary permission. Today the practice runs in all three: trucking in Pennsylvania and Georgia, nursing home and hospital negligence in New York, and catastrophic injury wherever it happens.",
   ],
   credentials: [
     { label: "J.D., University of Pittsburgh School of Law", meta: "Order of Barristers" },
     { label: "National Mock Trial Team", meta: "University of Pittsburgh School of Law" },
     { label: "John Jay College of Criminal Justice", meta: "New York, NY" },
     { label: "Published in Jury Verdict Review", meta: "$900,000 personal injury settlement" },
-    { label: "Admitted in Pennsylvania", meta: "Plus E.D. Pa., M.D. Pa. and M.D. Ga." },
+    { label: "Admitted in Pennsylvania, New York and Georgia", meta: "Plus E.D. Pa., M.D. Pa. and M.D. Ga." },
     { label: "In practice since 2015", meta: "Founder, Talon Law Group" },
   ],
+  /** Part 12 of the worksheet. His words. */
+  human: [
+    { title: "Tennis", body: "Six years in, and advanced. He says the game teaches you about life: learning it is hard, mastering it is harder, and the game only gives you what you give it. Not every shot has to be a winner. You can win by making your opponent cause errors. The lawyer he admires is Roger Federer: brutal on the court, and he made it look effortless." },
+    { title: "Aviation", body: "An aviation geek, by his own description. Someone once called him Mr. What Can't He Do, because he enjoys learning new things." },
+    { title: "The name", body: "Shaheen is Arabic for the peregrine falcon, the royal white falcon the Shahs flew to hunt. When a falcon hunts, its weapon is its talons. The firm is named for the job." },
+  ],
+  /** What makes him angry on behalf of clients. Verbatim from the worksheet, lightly punctuated. */
+  quote:
+    "I am fine with defendants putting on an honest defense when there is a real question about liability or damages. What I cannot stand is defendants who are unquestionably wrong fighting to hold on to money instead of their own integrity, while calling into question the integrity of the people they hurt.",
 };
 
 /* -------------------------------------------------------------------------- */
@@ -645,6 +804,43 @@ export const process_ = [
 ];
 
 /* -------------------------------------------------------------------------- */
+/* ANSWERS — Shaheen's avatar clips, in place of a written FAQ.                */
+/* Files live in public/media/faq. Each is 1080p H.264, re-encoded for web.    */
+/* `summary` is the one-line written answer used for search engines and       */
+/* screen readers; keep it faithful to what the clip says.                     */
+/* -------------------------------------------------------------------------- */
+
+export type FaqClip = { slug: string; question: string; summary: string; src: string; poster: string; duration: string; /** the source file's basename in Shaheen's Dropbox folder */ file: string };
+const clip = (slug: string, file: string, question: string, duration: string, summary: string): FaqClip => ({
+  slug, file, question, duration, summary, src: `/media/faq/${slug}.mp4`, poster: `/media/faq/${slug}.jpg`,
+});
+/* ⚠️  The `summary` lines are written answers for search engines and screen
+ * readers. They were drafted from the clip titles, not transcribed. Watch
+ * each clip and correct any summary that says more or less than Shaheen does. */
+export const faqClips: FaqClip[] = [
+  clip("what-to-do-after-a-truck-crash", "What_to_Do_After_a_Truck_Crash", "What should I do after a truck crash?", "0:26",
+    "Get medical care first, even if you feel fine. Photograph the scene, the truck and its markings. Get the police report number. Do not give a recorded statement to the trucking company's insurer. Call a lawyer before you call them back."),
+  clip("do-you-need-a-lawyer-after-a-truck-crash", "Do_You_Need_a_Lawyer_After_a_Truck_Crash", "Do I need a lawyer after a truck crash?", "0:25",
+    "A trucking company has a team working the crash within hours. The evidence that proves what happened belongs to them and can be lost quickly. A lawyer levels that, and you pay nothing unless there is a recovery."),
+  clip("dont-talk-to-the-trucking-adjuster", "Dont_Talk_to_the_Trucking_Adjuster", "Should I talk to the trucking company's adjuster?", "0:55",
+    "No. The adjuster works for the carrier, and the recorded statement they ask for is used to limit what they pay. Refer them to your lawyer. You are not required to speak to them."),
+  clip("dont-sign-that-trucking-insurance-offer", "Dont_Sign_That_Trucking_Insurance_Offer", "The trucking insurer made an offer. Should I sign?", "0:24",
+    "Not before you know the full extent of your injuries and what the case is worth. An early offer is priced to close the file cheaply, and signing a release ends the claim for good."),
+  clip("dont-let-truck-crash-evidence-disappear", "Dont_Let_Truck_Crash_Evidence_Disappear", "What evidence disappears after a truck crash?", "0:56",
+    "The truck's electronic data, driver logs, dash camera footage, maintenance records and the driver's phone records. Carriers are allowed to destroy some of it on a schedule unless a preservation letter goes out first. That letter is the first thing we send."),
+  clip("who-is-responsible-for-your-truck-crash", "Who_is_responsible_for_your_truck_crash", "Who is responsible for a truck crash?", "0:59",
+    "Often more than the driver: the motor carrier, the company that owns the trailer, the shipper or broker that loaded or dispatched it, and the maintenance contractor. Each may carry its own insurance, and naming every one of them is where the recovery is decided."),
+  clip("what-causes-most-truck-crashes", "What_Causes_Most_Truck_Crashes", "What causes most truck crashes?", "0:27",
+    "Fatigue and hours-of-service violations, distraction, speed, poor maintenance, improper loading and inexperienced drivers pushed by delivery schedules. Most of it is provable from the carrier's own records."),
+  clip("what-is-your-truck-crash-case-worth", "What_Is_Your_Truck_Crash_Case_Worth", "What is my truck crash case worth?", "0:27",
+    "It depends on the injuries, the medical bills and future care, lost wages and earning capacity, and what the carrier's insurance will bear. No honest lawyer gives a number on the first call. A file built for trial is worth more than one built to settle."),
+  clip("can-you-sue-if-you-shared-fault", "Can_You_Sue_If_You_Shared_Fault", "Can I still sue if I was partly at fault?", "0:23",
+    "In Pennsylvania and Georgia you can recover as long as you are not more at fault than the other side, reduced by your share. In New York you can recover even if you were mostly at fault. Do not assume a shared-fault case is a dead case."),
+  clip("wrongful-death-claims-after-truck-crashes", "Wrongful_death_claims_after_truck_crashe", "Can my family bring a claim after a fatal truck crash?", "0:24",
+    "Yes. A wrongful death claim compensates the family for the loss, and a survival claim belongs to the estate for what the person went through. Who may bring it, and the deadline, depend on the state. Call before the deadline becomes the problem."),
+];
+
+/* -------------------------------------------------------------------------- */
 /* NAVIGATION                                                                  */
 /* -------------------------------------------------------------------------- */
 
@@ -654,6 +850,7 @@ export const nav = [
   { label: "Shaheen Wallace", href: "/about" },
   { label: "Results", href: "/results" },
   { label: "Reviews", href: "/reviews" },
+  { label: "Answers", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];
 
