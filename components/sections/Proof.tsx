@@ -65,8 +65,7 @@ export function Proof() {
       <div className="shell py-24 md:py-32">
         <div className="mb-14 grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-12">
           <div className="lg:col-span-7">
-            <Reveal><p className="eyebrow mb-6">The record</p></Reveal>
-            <LineReveal as="h2" className="display max-w-[17ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={["Numbers we can", <span key="a" className="text-accent">document.</span>]} />
+            <LineReveal as="h2" className="display max-w-[17ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={["No talk.", <span key="a" className="text-accent">Just results.</span>]} />
           </div>
           <Total total={total} count={publishedResults.length} />
         </div>
@@ -198,8 +197,6 @@ export function RecordStack() {
         <div className="shell py-20 md:py-28">
           {recordResults.length > 0 && (
             <>
-              <Reveal><p className="eyebrow mb-6">The rest of the record</p></Reveal>
-              <LineReveal as="h2" className="display max-w-[18ch] text-[clamp(1.75rem,3.6vw,3rem)]" lines={["Smaller figures.", "Same standard of proof."]} />
               <RecordList />
             </>
           )}
@@ -230,7 +227,7 @@ function RecordList() {
   const { ref, seen } = useSeen<HTMLOListElement>(0.15);
   const max = Math.max(...recordResults.map((r) => amountOf(r.amount)));
   return (
-    <ol ref={ref} className="mt-12 border-t border-line">
+    <ol ref={ref} className="border-t border-line">
       {recordResults.map((r, i) => (
         <RecordRow key={r.amount + r.type} result={r} index={i} seen={seen} delay={i * 120} share={amountOf(r.amount) / max} />
       ))}

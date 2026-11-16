@@ -19,19 +19,14 @@ export default function About() {
         eyebrow="Founder & trial attorney"
         lines={["Shaheen", <em key="e" className="not-italic text-accent">Wallace,</em>, "Esq."]}
         lede={attorney.lede}
+        photo={attorney.portrait}
       />
 
       <Ticker />
 
       <section className="dark border-b border-line">
-        <div className="shell grid gap-10 py-16 md:py-20 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-3">
-            <Reveal><p className="eyebrow">The mission</p></Reveal>
-          </div>
-          <div className="lg:col-span-9">
-            <Reveal delay={0.1}><p className="h2-soft max-w-[40ch] text-[clamp(1.5rem,2.8vw,2.5rem)] text-fg text-pretty">{brand.mission}</p></Reveal>
-            <Reveal delay={0.2}><p className="mt-6 max-w-[48ch] text-[15px] leading-relaxed text-fg-2">{brand.oneMessage} {brand.name.short} The firm is named for the job.</p></Reveal>
-          </div>
+        <div className="shell py-16 md:py-20">
+          <Reveal><p className="h2-soft max-w-[40ch] text-[clamp(1.5rem,2.8vw,2.5rem)] text-fg text-pretty">{brand.mission}</p></Reveal>
         </div>
       </section>
 
@@ -40,10 +35,9 @@ export default function About() {
           <Reveal>
             <div className="lg:sticky lg:top-28">
               <Figure
-                src={attorney.portrait}
+                src="/media/photos/brick-chair-pen.jpg"
                 alt={`${attorney.name}, ${attorney.suffix}`}
                 ratio="4 / 5"
-                imgClassName="object-[80%_50%]"
               />
               <div className="mt-8 border-t border-line pt-6">
                 <p className="eyebrow mb-4">Admissions</p>
@@ -65,22 +59,8 @@ export default function About() {
         </div>
 
         <div className="lg:col-span-6 lg:col-start-7">
-          {attorney.bio.map((para, i) => (
-            <Reveal key={i} delay={i * 0.08}>
-              <p
-                className={
-                  i === 0
-                    ? "h2-soft text-[clamp(1.375rem,2.3vw,1.75rem)] text-fg"
-                    : "mt-7 text-[1.0625rem] leading-relaxed text-fg/70 text-pretty"
-                }
-              >
-                {para}
-              </p>
-            </Reveal>
-          ))}
-
           <Reveal delay={0.3}>
-            <div className="mt-14 border-t border-line pt-10">
+            <div>
               <p className="eyebrow mb-8">Credentials</p>
               <ul className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
                 {attorney.credentials.map((c) => (
@@ -91,15 +71,6 @@ export default function About() {
                 ))}
               </ul>
             </div>
-          </Reveal>
-
-          <Reveal delay={0.35}>
-            <blockquote className="mt-14 border-l-2 border-accent pl-7">
-              <p className="h2-soft text-[clamp(1.375rem,2.4vw,1.875rem)] text-fg">{attorney.quote}</p>
-              <footer className="mt-5 text-[12px] uppercase tracking-[0.18em] text-fg-3">
-                {attorney.name}, {attorney.suffix}
-              </footer>
-            </blockquote>
           </Reveal>
 
           <Reveal delay={0.4}>

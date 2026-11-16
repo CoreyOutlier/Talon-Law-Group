@@ -21,7 +21,7 @@ export default function Disclaimer() {
           {site.address.city}, {site.address.region} {site.address.postal}.
         </p>
         <p>
-          {site.name} maintains offices in Pennsylvania. Matters in other jurisdictions may be
+          {site.name} maintains offices in Pennsylvania and New York. Matters in other jurisdictions may be
           handled with local counsel where required.
         </p>
       </section>

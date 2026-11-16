@@ -3,7 +3,7 @@ import { markets, practiceAreas, site } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const staticRoutes = ["", "/about", "/practice-areas", "/offices", "/results", "/reviews", "/faq", "/referrals", "/contact"];
+  const staticRoutes = ["", "/about", "/practice-areas", "/locations", "/results", "/reviews", "/faq", "/referrals", "/contact"];
 
   return [
     ...staticRoutes.map((r) => ({
@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: r === "" ? 1 : 0.8,
     })),
     ...markets.map((m) => ({
-      url: `${site.domain}/offices/${m.slug}`,
+      url: `${site.domain}/locations/${m.slug}`,
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.8,

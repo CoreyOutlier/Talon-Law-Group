@@ -32,7 +32,7 @@ export const site = {
     country: "US",
   },
   geo: { lat: 40.4486, lng: -80.1123 }, // Steubenville Pike, Robinson Township — verify before launch
-  hours: "Answered 24/7. A lawyer calls back — not a call center.",
+  hours: "Answered 24/7.",
   founded: "2015",
   /** Cities we hold ourselves out in. Full detail lives in `markets` below. */
   cities: ["Pittsburgh", "New York", "Atlanta"],
@@ -350,27 +350,6 @@ export const practiceAreas: PracticeArea[] = [
     ],
   },
   {
-    photo: "/media/photos/couch-glasses-serious.jpg",
-    slug: "medical-malpractice",
-    name: "Medical Malpractice",
-    short: "Medical Malpractice",
-    kicker: "When the institution closes ranks",
-    intro:
-      "Hospitals defend these cases with unlimited resources and expert witnesses on retainer. They should be met the same way.",
-    body: [
-      "Medical negligence cases are the most expensive and most technically demanding in civil litigation. Pennsylvania requires a certificate of merit from a qualified expert within sixty days of filing. New York and Georgia have their own thresholds. A case brought without the right specialist behind it does not survive.",
-      "We fund the experts, obtain the complete chart including nursing notes and audit trails, and reconstruct the timeline that the discharge summary smooths over. Missed diagnosis, surgical error, medication error, failure to monitor, delayed intervention — each turns on a different standard of care.",
-      "These matters are not filed lightly and they are not settled cheaply. We take them when the record supports them, and we prepare them for a jury.",
-    ],
-    urgency: "Records requests and expert review take months. Start early.",
-    faqs: [
-      {
-        q: "A bad outcome happened. Is that malpractice?",
-        a: "Not automatically. Medicine carries risk, and a poor result is not negligence by itself. The question is whether the care fell below the accepted standard and whether that failure caused the harm. That takes a qualified expert to answer.",
-      },
-    ],
-  },
-  {
     photo: "/media/photos/brick-chair-out.jpg",
     slug: "wrongful-death",
     name: "Wrongful Death",
@@ -430,27 +409,6 @@ export const practiceAreas: PracticeArea[] = [
       {
         q: "We signed an arbitration agreement at admission. Are we stuck?",
         a: "Not necessarily. These agreements are frequently signed by someone without legal authority for the resident, presented as a condition of admission, or drafted unconscionably. They are challengeable.",
-      },
-    ],
-  },
-  {
-    photo: "/media/photos/couch-hands.jpg",
-    slug: "birth-injuries",
-    name: "Birth Injury",
-    short: "Birth Injury",
-    kicker: "A lifetime of care, costed properly",
-    intro:
-      "Hypoxic injury, shoulder dystocia and delayed cesarean cases turn on the fetal monitoring strip and the minutes around it.",
-    body: [
-      "The electronic fetal monitoring record is the spine of a birth injury case. It shows what the tracing was telling the team and when, which makes the question of when intervention should have occurred an answerable one.",
-      "These cases require maternal-fetal medicine, neonatology, neuroradiology and life-care planning experts. The damages model is the most complex in tort law because it must fund decades of therapy, equipment, home modification, attendant care and lost earning capacity for a child who has not yet started school.",
-      "The limitations period for a minor is treated differently than for an adult. If you have questions about an older birth, ask rather than assume.",
-    ],
-    urgency: "Minors' claims follow different deadlines. Ask before assuming.",
-    faqs: [
-      {
-        q: "Our child was born years ago. Is it too late?",
-        a: "Possibly not. Claims on behalf of minors are handled differently than adult claims in Pennsylvania. It costs nothing to have the timeline reviewed.",
       },
     ],
   },
@@ -523,8 +481,6 @@ export const caseResults: CaseResult[] = [
   {
     amount: "$2,000,000",
     type: "Catastrophic Injury",
-    detail:
-      "Recovery for a client who suffered life-altering injuries through another party's negligence.",
     tier: "headline",
     status: "verified",
   },
@@ -546,16 +502,12 @@ export const caseResults: CaseResult[] = [
   {
     amount: "$900,000",
     type: "Personal Injury Settlement",
-    detail:
-      "Settlement published in Jury Verdict Review, obtained with longtime colleague Conrad Park, Esq.",
     tier: "record",
     status: "verified",
   },
   {
     amount: "$500,000",
     type: "Motor Vehicle Collision",
-    detail:
-      "Settlement for a client seriously injured in a collision caused by another driver.",
     tier: "record",
     status: "verified",
   },
@@ -636,7 +588,7 @@ export const testimonials: Testimonial[] = [
   {
     quote:
       "In 2016 I was riding my bike to work just like any other day when a van decided to hit me and drive off. My injuries were unbelievably severe. Thanks to the wonderful doctors at UPMC, I am here today. But this review is about the lawyer I chose.\n\nI approached the biggest law firms in Pittsburgh, the ones you hear on the radio and see the ads for. You know their slogans. They turned me away and said my case was \"too difficult.\" They didn't want to help in any way. I was just dismissed, told there was nothing anyone could do.\n\nShaheen Wallace changed my life from the day I met him. Immediately upon learning about the details of my accident and the circumstances surrounding it, Shaheen went to work. His communication, persistence and dedication to me as a client was outstanding. I knew he was working on other cases, but the whole time it felt like I was his only client.\n\nI believed that Shaheen would find justice for me from the moment we decided to work together. If it was not for Shaheen's knowledge of law and his compassion for his clients, this never could have gotten done. I would recommend Shaheen to anyone that truly wants the best lawyer in the Burgh to be on their team.",
-    excerpt: "The biggest firms in Pittsburgh turned me away and said my case was too difficult. Shaheen Wallace changed my life from the day I met him.",
+    excerpt: "Shaheen Wallace changed my life from the day I met him.",
     author: "Corbin W.",
     matter: "Hit-and-run, cyclist",
     source: "Google",
@@ -645,7 +597,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote: "I was hit by a car and sustained a few injuries and had no idea what to do. That night I reached out to Shaheen and he called me within a few minutes. After talking to him, I immediately knew that I was in good hands. From the accident to the settlement, he made everything quick and effortless. And he's also just a good dude. 10 stars out of 5.",
-    excerpt: "That night I reached out to Shaheen and he called me within a few minutes. From the accident to the settlement, he made everything quick and effortless.",
+    excerpt: "From the accident to the settlement, he made everything quick and effortless.",
     author: "Kyle B.",
     matter: "Pedestrian struck",
     source: "Google",
@@ -653,7 +605,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote: "I was hit by a drunk driver and Shaheen definitely got the best buck for my bang. The texting service is so convenient, no need to schedule a time to talk to him or Megan for quick questions. They really made it easy for me to move on after my accident because I knew that they were taking care of things the best way possible. Couldn't have asked for a better attorney.",
-    excerpt: "No need to schedule a time to talk to him for quick questions. They really made it easy for me to move on after my accident.",
+    excerpt: "They really made it easy for me to move on after my accident because I knew that they were taking care of things the best way possible.",
     author: "Adrienne H.",
     matter: "Drunk-driving crash",
     source: "Google",
@@ -661,7 +613,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote: "Shaheen and his team were absolutely incredible while helping me with my case after I had gotten into a car accident six months pregnant. They stopped at nothing to make sure we were fairly compensated for the emotional and physical damage left behind in the accident. They were very consistent with communication and overall updating us so we knew what was happening every step of the way. I really cannot thank them enough for helping out me and my family.",
-    excerpt: "A car accident six months pregnant. They stopped at nothing to make sure we were fairly compensated, and we knew what was happening every step of the way.",
+    excerpt: "They stopped at nothing to make sure we were fairly compensated for the emotional and physical damage left behind in the accident.",
     author: "Yazi S.",
     matter: "Car crash",
     source: "Google",
@@ -741,19 +693,18 @@ export const attorney = {
   role: "Founder & Trial Attorney",
   portrait: "/media/photos/couch-chin.jpg",
   lede:
-    "A New Yorker who built his trial practice in Pittsburgh and is admitted in Pennsylvania, New York and Georgia. A decade spent against the largest insurance carriers in the country, on behalf of people they hoped would go away.",
-  bio: [
+    "A New Yorker who has spent over a decade going up against the largest insurance carriers in the country throughout New York, Pennsylvania and Georgia.",
+  /** Shaheen struck the biography from the page (Nov 14, 2026 markup). Kept here, unrendered, in case he wants it back. */
+  bio: [] as string[],
+  bioArchived: [
     "Shaheen Wallace became a lawyer because of a case he watched lose. In college he sat in on a plaintiff's trial, thought the client had a righteous case, and watched her lawyer cost her the verdict. He figured he could do it better, and he has spent every year since proving it.",
     "He opened his own practice in 2015. Since then he has represented people seriously hurt in tractor-trailer crashes, nursing home and hospital negligence, medical negligence and falls, going up against some of the biggest insurance companies in the nation as the lawyer who actually knows the client's name. He studied at John Jay College of Criminal Justice in New York City, then earned his J.D. at the University of Pittsburgh School of Law, where he was a member of the National Mock Trial Team and was inducted into the Order of Barristers, a national distinction reserved for the most gifted oral advocates.",
     "Pennsylvania taught him how to be a lawyer. New York, where he was sworn in five years later because New York is home, taught him how to do it his way. Georgia came with a wrongful death case he refused to try on a temporary permission. Today the practice runs in all three: trucking in Pennsylvania and Georgia, nursing home and hospital negligence in New York, and catastrophic injury wherever it happens.",
   ],
   credentials: [
     { label: "J.D., University of Pittsburgh School of Law", meta: "Order of Barristers" },
-    { label: "National Mock Trial Team", meta: "University of Pittsburgh School of Law" },
     { label: "John Jay College of Criminal Justice", meta: "New York, NY" },
-    { label: "Published in Jury Verdict Review", meta: "$900,000 personal injury settlement" },
     { label: "Admitted in Pennsylvania, New York and Georgia", meta: "Plus E.D. Pa., M.D. Pa. and M.D. Ga." },
-    { label: "In practice since 2015", meta: "Founder, Talon Law Group" },
   ],
   /** Part 12 of the worksheet. His words. */
   human: [
@@ -846,7 +797,7 @@ export const faqClips: FaqClip[] = [
 
 export const nav = [
   { label: "Practice", href: "/practice-areas" },
-  { label: "Offices", href: "/offices" },
+  { label: "Locations", href: "/locations" },
   { label: "Shaheen Wallace", href: "/about" },
   { label: "Results", href: "/results" },
   { label: "Reviews", href: "/reviews" },

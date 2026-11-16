@@ -3,6 +3,16 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   images: { formats: ["image/avif", "image/webp"] },
+  async redirects() {
+    return [
+      { source: "/offices", destination: "/locations", permanent: true },
+      { source: "/offices/:slug", destination: "/locations/:slug", permanent: true },
+      { source: "/practice-areas/medical-malpractice", destination: "/practice-areas", permanent: true },
+      { source: "/practice-areas/birth-injuries", destination: "/practice-areas", permanent: true },
+      { source: "/privacy-policy", destination: "/privacy", permanent: true },
+      { source: "/terms-and-conditions", destination: "/terms", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

@@ -1,30 +1,30 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { admissions, markets, site } from "@/lib/site";
+import { cityPhoto } from "@/lib/env";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Motion";
 import { CTA } from "@/components/sections/CTA";
 
 export const metadata: Metadata = {
-  title: "Offices — Pittsburgh, New York, Atlanta",
+  title: "Locations — Pittsburgh, New York, Atlanta",
   description:
     "Talon Law Group represents seriously injured people in Pennsylvania, New York and Georgia, with offices in Pittsburgh and Garden City, New York.",
 };
 
-export default function Offices() {
+export default function Locations() {
   return (
     <>
       <PageHeader
-        eyebrow="Where we work"
-        lines={["Three states.", "One standard."]}
-        lede="Injury law is local law. The notice that saves a case in New York has no counterpart in Pennsylvania, and the six-month clock on a claim against a Georgia city does not exist anywhere else. Each page sets out the rules that actually decide cases in that jurisdiction, and the firm says only where its lawyer is admitted."
+        lines={["Where", "you are."]}
+        lede="Talon Law Group is admitted to practice in Pennsylvania, New York, and Georgia. Wherever there is a serious injury that needs a serious team, Talon Law Group is there for you."
       />
 
       <section className="shell pb-20 md:pb-28">
         <ul className="border-t border-line">
           {markets.map((m, i) => (
             <Reveal as="li" key={m.slug} delay={i * 0.06} className="border-b border-line">
-              <Link href={`/offices/${m.slug}`} className="group block py-10 md:py-14">
+              <Link href={`/locations/${m.slug}`} className="group block py-10 md:py-14">
                 <div className="grid gap-6 md:grid-cols-12 md:items-start">
                   <span className="figure text-[12px] text-fg-3 md:col-span-1">
                     {String(i + 1).padStart(2, "0")}
@@ -34,21 +34,28 @@ export default function Offices() {
                     <h2 className="display text-[clamp(1.5rem,3vw,2.5rem)] leading-tight text-fg/90 transition-colors duration-500 group-hover:text-accent">
                       {m.city}
                     </h2>
-                    <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-fg-3">
-                      {m.stateFull}
-                      {m.isHQ && <span className="text-accent"> · Head office</span>}
-                    </p>
-                  </div>
-
-                  <div className="md:col-span-6">
-                    <p className="max-w-[52ch] text-[15px] leading-relaxed text-fg/65">{m.lede}</p>
+                    <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-fg-3">{m.stateFull}</p>
                     {m.address && (
-                      <address className="mt-5 not-italic text-[13px] leading-relaxed text-fg-3">
+                      <address className="mt-6 not-italic text-[14px] leading-relaxed text-fg/70">
                         {m.address.street}
                         <br />
                         {m.address.city}, {m.address.region} {m.address.postal}
                       </address>
                     )}
+                  </div>
+
+                  <div className="md:col-span-6">
+                    <div className="relative aspect-[16/10] overflow-hidden bg-ground-2">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={cityPhoto[m.slug] ?? m.photo}
+                        alt={`${m.city}, ${m.stateFull}`}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover transition-transform duration-[1600ms] group-hover:scale-[1.05]"
+                        style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
+                      />
+                    </div>
                   </div>
 
                   <span
@@ -83,7 +90,6 @@ export default function Offices() {
               <ul className="space-y-2 text-[15px] text-fg/80">
                 {site.states.map((j) => <li key={j}>{j}</li>)}
               </ul>
-              <p className="mt-6 max-w-[44ch] text-[13px] leading-relaxed text-fg-3">The firm says only where its lawyer is licensed. A case outside these states is referred to counsel admitted there, with Shaheen alongside where the rules allow.</p>
             </div>
           </div>
         </Reveal>

@@ -38,9 +38,9 @@ export function Footer() {
             </ul>
           </div>
           <div className="lg:col-span-2">
-            <p className="eyebrow mb-6">Offices</p>
+            <p className="eyebrow mb-6">Locations</p>
             <ul className="space-y-3">{markets.map((m) => (
-              <li key={m.slug}><Link href={`/offices/${m.slug}`} className="link-draw text-[14px] text-fg/70 hover:text-fg">{m.city}, {m.state}</Link></li>))}
+              <li key={m.slug}><Link href={`/locations/${m.slug}`} className="link-draw text-[14px] text-fg/70 hover:text-fg">{m.city}, {m.state}</Link></li>))}
             </ul>
           </div>
         </div>
@@ -49,7 +49,7 @@ export function Footer() {
           <p className="max-w-[92ch]">{resultsDisclaimer}</p>
           <div className="flex flex-wrap items-center justify-between gap-4 pt-4">
             <p>© {new Date().getFullYear()} {site.legalName}. All rights reserved.</p>
-            <div className="flex gap-6"><Link href="/privacy" className="link-draw">Privacy</Link><Link href="/disclaimer" className="link-draw">Legal notices</Link></div>
+            <div className="flex flex-wrap gap-6"><Link href="/privacy" className="link-draw">Privacy Policy</Link><Link href="/terms" className="link-draw">Terms and Conditions</Link><Link href="/disclaimer" className="link-draw">Legal notices</Link></div>
           </div>
         </div>
       </div>

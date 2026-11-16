@@ -7,6 +7,10 @@ import { site } from "@/lib/site";
 const EASE = [0.16, 1, 0.3, 1] as const;
 const STORAGE_KEY = "tlg_intake_v1";
 
+/* Shaheen's wording. Shown on every step, above the button. */
+const FORM_NOTICE =
+  "Submitting this form does not create an attorney-client relationship. Please do not send confidential information until we have agreed to represent you.";
+
 type Answers = {
   incident: string;
   when: string;
@@ -34,7 +38,6 @@ const STEPS = [
       "Truck or commercial vehicle",
       "Hit by a vehicle while walking or cycling",
       "Slip, trip or fall",
-      "Medical care that went wrong",
       "Nursing home injury",
       "A death in the family",
       "Something else",
@@ -113,12 +116,12 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
       <div className={`${compact ? "" : "min-h-[420px]"} flex flex-col justify-center`}>
         <p className="eyebrow mb-5">Received</p>
         <h3 className="display text-[clamp(2rem,4vw,3rem)]">
-          We have it. Expect a call
+          We have it.
           <br />
-          <em className="not-italic text-accent">within 15 minutes</em> during business hours.
+          <em className="not-italic text-accent">Shaheen</em> will be in touch.
         </h3>
         <p className="mt-6 max-w-[46ch] text-[15px] leading-relaxed text-fg/65">
-          If it is after hours, you will hear from us first thing. If it cannot wait, call{" "}
+          If it cannot wait, call{" "}
           <a href={`tel:${site.phoneRaw}`} className="text-accent link-draw">{site.phone}</a> now — it is answered around the clock.
         </p>
       </div>
@@ -181,11 +184,13 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
               })}
             </div>
 
+            <p className="mt-8 max-w-[62ch] text-[11px] leading-relaxed text-fg-3">{FORM_NOTICE}</p>
+
             {step > 0 && (
               <button
                 type="button"
                 onClick={() => setStep((s) => s - 1)}
-                className="mt-8 text-[12px] uppercase tracking-[0.16em] text-fg-3 transition-colors hover:text-fg"
+                className="mt-6 text-[12px] uppercase tracking-[0.16em] text-fg-3 transition-colors hover:text-fg"
               >
                 ← Back
               </button>
@@ -201,7 +206,7 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
           >
             <h3 className="display text-[clamp(1.75rem,3.4vw,2.75rem)]">Where do we reach you?</h3>
             <p className="mt-3 max-w-[46ch] text-[14px] leading-relaxed text-fg-3">
-              A lawyer reviews this — not a call center. Free, confidential, no obligation.
+              Free, confidential, no obligation.
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -222,7 +227,9 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
               </div>
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-5">
+            <p className="mt-7 max-w-[62ch] text-[11px] leading-relaxed text-fg-3">{FORM_NOTICE}</p>
+
+            <div className="mt-6 flex flex-wrap items-center gap-5">
               <button type="submit" disabled={state === "sending"} className="btn btn-wine disabled:opacity-60">
                 {state === "sending" ? "Sending…" : "Send to Shaheen"}
               </button>
@@ -242,11 +249,6 @@ export function CaseIntake({ compact = false }: { compact?: boolean }) {
               </p>
             )}
 
-            <p className="mt-7 max-w-[62ch] text-[11px] leading-relaxed text-fg-3">
-              Submitting this form does not create an attorney-client relationship. Do not send
-              confidential or time-sensitive information until that relationship is established
-              in writing.
-            </p>
           </motion.form>
         )}
       </AnimatePresence>

@@ -14,8 +14,7 @@ export default function Results() {
   return (
     <>
       <PageHeader
-        eyebrow="The record"
-        lines={["Results we", "can document."]}
+        lines={["No talk.", "Just results."]}
         lede="We publish figures we can stand behind. Every recovery below is a real matter with a real file. Prior results never guarantee a future outcome — but they do tell you what a firm is willing to put its name on."
         photo={env.corridor}
       />
