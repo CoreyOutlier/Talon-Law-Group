@@ -12,7 +12,7 @@ import { LineReveal, Reveal } from "@/components/Motion";
 
 const EASE = "cubic-bezier(.16,1,.3,1)";
 
-export function Answers({ limit, dark = true, heading = ["Questions,", "answered."] }: { limit?: number; dark?: boolean; heading?: string[] }) {
+export function Answers({ limit, dark = true, heading = ["Your questions,", "answered."], openTranscripts = false }: { limit?: number; dark?: boolean; heading?: string[]; openTranscripts?: boolean }) {
   const clips = limit ? faqClips.slice(0, limit) : faqClips;
   const [playing, setPlaying] = useState<string | null>(null);
   const videos = useRef<Record<string, HTMLVideoElement | null>>({});
@@ -30,23 +30,15 @@ export function Answers({ limit, dark = true, heading = ["Questions,", "answered
   return (
     <section className={`${dark ? "dark" : ""} relative border-y border-line`}>
       <div className="shell py-24 md:py-32">
-        <div className="mb-14 grid gap-8 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
-            <Reveal><p className="eyebrow mb-6">Straight answers</p></Reveal>
-            <LineReveal as="h2" className="display max-w-[16ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={heading} />
-          </div>
-          <Reveal delay={0.15} className="lg:col-span-5">
-            <p className="max-w-[44ch] text-[15px] leading-relaxed text-fg-2">
-              The questions people ask on the first call, answered by Shaheen in under half a minute each. No form, no fine print. If yours is not here, call. He picks up.
-            </p>
-          </Reveal>
+        <div className="mb-14">
+          <LineReveal as="h2" className="display max-w-[16ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={heading} />
         </div>
 
         <ul className="grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3">
           {clips.map((c, i) => {
             const on = playing === c.slug;
             return (
-              <Reveal as="li" key={c.slug} delay={0.05 * i} className="group relative border-b border-r border-line bg-ground">
+              <Reveal as="li" key={c.slug} delay={0.05 * i} className="group relative flex flex-col border-b border-r border-line bg-ground">
                 <button
                   type="button"
                   onClick={() => setPlaying(on ? null : c.slug)}
@@ -71,9 +63,20 @@ export function Answers({ limit, dark = true, heading = ["Questions,", "answered
                   </span>
                   <span className={`absolute inset-x-5 bottom-5 transition-opacity duration-500 ${on ? "opacity-0" : "opacity-100"}`}>
                     <span className="block font-display text-[10px] uppercase tracking-[0.22em] text-paper/70">{String(i + 1).padStart(2, "0")} · {c.duration}</span>
-                    <span className="display mt-2 block text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-tight text-paper">{c.question}</span>
                   </span>
                 </button>
+                {/* the question is its own link to the clip; the transcript sits under it */}
+                <div id={c.slug} className="flex flex-1 flex-col p-6 md:p-7">
+                  <Link href={`/faq#${c.slug}`} onClick={(e) => { if (!limit) { e.preventDefault(); setPlaying(on ? null : c.slug); } }} className="display link-draw w-fit text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-tight text-fg transition-colors hover:text-accent">
+                    {c.question}
+                  </Link>
+                  {c.transcript ? (
+                    <details open={openTranscripts} className="mt-4 text-[14px] leading-relaxed text-fg-2">
+                      <summary className="cursor-pointer select-none font-display text-[10px] uppercase tracking-[0.2em] text-fg-3 transition-colors hover:text-accent">Transcript</summary>
+                      <p className="mt-3 text-pretty">{c.transcript}</p>
+                    </details>
+                  ) : null}
+                </div>
               </Reveal>
             );
           })}

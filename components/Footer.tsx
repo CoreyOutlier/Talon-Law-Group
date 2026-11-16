@@ -8,8 +8,8 @@ export function Footer() {
       <div className="shell py-20 md:py-28">
         <div className="grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <Wordmark onDark className="h-12 w-auto" />
-            <p className="h2-soft mt-8 max-w-[30ch] text-[1.5rem] text-fg/85">{site.tagline}</p>
+            <Wordmark onDark className="h-16 w-auto" />
+            <p className="h2-soft mt-8 max-w-[30ch] text-[1.5rem] italic text-fg/85">{site.tagline}</p>
             <div className="mt-9 flex flex-col gap-2 text-[15px]">
               <a href={`tel:${site.phoneRaw}`} className="link-draw w-fit text-accent">{site.phone}</a>
               <a href={`mailto:${site.email}`} className="link-draw w-fit text-fg/70">{site.email}</a>
@@ -33,12 +33,12 @@ export function Footer() {
           </div>
           <div className="lg:col-span-2">
             <p className="eyebrow mb-6">Firm</p>
-            <ul className="space-y-3">{[...nav, { label: "For referring attorneys", href: "/referrals" }].map((n) => (
+            <ul className="space-y-3">{[...nav, { label: "Reviews", href: "/reviews" }, { label: "For referring attorneys", href: "/referrals" }].map((n) => (
               <li key={n.href}><Link href={n.href} className="link-draw text-[14px] text-fg/70 hover:text-fg">{n.label}</Link></li>))}
             </ul>
           </div>
           <div className="lg:col-span-2">
-            <p className="eyebrow mb-6">Locations</p>
+            <p className="eyebrow mb-6">Licensed in</p>
             <ul className="space-y-3">{markets.map((m) => (
               <li key={m.slug}><Link href={`/locations/${m.slug}`} className="link-draw text-[14px] text-fg/70 hover:text-fg">{m.city}, {m.state}</Link></li>))}
             </ul>

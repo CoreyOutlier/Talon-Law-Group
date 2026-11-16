@@ -7,9 +7,9 @@ import { LineReveal, Reveal } from "@/components/Motion";
    trial-ready file is worth more, three entries in the ledger, one image. */
 
 const LEDGER = [
-  { k: "01", title: "Every file built as a trial file.", body: "From the first call, not the month before trial. Insurers read the difference in the first letter." },
-  { k: "02", title: "One lawyer, start to finish.", body: "The lawyer you meet is the lawyer who negotiates your case and the one standing up in the courtroom." },
-  { k: "03", title: "Paid only when you are.", body: "No retainer. No hourly bill. A percentage of what we recover, and nothing if we recover nothing." },
+  { k: "01", title: "Every file built as a trial file.", body: "From the first call, your file is prepared like it will go the distance because we anticipate that it will." },
+  { k: "02", title: "One team, start to finish.", body: "The team you meet is the one negotiating your case and the one standing up in the courtroom." },
+  { k: "03", title: "Paid only when you are.", body: "No retainer. No hourly bill. We only get paid if we recover for you." },
 ];
 
 export function Standard() {
@@ -17,15 +17,14 @@ export function Standard() {
     <section className="dark border-y border-line">
       <div className="shell grid gap-14 py-24 md:py-36 lg:grid-cols-12 lg:items-center lg:gap-16">
         <div className="lg:col-span-7">
-          <Reveal><p className="eyebrow mb-8">The standard</p></Reveal>
           <LineReveal
             as="h2"
             className="display display-xl max-w-[14ch] text-[clamp(2.25rem,5.5vw,5rem)]"
-            lines={["Built to try.", <span key="a" className="text-accent">Priced accordingly.</span>]}
+            lines={["Trial ready.", <span key="a" className="text-accent">Anywhere. Anytime.</span>]}
           />
           <Reveal delay={0.2}>
             <p className="h2-soft mt-10 max-w-[34ch] text-[clamp(1.25rem,2vw,1.625rem)] text-fg-2 text-pretty">
-              Insurers value a claim by the lawyer holding it. A file that is ready for a jury from the first week is worth more on the day it settles. That is not a slogan. It is the pricing model.
+              Insurers value a claim by the lawyer holding it. A file that is ready for a jury and a lawyer that is willing to go the distance is valued more on the day it settles. We know that. They know that. Now you know that.
             </p>
           </Reveal>
           <ul className="mt-14 divide-y divide-line border-y border-line">

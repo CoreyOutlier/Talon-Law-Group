@@ -17,18 +17,17 @@ export default function FAQ() {
     mainEntity: faqClips.map((c) => ({
       "@type": "Question",
       name: c.question,
-      acceptedAnswer: { "@type": "Answer", text: c.summary },
+      acceptedAnswer: { "@type": "Answer", text: c.transcript ?? c.summary },
     })),
   };
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
       <PageHeader
-        eyebrow="Straight answers"
-        lines={["Ask the lawyer.", "Not the internet."]}
+        lines={["Your questions,", "answered."]}
         lede="Every answer here is Shaheen's, in under half a minute. They are general information for people deciding whether to call, not advice about your case. For that, the number is at the bottom of the page and he picks up."
       />
-      <Answers dark={false} heading={["Every question", "we get asked."]} />
+      <Answers dark={false} heading={["Every question", "we get asked."]} openTranscripts />
       <CTA />
     </>
   );

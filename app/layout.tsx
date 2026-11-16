@@ -6,7 +6,6 @@ import { Footer } from "@/components/Footer";
 import { ActionBar } from "@/components/ActionBar";
 import { CTADock } from "@/components/CTADock";
 import { Intro } from "@/components/Intro";
-import { Cursor } from "@/components/Cursor";
 import { site, attorney, markets, practiceAreas } from "@/lib/site";
 
 // Jost carries the logotype and every header, per the brand sheet.
@@ -114,7 +113,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <Intro />
-        <Cursor />
         <Nav />
         <main id="main">{children}</main>
         <Footer />
