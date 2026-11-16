@@ -1,0 +1,52 @@
+name: Transcribe FAQ clips
+
+# One-off helper: Hugging Face is unreachable from the build sandbox. This
+# runs faster-whisper over the ten avatar clips in public/media/faq on the
+# runner and publishes transcripts.json to the shaheen-assets branch.
+# Never touches the site branches.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  transcribe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Transcribe
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq ffmpeg >/dev/null
+          pip install -q faster-whisper
+          python - <<'PY'
+          import json, glob, os
+          from faster_whisper import WhisperModel
+          m = WhisperModel("medium.en", device="cpu", compute_type="int8")
+          out = {}
+          for f in sorted(glob.glob("public/media/faq/*.mp4")):
+              slug = os.path.basename(f)[:-4]
+              segs, _ = m.transcribe(f, beam_size=5, vad_filter=True)
+              text = " ".join(s.text.strip() for s in segs)
+              out[slug] = text
+              print(slug, "->", len(text.split()), "words")
+          os.makedirs("/tmp/out", exist_ok=True)
+          json.dump(out, open("/tmp/out/transcripts.json", "w"), indent=2, ensure_ascii=False)
+          PY
+      - name: Publish to shaheen-assets
+        run: |
+          set -euo pipefail
+          git fetch origin shaheen-assets
+          git worktree add /tmp/assets origin/shaheen-assets
+          cp /tmp/out/transcripts.json /tmp/assets/transcripts.json
+          cd /tmp/assets
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add transcripts.json
+          git commit -m "FAQ clip transcripts (faster-whisper medium.en)" || true
+          git push origin HEAD:shaheen-assets
