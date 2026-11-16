@@ -40,7 +40,7 @@ export function Footer() {
           <div className="lg:col-span-2">
             <p className="eyebrow mb-6">Licensed in</p>
             <ul className="space-y-3">{markets.map((m) => (
-              <li key={m.slug}><Link href={`/locations/${m.slug}`} className="link-draw text-[14px] text-fg/70 hover:text-fg">{m.city}, {m.state}</Link></li>))}
+              <li key={m.slug}><Link href={`/locations/${m.slug}`} className="link-draw text-[14px] text-fg/70 hover:text-fg">{m.stateFull}</Link></li>))}
             </ul>
           </div>
         </div>

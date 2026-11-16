@@ -1,14 +1,11 @@
 import Link from "next/link";
 import { markets } from "@/lib/site";
 import { cityPhoto } from "@/lib/env";
-import { LineReveal, Reveal } from "@/components/Motion";
+import { Reveal } from "@/components/Motion";
 
 export function Markets() {
   return (
-    <section className="shell py-24 md:py-32">
-      <div className="mb-14">
-        <LineReveal as="h2" className="display max-w-[20ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={["Three states.", "One standard."]} />
-      </div>
+    <section className="shell py-16 md:py-20">
       <div className="grid gap-px border border-line bg-line md:grid-cols-3">
         {markets.map((m, i) => (
           <Reveal key={m.slug} delay={i * 0.09} className="bg-ground">

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
 import { Figure } from "@/components/Figure";
-import { LineReveal, Live, Reveal } from "@/components/Motion";
+import { LineReveal, Reveal } from "@/components/Motion";
 
 /* Insurance companies are not your friend. His words, Nov 13, 2026. The
    photograph beside it is the point: he answers his own phone. */
@@ -18,10 +18,6 @@ export function Promise() {
             <Reveal>
               <div className="relative">
                 <Figure src="/media/photos/coffee-espresso.jpg" alt="Shaheen Wallace on the phone" ratio="4 / 5" wipe="x" parallax={5} imgClassName="object-[50%_30%]" />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 via-ink/50 to-transparent p-6 pt-28 md:p-7">
-                  <p className="flex items-center gap-3 font-display text-[10px] uppercase tracking-[0.24em] text-paper/75"><Live onDark /> Answered now</p>
-                  <p className="h2-soft mt-3 max-w-[24ch] text-[clamp(1.25rem,2vw,1.625rem)] text-paper text-pretty">He answers his own phone. That is not a slogan; it is the operating model.</p>
-                </div>
               </div>
             </Reveal>
           </div>

@@ -4,8 +4,8 @@ import { LineReveal, Reveal } from "@/components/Motion";
 export function Process() {
   return (
     <section className="shell py-24 md:py-32">
-      <div className="mb-16 max-w-[720px]">
-        <LineReveal as="h2" className="display text-[clamp(2rem,4.6vw,3.75rem)]" lines={["From the", "first call."]} />
+      <div className="mb-16">
+        <LineReveal as="h2" className="display text-[clamp(2rem,4.6vw,3.75rem)]" lines={["From the first call."]} />
       </div>
       <ol className="grid gap-px border border-line bg-line md:grid-cols-2 lg:grid-cols-5">
         {process_.map((s, i) => (

@@ -54,8 +54,11 @@ export function Hero() {
       </div>
 
       {/* words */}
-      <div ref={copy} className="shell relative flex flex-col justify-end pb-12 pt-6 will-change-transform lg:h-full lg:max-w-none lg:pb-[max(3rem,7vh)] lg:pt-32">
+      <div ref={copy} className="shell relative flex flex-col justify-start pb-12 pt-8 will-change-transform lg:h-full lg:max-w-none lg:pb-[max(3rem,7vh)] lg:pt-[7.5rem]">
         <div className="lg:w-[60%] xl:w-[56%]">
+          <p className="hero-meta mb-6 max-w-[42ch] text-[1.0625rem] leading-relaxed text-paper/80 text-pretty md:text-[1.1875rem]">
+            {brand.oneMessage}
+          </p>
           <h1 className="display display-xl max-w-[13ch] text-[clamp(2.5rem,6.4vw,6.25rem)] text-paper">
             {LINES.map((l, i) => (
               <span key={i} className="line-mask">
@@ -64,9 +67,6 @@ export function Hero() {
             ))}
           </h1>
 
-          <p className="hero-meta mt-7 max-w-[42ch] text-[1.0625rem] leading-relaxed text-paper/75 text-pretty md:text-[1.1875rem]">
-            {brand.oneMessage}
-          </p>
           <div className="hero-meta mt-8 flex flex-wrap items-center gap-3" style={{ animationDelay: "1.45s" }}>
             <Magnetic><Link href="/contact" className="btn btn-wine">Start your case</Link></Magnetic>
             <Magnetic><a href={`tel:${site.phoneRaw}`} className="btn border border-paper/60 text-paper transition-colors hover:bg-paper hover:text-ink">{site.phone}</a></Magnetic>
@@ -76,7 +76,6 @@ export function Hero() {
           <span className="hero-rule mt-10 hidden h-px w-full origin-left bg-paper/25 sm:block" />
           <div className="hero-meta mt-5 hidden flex-wrap items-center justify-between gap-4 font-display text-[10px] uppercase tracking-[0.26em] text-paper/55 sm:flex">
             <p className="flex items-center gap-3"><Live onDark /> Answered now · Free consultation</p>
-            <p className="hidden md:block">{site.cities.join(" · ")}</p>
           </div>
         </div>
       </div>

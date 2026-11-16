@@ -10,10 +10,10 @@ export function PracticeIndex() {
   const [active, setActive] = useState(0);
   return (
     <section className="border-y border-line bg-ground-2">
-      <div className="shell py-24 md:py-32">
-        <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
+      <div className="shell py-16 md:py-20">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
           <div>
-            <LineReveal as="h2" className="display max-w-[20ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={["We do", "it well."]} />
+            <LineReveal as="h2" className="display text-[clamp(2.5rem,6vw,5rem)]" lines={["What we do best."]} />
           </div>
           <Reveal delay={0.2}><Link href="/practice-areas" className="btn btn-ghost">All practice areas</Link></Reveal>
         </div>
@@ -27,10 +27,6 @@ export function PracticeIndex() {
                     className="absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-700"
                     style={{ opacity: i === active ? 1 : 0, transform: i === active ? "scale(1)" : "scale(1.05)", transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }} />
                 ))}
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-7 pt-24">
-                  <p className="eyebrow !text-[#E3A6C4]">{practiceAreas[active].kicker}</p>
-                  <p className="mt-3 max-w-[36ch] text-[15px] leading-relaxed text-paper/90">{practiceAreas[active].intro}</p>
-                </div>
               </div>
             </div>
           </div>
@@ -45,7 +41,6 @@ export function PracticeIndex() {
                   </span>
                   <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-transparent text-fg-3 transition-all duration-500 group-hover:border-accent group-hover:text-accent" aria-hidden>→</span>
                 </Link>
-                <p className="-mt-2 mb-6 max-w-[46ch] pl-11 text-[13px] leading-relaxed text-fg-3 lg:hidden">{p.intro}</p>
               </li>
             ))}
           </ul>
