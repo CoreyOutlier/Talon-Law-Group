@@ -1,14 +1,12 @@
+import { Marquee } from "@/components/Marquee";
 import { publishedResults } from "@/lib/site";
 
-/* A still row of the recoveries. Nothing moves and nothing else is said. Shaheen's call, Nov 13, 2026. */
+/* The twelve recoveries, large, moving slowly across the bar. Nothing else is said. Shaheen's round-two call, Nov 16, 2026. */
 export function Ticker() {
   return (
-    <section aria-label="Documented recoveries" className="border-y border-line bg-ground py-6">
-      <ul className="shell flex flex-wrap items-center justify-center gap-x-9 gap-y-3 md:gap-x-12">
-        {publishedResults.map((r) => (
-          <li key={r.amount + r.type} className="figure whitespace-nowrap text-[clamp(0.9375rem,1.3vw,1.125rem)] tabular-nums text-accent">{r.amount}</li>
-        ))}
-      </ul>
+    <section aria-label="Documented recoveries" className="border-y border-line bg-ground py-6 md:py-7">
+      <Marquee duration={60} items={publishedResults.map((r) => (
+        <span key={r.amount + r.type} className="figure whitespace-nowrap text-[clamp(1.375rem,2.4vw,2.125rem)] font-semibold tabular-nums text-accent">{r.amount}</span>))} />
     </section>
   );
 }

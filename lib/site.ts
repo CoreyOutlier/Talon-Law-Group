@@ -701,7 +701,7 @@ export const attorney = {
     "A New Yorker who has spent over a decade going up against the largest insurance carriers in the country throughout New York, Pennsylvania and Georgia.",
   /** The home-page panel. His words, Nov 13 markup. */
   homeLede:
-    "A trial lawyer first, Shaheen Wallace has over a decade of taking on some of the largest insurance carriers in the country on behalf of people they hoped would go away.",
+    "A trial lawyer first, Shaheen Wallace has over a decade of taking on some of the largest insurance carriers in the country on behalf of injured people.",
   /** Shaheen struck the biography from the page (Nov 14, 2026 markup). Kept here, unrendered, in case he wants it back. */
   bio: [] as string[],
   bioArchived: [

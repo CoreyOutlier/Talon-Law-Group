@@ -2,7 +2,6 @@
 
 import { Hero } from "@/components/Hero";
 import { Ticker } from "@/components/sections/Ticker";
-import { Statement } from "@/components/sections/Statement";
 import { Promise as PromiseSection } from "@/components/sections/Promise";
 import { Voices } from "@/components/sections/Voices";
 import { PracticeIndex } from "@/components/sections/PracticeIndex";
@@ -22,7 +21,6 @@ export default function Home() {
     <>
       <Hero />
       <Ticker />
-      <Statement words={["Your", "Sword.", "Your", "Shield."]} accentFrom={2} />
       <PromiseSection />
       <Voices />
       <PracticeIndex />

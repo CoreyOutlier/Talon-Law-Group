@@ -10,7 +10,7 @@ export function AttorneyPanel() {
         <Figure src={attorney.portrait} alt={`${attorney.name}, ${attorney.suffix}`} ratio="3 / 4" wipe="x" parallax={6} imgClassName="object-[80%_50%]" />
       </Reveal>
       <div className="lg:col-span-6 lg:col-start-7 lg:pt-8">
-        <LineReveal as="h2" className="display max-w-[16ch] text-[clamp(2rem,4.5vw,3.5rem)]" lines={["Shaheen Wallace,", <em key="e" className="not-italic text-accent">Esq.</em>]} />
+        <LineReveal as="h2" className="display whitespace-nowrap text-[clamp(1.5rem,2.6vw,2.375rem)]" lines={[<span key="n">Shaheen Wallace, <em className="not-italic text-accent">Esq.</em></span>]} />
         <Reveal delay={0.15}><p className="mt-8 max-w-[54ch] text-[1.0625rem] leading-relaxed text-fg-2 text-pretty">{attorney.homeLede}</p></Reveal>
         <Reveal delay={0.35}><Link href="/about" className="btn btn-ghost mt-10">Read the full profile</Link></Reveal>
       </div>

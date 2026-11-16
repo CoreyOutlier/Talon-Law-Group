@@ -49,7 +49,7 @@ export default function About() {
                     </li>
                   ))}
                 </ul>
-                <p className="eyebrow mb-3 mt-7">Practising in</p>
+                <p className="eyebrow mb-3 mt-7">Practicing in</p>
                 <ul className="space-y-1 text-[14px] text-fg/75">
                   {markets.map((m) => <li key={m.slug}>{m.city}, {m.state}</li>)}
                 </ul>
