@@ -1,10 +1,14 @@
 import { Marquee } from "@/components/Marquee";
-const ITEMS = ["$2,000,000 recovered","No fee unless we win","$1,200,000 recovered","Order of Barristers","$1,000,000 recovered","Published in Jury Verdict Review","Twelve documented recoveries","Admitted in Pennsylvania · New York · Georgia","Victory loves preparation","You talk to the lawyer, not a call center"];
+import { publishedResults } from "@/lib/site";
+
+/* Only the recoveries. Shaheen's call, Nov 2026. */
 export function Ticker() {
   return (
-    <section aria-label="Firm credentials" className="border-y border-line bg-ground py-5">
-      <Marquee duration={54} items={ITEMS.map((t) => (
-        <span key={t} className={`whitespace-nowrap font-display text-[11px] uppercase tracking-[0.24em] ${t.startsWith("$") ? "text-accent" : "text-fg-3"}`}>{t}</span>))} />
+    <section aria-label="Documented recoveries" className="border-y border-line bg-ground py-5">
+      <Marquee duration={54} items={publishedResults.map((r) => (
+        <span key={r.amount + r.type} className="whitespace-nowrap font-display text-[11px] uppercase tracking-[0.24em]">
+          <span className="text-accent">{r.amount}</span><span className="text-fg-3"> · {r.type}</span>
+        </span>))} />
     </section>
   );
 }

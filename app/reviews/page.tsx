@@ -29,14 +29,12 @@ export default function Reviews() {
   const featured = publishedTestimonials.find((t) => t.featured);
   const rest = publishedTestimonials.filter((t) => t !== featured);
   const n = publishedTestimonials.length;
-  const sources = Array.from(new Set(publishedTestimonials.map((t) => t.source)));
 
   return (
     <>
       <PageHeader
         eyebrow="In their words"
         lines={[`${WORDS[n] ? WORDS[n][0].toUpperCase() + WORDS[n].slice(1) : n} people.`, "Their words,", "not ours."]}
-        lede={`Every review here was written by the client and published on ${sources.join(" or ")}. We do not write them, edit them, or pay for them. Names are shortened. Nothing else is.`}
         photo="/media/photos/couch-laugh.jpg"
       />
 

@@ -22,7 +22,7 @@ export async function generateMetadata({
   return {
     title: `${m.city} Personal Injury Lawyer`,
     description: m.lede,
-    alternates: { canonical: `${site.domain}/offices/${m.slug}` },
+    alternates: { canonical: `${site.domain}/locations/${m.slug}` },
   };
 }
 
@@ -38,7 +38,7 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
     "@context": "https://schema.org",
     "@type": "LegalService",
     name: `${site.name} — ${m.city}`,
-    url: `${site.domain}/offices/${m.slug}`,
+    url: `${site.domain}/locations/${m.slug}`,
     telephone: site.phone,
     areaServed: { "@type": "City", name: `${m.city}, ${m.state}` },
     ...(m.address && {
@@ -182,7 +182,7 @@ export default async function Office({ params }: { params: Promise<{ slug: strin
 
         <Reveal delay={0.15}>
           <Link
-            href={`/offices/${next.slug}`}
+            href={`/locations/${next.slug}`}
             className="group mt-24 flex items-center justify-between gap-6 border-t border-line pt-10"
           >
             <span>

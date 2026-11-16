@@ -76,7 +76,7 @@ export function Hero() {
 
           <span className="hero-rule mt-10 hidden h-px w-full origin-left bg-paper/25 sm:block" />
           <div className="hero-meta mt-5 hidden flex-wrap items-center justify-between gap-4 font-display text-[10px] uppercase tracking-[0.26em] text-paper/55 sm:flex">
-            <p className="flex items-center gap-3"><Live onDark /> Answered now · No fee unless we win · Free consultation</p>
+            <p className="flex items-center gap-3"><Live onDark /> Answered now · Free consultation</p>
             <p className="hidden md:block">{site.cities.join(" · ")}</p>
           </div>
         </div>

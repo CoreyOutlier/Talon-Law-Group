@@ -13,9 +13,7 @@ export default function Contact() {
   return (
     <>
       <PageHeader
-        eyebrow="No fee unless we win"
         lines={["Tell us what", "happened."]}
-        lede="Five questions, under ninety seconds. A lawyer reads every submission and calls back — usually within fifteen minutes during business hours."
         photo="/media/photos/couch-glasses-laugh.jpg"
       />
 
@@ -54,13 +52,12 @@ export default function Contact() {
             </div>
 
             <div className="border-t border-line pt-8">
-              <p className="eyebrow mb-5">Offices</p>
+              <p className="eyebrow mb-5">Locations</p>
               <ul className="space-y-6">
                 {markets.map((m) => (
                   <li key={m.slug}>
                     <p className="text-[15px] text-fg/90">
                       {m.city}, {m.state}
-                      {m.isHQ && <span className="ml-2 text-[11px] uppercase tracking-[0.14em] text-accent">Head office</span>}
                     </p>
                     {m.address ? (
                       <>

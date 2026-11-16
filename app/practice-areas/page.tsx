@@ -8,16 +8,15 @@ import { CTA } from "@/components/sections/CTA";
 export const metadata: Metadata = {
   title: "Practice Areas",
   description:
-    "Truck and car crashes, medical malpractice, wrongful death, premises liability, nursing home neglect, birth injury, pedestrian and bicycle collisions.",
+    "Truck and car crashes, wrongful death, slip and fall, nursing home neglect and abuse, pedestrian and bicycle collisions, hit and run.",
 };
 
 export default function PracticeAreasIndex() {
   return (
     <>
       <PageHeader
-        eyebrow="What we handle"
-        lines={["Injury law.", "All of it."]}
-        lede="We take a limited number of cases so each one gets tried-file preparation. If your matter is not one we should handle, we will tell you and point you to someone who should."
+        lines={["What we", "do best."]}
+        lede="Helping people who have been hurt is all we do and we do it well."
       />
 
       <section className="shell pb-20 md:pb-28">
@@ -29,15 +28,9 @@ export default function PracticeAreasIndex() {
                   <span className="figure text-[12px] text-fg-3 md:col-span-1">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <div className="md:col-span-5">
-                    <h2 className="display text-[clamp(1.25rem,2.4vw,2rem)] leading-tight text-fg/90 transition-colors duration-500 group-hover:text-accent">
-                      {p.name}
-                    </h2>
-                    <p className="eyebrow mt-3 !text-fg-3">{p.kicker}</p>
-                  </div>
-                  <p className="max-w-[46ch] text-[15px] leading-relaxed text-fg/65 md:col-span-5">
-                    {p.intro}
-                  </p>
+                  <h2 className="display text-[clamp(1.5rem,3vw,2.5rem)] leading-tight text-fg/90 transition-colors duration-500 group-hover:text-accent md:col-span-10">
+                    {p.name}
+                  </h2>
                   <span
                     className="hidden text-right text-fg-3 transition-all duration-500 group-hover:translate-x-1 group-hover:text-accent md:col-span-1 md:block"
                     style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}

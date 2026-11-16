@@ -9,12 +9,12 @@ export function Markets() {
       <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
         <div><Reveal><p className="eyebrow mb-6">Where we work</p></Reveal>
           <LineReveal as="h2" className="display max-w-[20ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={["Three states.", "One standard."]} /></div>
-        <Reveal delay={0.2}><Link href="/offices" className="btn btn-ghost">All offices</Link></Reveal>
+        <Reveal delay={0.2}><Link href="/locations" className="btn btn-ghost">All locations</Link></Reveal>
       </div>
       <div className="grid gap-px border border-line bg-line md:grid-cols-3">
         {markets.map((m, i) => (
           <Reveal key={m.slug} delay={i * 0.09} className="bg-ground">
-            <Link href={`/offices/${m.slug}`} className="group flex h-full flex-col">
+            <Link href={`/locations/${m.slug}`} className="group flex h-full flex-col">
               <div className="relative aspect-[16/10] overflow-hidden bg-ground-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={cityPhoto[m.slug] ?? m.photo} alt={`${m.city}, ${m.stateFull}`} loading="lazy" decoding="async"
@@ -23,7 +23,6 @@ export function Markets() {
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6 md:p-7">
                   <span className="eyebrow !text-paper/80">{m.kicker}</span>
-                  {m.isHQ && <span className="border border-paper/40 px-2 py-1 font-display text-[9px] uppercase tracking-[0.16em] text-paper">Head office</span>}
                 </div>
               </div>
               <div className="flex flex-1 flex-col p-8 md:p-10">
