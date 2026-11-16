@@ -58,48 +58,21 @@ function useCountUp(el: React.RefObject<HTMLSpanElement | null>, amount: string,
 /* ---------------------------------------------------------------- home --- */
 export function Proof() {
   if (publishedResults.length === 0) return null;
-  const total = publishedResults.reduce((s, r) => s + amountOf(r.amount), 0);
   const max = Math.max(...headlineResults.map((r) => amountOf(r.amount)));
   return (
     <section className="dark relative overflow-hidden border-y border-line">
       <div className="shell py-24 md:py-32">
-        <div className="mb-14 grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-12">
-          <div className="lg:col-span-7">
-            <LineReveal as="h2" className="display max-w-[17ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={["No talk.", <span key="a" className="text-accent">Just results.</span>]} />
-          </div>
-          <Total total={total} count={publishedResults.length} />
+        <div className="mb-14">
+          <LineReveal as="h2" className="display max-w-[17ch] text-[clamp(2rem,4.6vw,3.75rem)]" lines={["No talk.", <span key="a" className="text-accent">Just results.</span>]} />
         </div>
         <Ledger max={max} />
         {recordResults.length > 0 && <Quiet />}
         <div className="mt-12 flex flex-wrap items-center justify-between gap-6 border-t border-line pt-8">
-          <Reveal><Link href="/results" className="btn btn-ghost">All case results</Link></Reveal>
+          <Reveal><Link href="/results" className="btn btn-ghost">Case results</Link></Reveal>
           <Reveal delay={0.1}><p className="max-w-[62ch] text-[11px] leading-relaxed text-fg-3">{resultsDisclaimer}</p></Reveal>
         </div>
       </div>
     </section>
-  );
-}
-
-const WORDS = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
-
-/* every published recovery, added up */
-function Total({ total, count }: { total: number; count: number }) {
-  const { ref, seen } = useSeen<HTMLDivElement>(0.5);
-  const num = useRef<HTMLSpanElement>(null);
-  useCountUp(num, "$" + total.toLocaleString("en-US"), seen, 200, 2200);
-  return (
-    <div ref={ref} className="border-t border-line pt-6 lg:col-span-5 lg:border-t-0 lg:pt-0 lg:text-right">
-      <span
-        ref={num}
-        className="figure block text-[clamp(2.25rem,4.2vw,3.75rem)] leading-none tabular-nums text-fg"
-        style={{ opacity: seen ? 1 : 0, transform: seen ? "none" : "translateY(10px)", transition: `opacity .9s ${EASE}, transform .9s ${EASE}` }}
-      >
-        $0
-      </span>
-      <p className="mt-3 font-display text-[10px] uppercase tracking-[0.22em] text-fg-3" style={{ opacity: seen ? 1 : 0, transition: "opacity 1s .4s" }}>
-        Combined · {WORDS[count] ?? count} documented recoveries · gross
-      </p>
-    </div>
   );
 }
 
@@ -136,7 +109,7 @@ function Row({ result, index, seen, delay, share }: { result: (typeof publishedR
         </span>
       </div>
       <div className="md:col-span-5 md:pb-2" style={{ opacity: seen ? 1 : 0, transform: seen ? "none" : "translateY(10px)", transition: `opacity 1s ${EASE}, transform 1s ${EASE}`, transitionDelay: `${delay + 320}ms` }}>
-        <p className="eyebrow mb-3">{result.type}</p>
+        {!result.unlabeled && <p className="eyebrow mb-3">{result.type}</p>}
         {result.detail && <p className="max-w-[40ch] text-[14px] leading-relaxed text-fg-2">{result.detail}</p>}
       </div>
     </li>
@@ -272,7 +245,7 @@ function Plate({ result, index, total }: { result: (typeof publishedResults)[num
           <p className="eyebrow mb-8 flex items-center gap-4">
             <span className="figure text-fg-3">{label}</span>
             <span aria-hidden className="h-px w-8 bg-line" />
-            <span>{result.type}</span>
+            {!result.unlabeled && <span>{result.type}</span>}
           </p>
           <span
             ref={num}

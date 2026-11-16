@@ -46,7 +46,7 @@ export function Nav() {
       >
         <div className="shell flex h-[76px] items-center justify-between gap-8 md:h-[92px]">
           <Link href="/" aria-label="Talon Law Group — home" className="shrink-0">
-            <Wordmark className="h-9 w-auto md:h-11" onDark={dark} />
+            <Wordmark className="h-11 w-auto md:h-14" onDark={dark} />
           </Link>
 
           <nav className="hidden items-center gap-9 lg:flex">

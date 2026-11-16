@@ -3,7 +3,6 @@
 import { Hero } from "@/components/Hero";
 import { Ticker } from "@/components/sections/Ticker";
 import { Statement } from "@/components/sections/Statement";
-import { Film } from "@/components/sections/Film";
 import { Promise as PromiseSection } from "@/components/sections/Promise";
 import { Voices } from "@/components/sections/Voices";
 import { PracticeIndex } from "@/components/sections/PracticeIndex";
@@ -23,22 +22,16 @@ export default function Home() {
     <>
       <Hero />
       <Ticker />
-      <Statement eyebrow="Talon Law Group" words={["Quiet", "work.", "Loud", "results."]} accentFrom={2}
-        footnote="A trial practice built around one lawyer who answers his own phone, prepares every file as though it is going to a jury, and does not get paid unless you do." />
-      <Film />
+      <Statement words={["Your", "Sword.", "Your", "Shield."]} accentFrom={2} />
       <PromiseSection />
       <Voices />
       <PracticeIndex />
-      <Break src={env.corridor} position="50% 40%" eyebrow="Amat victoria curam"
-        lines={["Victory loves", "preparation."]}
-        note="Insurers pay for what they believe a jury would award. The only way to make them believe it is to be ready to find out." />
+      <Break src={env.corridor} position="50% 40%" eyebrow="Amat victoria curam" lines={["Victory loves", "preparation."]} />
       <Proof />
       <AttorneyPanel />
       <Standard />
       <Process />
       <Answers limit={3} dark={false} />
-      <Break src={env.pghSkyline} height="70vh" eyebrow="Home court"
-        lines={["Built in Pittsburgh.", "Admitted in three states."]} />
       <Markets />
       <CTA />
     </>

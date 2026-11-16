@@ -14,7 +14,7 @@ import { Live, Magnetic } from "@/components/Motion";
    at any width. The nav sits transparent over this frame. */
 
 const HERO_PHOTO = "/media/photos/couch-wide-serious.jpg";
-const LINES = ["Bad companies", "fear good", "lawyers."];
+const LINES = ["We make them", "pay for it."];
 
 export function Hero() {
   const section = useRef<HTMLElement>(null);
@@ -56,17 +56,16 @@ export function Hero() {
       {/* words */}
       <div ref={copy} className="shell relative flex flex-col justify-end pb-12 pt-6 will-change-transform lg:h-full lg:max-w-none lg:pb-[max(3rem,7vh)] lg:pt-32">
         <div className="lg:w-[60%] xl:w-[56%]">
-          <p className="hero-meta eyebrow mb-6 lg:mb-7">Order of Barristers · Trial practice since {site.founded}</p>
           <h1 className="display display-xl max-w-[13ch] text-[clamp(2.5rem,6.4vw,6.25rem)] text-paper">
             {LINES.map((l, i) => (
               <span key={i} className="line-mask">
-                <span className={`hero-line block ${i === 2 ? "text-accent" : ""}`} style={{ animationDelay: `${0.25 + i * 0.12}s` }}>{l}</span>
+                <span className={`hero-line block ${i === LINES.length - 1 ? "text-accent" : ""}`} style={{ animationDelay: `${0.25 + i * 0.12}s` }}>{l}</span>
               </span>
             ))}
           </h1>
 
           <p className="hero-meta mt-7 max-w-[42ch] text-[1.0625rem] leading-relaxed text-paper/75 text-pretty md:text-[1.1875rem]">
-            {brand.oneMessage} The insurer put a professional on your case the day it happened. Now you have one.
+            {brand.oneMessage}
           </p>
           <div className="hero-meta mt-8 flex flex-wrap items-center gap-3" style={{ animationDelay: "1.45s" }}>
             <Magnetic><Link href="/contact" className="btn btn-wine">Start your case</Link></Magnetic>

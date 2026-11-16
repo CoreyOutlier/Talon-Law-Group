@@ -1,3 +1,4 @@
+import transcriptsJson from "./transcripts.json";
 /* ============================================================================
  * TALON LAW GROUP — SINGLE SOURCE OF TRUTH
  * Every word, number, phone and address on the site comes from this file.
@@ -13,7 +14,7 @@ export const SHOW_DRAFT_PROOF = process.env.NEXT_PUBLIC_SHOW_DRAFT_PROOF === "1"
 
 export const site = {
   name: "Talon Law Group",
-  legalName: "Talon Law Group (formerly The Law Office of Shaheen Wallace, Esq., LLC)",
+  legalName: "The Law Office of Shaheen Wallace, LLC d/b/a Talon Law Group",
   domain: "https://www.wallaceinjury.com", // TODO: confirm whether launch is on talonlawgroup.com (Shaheen's mail is there)
   tagline: "Victory loves preparation.",
   description:
@@ -54,7 +55,7 @@ export const site = {
 
 export const brand = {
   /** "If you could only get one message across in the entire brand." */
-  oneMessage: "Big companies don't get to hurt you and get away with it.",
+  oneMessage: "When bad companies hurt people, they don't get to just walk away.",
   mission:
     "Talon Law Group exists to speak for those who need a voice but don't have one, by taking cases to verdict, so that a jury can tell them they have been heard.",
   vision: "To be the firm that law firms call when they need eight-figure verdicts on behalf of their clients.",
@@ -467,6 +468,8 @@ export type CaseResult = {
   /** One line on the matter. Leave it out rather than invent one. */
   detail?: string;
   note?: string;
+  /** Show the amount only; no type beside it. */
+  unlabeled?: boolean;
   /** "headline" carries the big figures on the home page; "record" is the quieter tier beneath them. */
   tier: "headline" | "record";
   /** Where the figure was published before this site. */
@@ -481,6 +484,8 @@ export const caseResults: CaseResult[] = [
   {
     amount: "$2,000,000",
     type: "Catastrophic Injury",
+    /** Shaheen struck the label (Nov 13 markup). The figure stands alone. */
+    unlabeled: true,
     tier: "headline",
     status: "verified",
   },
@@ -694,6 +699,9 @@ export const attorney = {
   portrait: "/media/photos/couch-chin.jpg",
   lede:
     "A New Yorker who has spent over a decade going up against the largest insurance carriers in the country throughout New York, Pennsylvania and Georgia.",
+  /** The home-page panel. His words, Nov 13 markup. */
+  homeLede:
+    "A trial lawyer first, Shaheen Wallace has over a decade of taking on some of the largest insurance carriers in the country on behalf of people they hoped would go away.",
   /** Shaheen struck the biography from the page (Nov 14, 2026 markup). Kept here, unrendered, in case he wants it back. */
   bio: [] as string[],
   bioArchived: [
@@ -725,31 +733,26 @@ export const process_ = [
   {
     n: "01",
     title: "The call",
-    time: "Day one",
     body: "You tell us what happened. We tell you honestly whether you have a case and what it will take. No pressure, no obligation, no fee to find out.",
   },
   {
     n: "02",
     title: "We take the weight",
-    time: "Week one",
     body: "Evidence preservation letters go out. We notify the carriers, shut off the adjuster calls, order records, and put your treatment and your bills in order.",
   },
   {
     n: "03",
     title: "We build the file",
-    time: "Months 1–6",
     body: "Investigation, experts, medical documentation, wage loss and life-impact proof. We build it the way it would be shown to a jury, because that is the file that gets paid.",
   },
   {
     n: "04",
     title: "We demand. Or we file.",
-    time: "Month 6+",
     body: "A documented demand goes to the carrier. If the number is not right, we file suit. That decision is yours, and you make it with real information.",
   },
   {
     n: "05",
     title: "You get paid",
-    time: "Resolution",
     body: "We negotiate down the medical liens so more of the recovery stays with you, close the file, and account for every dollar in writing.",
   },
 ];
@@ -761,9 +764,11 @@ export const process_ = [
 /* screen readers; keep it faithful to what the clip says.                     */
 /* -------------------------------------------------------------------------- */
 
-export type FaqClip = { slug: string; question: string; summary: string; src: string; poster: string; duration: string; /** the source file's basename in Shaheen's Dropbox folder */ file: string };
+export type FaqClip = { slug: string; question: string; summary: string; src: string; poster: string; duration: string; /** the source file's basename in Shaheen's Dropbox folder */ file: string; /** what he says in the clip, word for word */ transcript?: string };
+/* What he says in each clip, transcribed on a runner from the clip audio (see .github/workflows/transcribe-clips.yml). */
+const TRANSCRIPTS: Record<string, string | undefined> = transcriptsJson;
 const clip = (slug: string, file: string, question: string, duration: string, summary: string): FaqClip => ({
-  slug, file, question, duration, summary, src: `/media/faq/${slug}.mp4`, poster: `/media/faq/${slug}.jpg`,
+  slug, file, question, duration, summary, src: `/media/faq/${slug}.mp4`, poster: `/media/faq/${slug}.jpg`, transcript: TRANSCRIPTS[slug],
 });
 /* ⚠️  The `summary` lines are written answers for search engines and screen
  * readers. They were drafted from the clip titles, not transcribed. Watch
@@ -795,13 +800,13 @@ export const faqClips: FaqClip[] = [
 /* NAVIGATION                                                                  */
 /* -------------------------------------------------------------------------- */
 
+/* Shaheen's order, Nov 13, 2026. Reviews stays a page but leaves the menu. */
 export const nav = [
-  { label: "Practice", href: "/practice-areas" },
-  { label: "Locations", href: "/locations" },
+  { label: "Practice Areas", href: "/practice-areas" },
   { label: "Shaheen Wallace", href: "/about" },
   { label: "Results", href: "/results" },
-  { label: "Reviews", href: "/reviews" },
   { label: "Answers", href: "/faq" },
+  { label: "Locations", href: "/locations" },
   { label: "Contact", href: "/contact" },
 ];
 
